@@ -1,6 +1,6 @@
-name: "サイトタイトル"
+name: "Naoshi ISAKI"
 navbar: 
-  title: "My ウェブサイト"
+  title: "Naoshi ISAKI"
   left:
     - text: "ホーム"
       href: index.html
@@ -17,9 +17,11 @@ navbar:
       href: grid_test.html
     - text: "cssチェック用"
       href: css_test.html
+    - text: "R勉強会"
+      href: rstudy.html
 output:
   html_document:
-    theme: cosmo
+    theme: "simplex"
     highlight: textmate
     toc: true
     toc_float:
