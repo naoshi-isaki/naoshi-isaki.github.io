@@ -1,8 +1,8 @@
-name: "サイトタイトル"
+name: "Naoshi ISAKI"
 navbar: 
-  title: "My ウェブサイト"
+  title: "Naoshi ISAKI"
   left:
-    - text: "ホーム"
+    - text: "Home"
       href: index.html
     - text: "趣味"
       href: shumi.html
