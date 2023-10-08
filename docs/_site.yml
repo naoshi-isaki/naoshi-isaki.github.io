@@ -21,7 +21,7 @@ navbar:
       href: week1.html
 output:
   html_document:
-    theme: Simplex
+    theme: "simplex"
     highlight: textmate
     toc: true
     toc_float:
