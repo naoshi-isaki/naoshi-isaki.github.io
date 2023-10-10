@@ -1,6 +1,6 @@
 name: "Naoshi ISAKI"
 navbar: 
-  title: "Naoshi ISAKI"
+  title: "Naoshi <strong>ISAKI</strong>"
   left:
     - text: "ホーム"
       href: index.html
