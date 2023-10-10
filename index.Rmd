@@ -1,22 +1,25 @@
 ---
-title: 伊﨑 直志 / Naoshi ISAKI
+title: "Naoshi ISAKI's website"
 ---
-## (Under Construction)
+Under Construction...
 
-## Index
+<font size="4"> 伊﨑 直志（Naoshi ISAKI）</font>
 
-### 略歴
+## Bio
+
+### Education
 
 - 2017-21 首都大学東京（現・東京都立大学）都市教養学部都市教養学科法学系政治学コース
-- 2021-現在 同志社大学大学院総合政策科学研究科 在籍
+- 2021-現在 同志社大学大学院総合政策科学研究科 博士前期課程 在籍
 
-### 研究分野
+### Field of research, Research interests
 
-比較政治学. 政党政治.
+- 比較政治学. 政党政治.
+- ガバナンス. 比較政策論.
 
-### 業績
+### Publications
 
-- アダム・プシェヴォスキ著, 吉田徹・伊﨑直志訳. (2019=2023).『民主主義の危機：比較分析が示す変容』. 白水社.
+- [アダム・プシェヴォスキ著, 吉田徹・伊﨑直志訳. (2019=2023).『民主主義の危機：比較分析が示す変容』. 白水社.](https://www.hakusuisha.co.jp/book/b626498.html)
 
 ## Contact
 
