@@ -4,8 +4,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "趣味"
-      href: shumi.html
+    - text: "Univ."
+      href: univ.html
   right:
     - text: "jsのテスト"
       href: js_test.html
