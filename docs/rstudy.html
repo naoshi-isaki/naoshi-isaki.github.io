@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="伊﨑 直志" />
+<meta name="author" content="Naoshi ISAKI" />
 
 
 <title>Rによる自主勉強会</title>
@@ -356,207 +356,32 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Rによる自主勉強会</h1>
-<h4 class="author">伊﨑 直志</h4>
-<h4 class="date">2023年10月6日-</h4>
+<h4 class="author">Naoshi ISAKI</h4>
+<h4 class="date">2023年10月4日-</h4>
 
 </div>
 
 
-<div id="week1" class="section level1">
-<h1>Week1</h1>
-<div id="準備" class="section level2">
-<h2>準備</h2>
-<div id="loading-packages" class="section level3">
-<h3>Loading Packages</h3>
+<div id="目的-到達目標" class="section level2">
+<h2>目的, 到達目標</h2>
+<p>R（Rstudio）の基本操作、統計分析の基礎、パネルデータ分析などのやや高度な分析手法などの学習及び習得。</p>
+</div>
+<div id="使用文献" class="section level2">
+<h2>使用文献</h2>
+<p><a href="https://www.ohmsha.co.jp/book/9784274230028/">星野匡郎,
+田中久稔. (2023).
+『Rによる実証分析（第2版）：回帰分析から因果分析へ』オーム社.</a></p>
 <ul>
-<li><code>tidyverse</code>：データ処理および可視化</li>
+<li><a href="https://www.rniyoru.com/">著者サポートページ</a></li>
 </ul>
 </div>
-</div>
-<div id="a.3-rの基本操作" class="section level2">
-<h2>A.3　Rの基本操作</h2>
-<div id="a.3.1-数式の入力" class="section level3">
-<h3>A.3.1　数式の入力</h3>
-<pre class="r"><code>##Rの基本操作
-#足し算: +
-#引き算: -
-#掛け算: *
-#割り算: /
-1+1</code></pre>
-<pre><code>## [1] 2</code></pre>
-<pre class="r"><code>2+3*4; (2+3)*4</code></pre>
-<pre><code>## [1] 14</code></pre>
-<pre><code>## [1] 20</code></pre>
-<pre class="r"><code>5^2</code></pre>
-<pre><code>## [1] 25</code></pre>
-<pre class="r"><code>A &lt;- 6-1
-A; A^2</code></pre>
-<pre><code>## [1] 5</code></pre>
-<pre><code>## [1] 25</code></pre>
-<pre class="r"><code>##複数要素の格納
-B &lt;- c(6,7,8)
-(B-1)/2</code></pre>
-<pre><code>## [1] 2.5 3.0 3.5</code></pre>
-</div>
-<div id="a.3.2-スクリプトの利用" class="section level3">
-<h3>A.3.2　スクリプトの利用</h3>
-</div>
-<div id="a.3.3-データの読み込み-基礎統計の計算" class="section level3">
-<h3>A.3.3　データの読み込み, 基礎統計の計算</h3>
-<pre class="r"><code>read.csv(&quot;data.csv&quot;)</code></pre>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="right">ID</th>
-<th align="right">age</th>
-<th align="left">sex</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">18</td>
-<td align="left">female</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">17</td>
-<td align="left">female</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">16</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">15</td>
-<td align="left">male</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">16</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">15</td>
-<td align="left">female</td>
-</tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="right">16</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="right">18</td>
-<td align="left">male</td>
-</tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="right">17</td>
-<td align="left">female</td>
-</tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="right">16</td>
-<td align="left">female</td>
-</tr>
-<tr class="odd">
-<td align="right">11</td>
-<td align="right">15</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">12</td>
-<td align="right">15</td>
-<td align="left">male</td>
-</tr>
-<tr class="odd">
-<td align="right">13</td>
-<td align="right">18</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="right">19</td>
-<td align="left">male</td>
-</tr>
-<tr class="odd">
-<td align="right">15</td>
-<td align="right">17</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">16</td>
-<td align="right">18</td>
-<td align="left">female</td>
-</tr>
-<tr class="odd">
-<td align="right">17</td>
-<td align="right">18</td>
-<td align="left">female</td>
-</tr>
-</tbody>
-</table>
-</div>
-<pre class="r"><code>df &lt;- read.csv(&quot;data.csv&quot;)
-head(df)</code></pre>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="right">ID</th>
-<th align="right">age</th>
-<th align="left">sex</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">18</td>
-<td align="left">female</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">17</td>
-<td align="left">female</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">16</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">15</td>
-<td align="left">male</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">16</td>
-<td align="left">male</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">15</td>
-<td align="left">female</td>
-</tr>
-</tbody>
-</table>
-</div>
-<pre class="r"><code>mean(df$age); sd(df$age); min(df$age); max(df$age)</code></pre>
-<pre><code>## [1] 16.70588</code></pre>
-<pre><code>## [1] 1.311712</code></pre>
-<pre><code>## [1] 15</code></pre>
-<pre><code>## [1] 19</code></pre>
-</div>
-</div>
-</div>
-<div id="week2" class="section level1">
-<h1>Week2</h1>
+<div id="一覧" class="section level2">
+<h2>一覧</h2>
+<ul>
+<li><a
+href="https://naoshi-isaki.github.io/personal/rweek1.html">第1回（2023年10月4日）</a></li>
+<li>[第2回（2023年x月x日）]</li>
+</ul>
 </div>
 
 <footer>

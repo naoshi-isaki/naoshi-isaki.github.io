@@ -1,50 +1,21 @@
 ---
 title: "Rによる自主勉強会"
-author: "伊﨑 直志"
-date: '2023年10月6日-'
-output: 
+author: "Naoshi ISAKI"
+date: '2023年10月4日-'
+output:
   html_document:
     toc: true
     toc_depth: 3
     toc_float: true
 ---
-# Week1
-## 準備
-### Loading Packages
+## 目的, 到達目標
+R（Rstudio）の基本操作、統計分析の基礎、パネルデータ分析などのやや高度な分析手法などの学習及び習得。
 
-```{r setup, include=FALSE}
-#libraryで使用する関数の読み込み
-library(tidyverse) #特に使わない
-knitr::opts_chunk$set(echo = TRUE)
-```
+## 使用文献
+[星野匡郎, 田中久稔. (2023). 『Rによる実証分析（第2版）：回帰分析から因果分析へ』オーム社.](https://www.ohmsha.co.jp/book/9784274230028/)
 
-- `tidyverse`：データ処理および可視化
+- [著者サポートページ](https://www.rniyoru.com/)
 
-## A.3　Rの基本操作
-### A.3.1　数式の入力
-```{r}
-##Rの基本操作
-#足し算: +
-#引き算: -
-#掛け算: *
-#割り算: /
-1+1
-2+3*4; (2+3)*4
-5^2
-A <- 6-1
-A; A^2
-##複数要素の格納
-B <- c(6,7,8)
-(B-1)/2
-```
-
-### A.3.2　スクリプトの利用
-### A.3.3　データの読み込み, 基礎統計の計算
-```{r}
-read.csv("data.csv")
-df <- read.csv("data.csv")
-head(df)
-mean(df$age); sd(df$age); min(df$age); max(df$age)
-```
-
-# Week2
+## 一覧
+- [第1回（2023年10月4日）](https://naoshi-isaki.github.io/personal/rweek1.html)
+- [第2回（2023年x月x日）]
