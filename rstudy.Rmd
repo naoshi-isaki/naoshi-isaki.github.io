@@ -12,10 +12,10 @@ output:
 R（Rstudio）の基本操作、統計分析の基礎、パネルデータ分析などのやや高度な分析手法の学習及び習得。
 
 ## 使用文献
-[星野匡郎, 田中久稔. (2023). 『Rによる実証分析（第2版）：回帰分析から因果分析へ』オーム社.](https://www.ohmsha.co.jp/book/9784274230028/)
+[星野匡郎, 田中久稔, 北川梨津. (2023). 『Rによる実証分析（第2版）：回帰分析から因果分析へ』オーム社.](https://www.ohmsha.co.jp/book/9784274230028/)
 
 - [著者サポートページ](https://www.rniyoru.com/)
 
 ## 一覧
-- [第1回（2023年10月4日）](https://naoshi-isaki.github.io/personal/rweek1.html)
-- [第2回（2023年x月x日）]
+- [第1回（2023年10月6日）](https://naoshi-isaki.github.io/personal/rweek1.html)
+- [第2回（2023年10月??日）](https://naoshi-isaki.github.io/personal/rweek2.html)

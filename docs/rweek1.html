@@ -378,10 +378,10 @@ div.tocify {
 <h3>A.3.1　数式の入力</h3>
 <p>Rの基本操作</p>
 <ul>
-<li>足し算: +</li>
-<li>引き算: -</li>
-<li>掛け算: *</li>
-<li>割り算: /</li>
+<li>足し算: <code>+</code></li>
+<li>引き算: <code>-</code></li>
+<li>掛け算: <code>*</code></li>
+<li>割り算: <code>/</code></li>
 </ul>
 <pre class="r"><code>1+1</code></pre>
 <pre><code>## [1] 2</code></pre>
@@ -390,7 +390,10 @@ div.tocify {
 <pre><code>## [1] 20</code></pre>
 <pre class="r"><code>5^2</code></pre>
 <pre><code>## [1] 25</code></pre>
-<p>変数への代入（Environment&gt;Valuesで確認） - [文字]&lt;-[数字]</p>
+<p>変数への代入（Environment&gt;Valuesで確認）</p>
+<ul>
+<li><code>[文字]&lt;-[数字]</code></li>
+</ul>
 <pre class="r"><code>A &lt;- 6-1
 A; A^2</code></pre>
 <pre><code>## [1] 5</code></pre>
@@ -405,9 +408,9 @@ A; A^2</code></pre>
 <div id="a.3.3-データの読み込み-基礎統計の計算" class="section level3">
 <h3>A.3.3　データの読み込み, 基礎統計の計算</h3>
 <ul>
-<li>read.csv(“data.csv”) or</li>
-<li>read.csv(“[ファイルパス]/data.csv”) or</li>
-<li>setwd(“[ファイルパス]”) %&gt;% read.csv(“data.csv”)</li>
+<li><code>read.csv("data.csv")</code> or</li>
+<li><code>read.csv("[ファイルパス]/data.csv")</code> or</li>
+<li><code>setwd("[ファイルパス]") %&gt;% read.csv("data.csv")</code></li>
 </ul>
 <pre class="r"><code>read.csv(&quot;data.csv&quot;) #オブジェクトへの格納→Environmentにて確認</code></pre>
 <div class="kable-table">
@@ -554,13 +557,14 @@ head(df) #中身の確認</code></pre>
 </table>
 </div>
 <ul>
-<li>平均: mean()</li>
-<li>標準偏差: sd()　#standard deviation</li>
-<li>最小値: min()</li>
-<li>最大値: max()</li>
+<li>平均: <code>mean()</code></li>
+<li>標準偏差: <code>sd()</code>　#standard deviation</li>
+<li>最小値: <code>min()</code></li>
+<li>最大値: <code>max()</code></li>
 </ul>
-<p><a
-href="https://ai-trend.jp/programming/r-beginner/r-2/">参考</a></p>
+<p><a href="https://ai-trend.jp/programming/r-beginner/r-2/">参考:
+Rでエクセルファイルからのデータ読み込みとアクセス | AVILEN AI
+Trend</a></p>
 <pre class="r"><code>mean(df$age); sd(df$age); min(df$age); max(df$age) #$: 一つの項目だけ取り出す</code></pre>
 <pre><code>## [1] 16.70588</code></pre>
 <pre><code>## [1] 1.311712</code></pre>
@@ -571,7 +575,7 @@ href="https://ai-trend.jp/programming/r-beginner/r-2/">参考</a></p>
 <h3>A.3.4　パッケージのインストール</h3>
 <ul>
 <li>右下区画のタブ&gt;Packages&gt;Install</li>
-<li>Command: install.packages(“[パッケージ名]”) →例略</li>
+<li>Command: <code>install.packages("[パッケージ名]")</code> →例略</li>
 </ul>
 </div>
 </div>
