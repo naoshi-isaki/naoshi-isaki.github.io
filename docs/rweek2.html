@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="伊﨑 直志" />
+
+
+<title>Week2 | Rによる自主勉強会</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="site_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Naoshi <strong>ISAKI</strong></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="univ.html">Univ.</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="js_test.html">jsのテスト</a>
+</li>
+<li>
+  <a href="html_gene.html">Rでhtml生成</a>
+</li>
+<li>
+  <a href="id_class_check.html">タグチェック用</a>
+</li>
+<li>
+  <a href="grid_test.html">gridレイアウト用</a>
+</li>
+<li>
+  <a href="css_test.html">cssチェック用</a>
+</li>
+<li>
+  <a href="rstudy.html">R勉強会</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week2 | Rによる自主勉強会</h1>
+<h4 class="author">伊﨑 直志</h4>
+<h4 class="date">2023年10月13日</h4>
+
+</div>
+
+
+<div id="第１章-回帰分析の目的" class="section level1">
+<h1>第１章　回帰分析の目的</h1>
+<div id="相関と因果" class="section level2">
+<h2>1.1.　相関と因果</h2>
+<ul>
+<li><p>相関関係 correlation：「Xが変化すればYも変化する」</p></li>
+<li><p>因果関係 causality：「Xを変化させればYも変化する」</p></li>
+<li><p>疑似相関 spurious correlation</p>
+<p>「変数XとYに共通の第3の要因Zが存在することによってXとYに生じる見せかけの相関関係」</p>
+<p>e.g. 個人所得の増加→タバコへの支出増加、医療・健康への支出増加 　
+　＝タバコと健康の疑似相関</p></li>
+</ul>
+<blockquote>
+<ul>
+<li>時間的先行性:
+原因となる現象が結果となる現象に時間的に先立って起きている。</li>
+<li>共変関係（相関関係）:
+原因となる現象が変動すると、結果となる現象も変動する。</li>
+<li>他条件の同一性:
+原因となる現象の双方に与える現象は存在しないか、その影響は統制されている。</li>
+</ul>
+</blockquote>
+</div>
+<div id="回帰と予測" class="section level2">
+<h2>1.2.　回帰と予測</h2>
+<ul>
+<li><p>一次関数 <span class="math inline">\(y=a+bx\)</span> の形で表現
+→最小二乗法（least squares estimation）（図1.1 →図1.6）</p>
+<p>回帰直線、回帰式、回帰係数</p></li>
+<li><p>回帰式の一方の変数に代入してもう一方の変数の値を計算、予測</p>
+<p>＝ある変数Xの値をもとにして、他の変数Yの値を予測　＝回帰分析</p>
+<p><code>X：説明変数</code>、<code>Y：被説明変数</code></p></li>
+</ul>
+<p>⇒因果解釈ではなく、あくまで予測解釈！</p>
+<p><strong>回帰分析 →Xが与えられた時のYの値の予測</strong></p>
+</div>
+<div id="自然科学のデータと社会科学のデータ" class="section level2">
+<h2>1.3.　自然科学のデータと社会科学のデータ</h2>
+<p>実験の難しさ（費用等コスト、倫理）</p>
+<p>⇔自然科学：変数選択の制約・影響少、実験室実験可（変数統制）　[従来的説明]</p>
+<p>→現在、社会科学における実験多数：実験経済学等 or
+自然実験…（後述）</p>
+</div>
+</div>
+<div id="第２章-統計の基礎知識" class="section level1">
+<h1>第２章　統計の基礎知識</h1>
+<div id="母集団と標本" class="section level2">
+<h2>2.1. 母集団と標本</h2>
+<p>-（有限集団全体）母集団－（抽出）標本 -
+（確率分布）母集団－（観測値）標本　（←本書）</p>
+<p>正規分布 normal distribution</p>
+<p>正規分布<span class="math inline">\(N(平均,
+分散=標準偏差^2)\)</span></p>
+<p>正規分布（乱数）: <code>rnorm(個数, 平均, 標準偏差)</code></p>
+<pre class="r"><code>rnorm(100, 50, 10) </code></pre>
+<pre><code>##   [1] 59.19885 37.02369 70.14474 37.71301 46.06930 65.49774 47.76800 44.54734
+##   [9] 22.56841 47.36286 51.28622 49.66572 54.95570 37.63097 49.42456 56.45773
+##  [17] 44.63642 48.22968 53.06989 50.57260 67.33681 53.46955 46.62721 61.40676
+##  [25] 55.74854 33.33729 37.86120 42.34747 42.35663 40.94675 46.74743 52.48667
+##  [33] 49.10653 51.30946 44.29657 58.59560 55.12346 57.56699 43.44093 40.91143
+##  [41] 56.22499 52.74144 41.04889 55.60419 46.37698 54.76485 56.37374 37.53044
+##  [49] 52.82470 44.39644 44.30434 43.32051 41.95381 45.71153 48.09938 55.64982
+##  [57] 61.64151 49.52927 45.99459 59.92633 60.97695 51.34846 41.42857 65.38195
+##  [65] 61.94160 49.86152 51.27518 33.15091 44.04111 58.61466 50.35783 43.54283
+##  [73] 42.80300 57.55339 56.39083 37.16019 46.22162 40.54397 45.24944 49.93105
+##  [81] 44.53424 50.83353 52.40750 39.10775 38.64513 55.71965 48.61368 59.61362
+##  [89] 47.64770 58.41794 50.28434 29.81678 59.39706 45.51934 40.61148 63.20754
+##  [97] 55.60280 31.08172 43.98240 37.88908</code></pre>
+<pre class="r"><code>curve(dnorm(x,50,10),0,100)　#正規分布のグラフ描画</code></pre>
+<p><img src="rweek2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>pnorm(60,50,10) #大きさ１の標本の値が60より小さくなる確率</code></pre>
+<pre><code>## [1] 0.8413447</code></pre>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>説明</th>
+<th>（英略）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>rnorm(n, a, b)</code></td>
+<td>平均a, 標準偏差bの正規分布乱数をn個発生させる。</td>
+<td>random+norm</td>
+</tr>
+<tr class="even">
+<td><code>dnorm(x, a, b)</code></td>
+<td>平均a, 標準偏差bの正規分布について,
+密度関数の点xにおける値を計算する。</td>
+<td>density+norm</td>
+</tr>
+<tr class="odd">
+<td><code>pnorm(x, a, b)</code></td>
+<td>平均a, 標準偏差bの正規分布について,
+分布関数の点xにおける値を計算する。</td>
+<td>probability+norm</td>
+</tr>
+</tbody>
+</table>
+<p>正規分布グラフ 描画関数</p>
+<p><code>curve(dnorm(x, a, b), min, max)</code> #curve(関数の式,
+横軸の最小値, 横軸の最大値)</p>
+</div>
+<div id="無作為抽出" class="section level2">
+<h2>2.2.　無作為抽出</h2>
+<p>母集団から標本を抽出 random sampling</p>
+<pre class="r"><code>Z &lt;- rnorm(100,50,10)
+hist(Z) #ヒストグラム</code></pre>
+<p><img src="rweek2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>Z[1:10] #最初の10個のデータを抜き出し</code></pre>
+<pre><code>##  [1] 43.97665 45.66963 38.01652 44.55045 64.82226 45.79962 57.33047 56.70129
+##  [9] 35.89959 56.08553</code></pre>
+<pre class="r"><code>Z[5]; Z[10]; Z[100] #5番目,10番目,100番目の位置にある数字を抜き出し</code></pre>
+<pre><code>## [1] 64.82226</code></pre>
+<pre><code>## [1] 56.08553</code></pre>
+<pre><code>## [1] 43.09323</code></pre>
+<pre class="r"><code>Z[c(5,10,100)] #aを使わずに同上の操作</code></pre>
+<pre><code>## [1] 64.82226 56.08553 43.09323</code></pre>
+<pre class="r"><code>#特定の意味を持つ数値を抽出
+max(Z) #最大値</code></pre>
+<pre><code>## [1] 76.48183</code></pre>
+<pre class="r"><code>which.max(Z) #最大値が何番目か</code></pre>
+<pre><code>## [1] 21</code></pre>
+<pre class="r"><code>min(Z) #最小値</code></pre>
+<pre><code>## [1] 26.3806</code></pre>
+<pre class="r"><code>which.min(Z) #最小値が何番目か</code></pre>
+<pre><code>## [1] 69</code></pre>
+<pre class="r"><code>mean(Z) #平均値</code></pre>
+<pre><code>## [1] 49.09878</code></pre>
+<pre class="r"><code>summary(Z) #基本統計量一括表示</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   26.38   43.96   47.57   49.10   55.04   76.48</code></pre>
+<p>#p.19下段</p>
+<pre class="r"><code>1:10</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>sample(1:10,3) #無作為抽出、sample(範囲, 抽出個数)</code></pre>
+<pre><code>## [1] 6 7 4</code></pre>
+<pre class="r"><code>sample(Z,5) #sample(標本, 抽出個数)</code></pre>
+<pre><code>## [1] 40.59324 43.91065 53.88561 51.67436 61.79483</code></pre>
+<pre class="r"><code>sample(Z,5) #sample(標本, 抽出個数)</code></pre>
+<pre><code>## [1] 40.59324 45.42363 52.66071 46.43496 46.55422</code></pre>
+<pre class="r"><code>fruits &lt;- c(&quot;ミカン&quot;,&quot;バナナ&quot;,&quot;リンゴ&quot;,&quot;レモン&quot;,&quot;モモ&quot;)
+fruits</code></pre>
+<pre><code>## [1] &quot;ミカン&quot; &quot;バナナ&quot; &quot;リンゴ&quot; &quot;レモン&quot; &quot;モモ&quot;</code></pre>
+<pre class="r"><code>sample(fruits, 1) #fruitsから1個抽出</code></pre>
+<pre><code>## [1] &quot;リンゴ&quot;</code></pre>
+<pre class="r"><code>sample(fruits, 2) #fruitsから2個抽出</code></pre>
+<pre><code>## [1] &quot;ミカン&quot; &quot;リンゴ&quot;</code></pre>
+<pre class="r"><code>sample(fruits, 1) #fruitsから1個抽出</code></pre>
+<pre><code>## [1] &quot;リンゴ&quot;</code></pre>
+<pre class="r"><code>sample(fruits,1) #fruitsから1個抽出</code></pre>
+<pre><code>## [1] &quot;リンゴ&quot;</code></pre>
+<p>コイン投げ</p>
+<pre class="r"><code>coin &lt;- c(&quot;Head&quot;, &quot;Tail&quot;) 
+#sample(coin, 5) #うまくいかない, 非復元抽出になっている
+sample(coin,5,replace = TRUE) #復元抽出, replace=TRUE</code></pre>
+<pre><code>## [1] &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;</code></pre>
+</div>
+<div id="平均と大数の法則" class="section level2">
+<h2>2.3.　平均と大数の法則</h2>
+<ul>
+<li>①ベクトルrecのi番目の場所rec[i]に</li>
+<li>②母集団N(50,10^2)から抜き出した大きさ100の標本の平均を格納する</li>
+</ul>
+<pre class="r"><code>mean(Z) #標本平均</code></pre>
+<pre><code>## [1] 49.09878</code></pre>
+<pre class="r"><code>mean(rnorm(100,50,10))</code></pre>
+<pre><code>## [1] 48.3025</code></pre>
+<pre class="r"><code>mean(rnorm(100,50,10)) #Z&lt;-rnorm(100,50,10)</code></pre>
+<pre><code>## [1] 49.2457</code></pre>
+<pre class="r"><code>#より多い試行、抽出1000回、標本の大きさ100
+S &lt;- 1000
+rec1 &lt;- numeric(S)
+for(i in 1:S){rec1[i]&lt;-mean(rnorm(100,50,10))}
+rec1</code></pre>
+<pre><code>##    [1] 50.11655 49.96074 50.35505 51.05341 49.96690 48.73811 49.21056 49.35624
+##    [9] 48.46226 50.06045 49.20190 49.78692 49.50404 51.54839 50.24340 48.46109
+##   [17] 49.23522 50.66846 49.24276 51.91030 49.58633 50.12209 50.36571 49.33646
+##   [25] 50.57106 50.36092 51.06687 48.60119 48.01654 51.03991 49.69400 49.00322
+##   [33] 50.98330 49.23812 50.69432 51.34659 49.77092 50.32707 48.80853 49.29312
+##   [41] 51.16136 49.51804 48.94530 51.03970 49.38856 49.53390 49.49696 48.20986
+##   [49] 49.32348 48.22157 49.32501 49.73580 49.28308 49.80143 48.47451 50.59953
+##   [57] 47.44762 51.47247 51.61169 50.71575 50.46003 50.90987 49.14654 51.74082
+##   [65] 49.34033 49.20296 48.99250 51.44830 50.46255 51.03870 50.69135 49.11852
+##   [73] 50.58724 51.67002 48.70774 51.28707 50.47942 49.97359 51.20589 49.71574
+##   [81] 50.05029 48.46569 51.11822 51.89060 51.67555 49.45107 50.23826 50.37782
+##   [89] 48.97179 49.94397 52.04852 50.35209 52.36868 50.14903 50.28267 49.01595
+##   [97] 49.30256 49.92778 51.36910 48.70856 48.71589 49.52508 49.12314 51.00830
+##  [105] 51.37831 49.42473 48.41738 49.68850 49.04889 48.74650 48.96782 48.83977
+##  [113] 49.98589 48.14199 51.17635 50.44181 49.06340 50.49117 50.57833 51.67011
+##  [121] 49.64061 50.02040 48.23689 50.63225 51.31139 49.85653 50.61375 50.66660
+##  [129] 48.37168 49.24866 48.23017 52.59098 48.40980 50.04804 49.57912 50.52068
+##  [137] 50.48741 50.25124 49.96281 49.50130 49.71049 51.29301 49.11740 50.10286
+##  [145] 49.03140 48.97860 49.87602 50.62942 48.70548 49.96264 49.27024 48.96574
+##  [153] 51.43693 49.47300 50.43348 52.72689 49.73668 47.76894 48.61926 49.44217
+##  [161] 49.59136 49.67110 50.07219 52.38209 47.82421 48.34271 49.78328 49.90112
+##  [169] 50.05347 50.13574 50.39040 49.15678 50.99211 51.69188 48.89494 50.99235
+##  [177] 49.83332 51.66440 49.22515 51.74277 51.28197 51.34169 49.81941 50.88340
+##  [185] 49.27614 49.86998 49.06679 50.14890 48.85863 49.51514 50.36894 50.13682
+##  [193] 48.66237 51.85814 50.86137 50.49266 48.09140 50.08636 50.23664 49.78214
+##  [201] 49.70635 50.74739 48.77380 50.08869 49.98317 49.89419 49.29456 51.80202
+##  [209] 48.80861 51.48957 49.29527 50.96635 49.92497 49.61112 48.60738 50.13360
+##  [217] 50.38325 47.99497 50.01497 49.49849 51.02720 49.82005 49.86669 50.91506
+##  [225] 48.60099 50.04421 48.16554 48.92111 50.23968 49.99979 50.54521 50.75692
+##  [233] 49.49107 51.34932 51.19574 50.10077 48.51088 50.85938 51.06844 48.25297
+##  [241] 48.95723 48.74187 48.65783 50.07621 47.96838 49.43367 51.41297 49.55518
+##  [249] 49.94640 52.04464 49.40487 49.29331 49.75272 50.18499 49.80021 49.20118
+##  [257] 50.12062 48.95756 51.61284 48.15921 49.59548 50.04775 51.66213 51.26119
+##  [265] 49.93532 48.61563 50.73279 50.45053 50.54493 49.17551 49.07044 50.55263
+##  [273] 49.95482 49.76415 49.70750 49.75889 50.16647 50.32368 48.83233 50.54591
+##  [281] 49.44265 47.48705 51.00880 49.70022 49.35815 48.30201 50.09838 50.14348
+##  [289] 49.10916 49.50719 49.52292 48.67369 50.23094 49.39908 50.68138 50.52659
+##  [297] 48.90722 50.67081 49.05091 49.90685 51.16953 50.79225 48.97827 50.16632
+##  [305] 51.15441 50.58376 49.92904 50.08844 50.22781 50.38397 49.11675 49.14000
+##  [313] 50.85106 49.39127 49.79807 50.29288 49.82048 49.15811 51.03394 48.67706
+##  [321] 48.74361 50.72856 50.75192 51.11827 51.07993 49.35576 48.70792 51.09522
+##  [329] 52.09089 49.94871 51.00107 51.94559 50.84481 51.90151 52.10388 50.74202
+##  [337] 47.63724 48.35157 50.32241 50.12976 50.98985 48.29095 50.43674 51.50107
+##  [345] 50.23028 50.75528 50.28020 49.08965 51.14251 50.79956 50.42487 50.35504
+##  [353] 50.62816 49.82433 52.64942 50.41291 50.62012 49.02232 49.98681 50.44455
+##  [361] 48.68562 49.84686 49.46954 50.68326 48.45144 49.55357 51.78074 49.47161
+##  [369] 51.57379 49.28963 49.59468 50.24525 48.35471 50.31182 49.14963 47.53781
+##  [377] 50.12088 51.76160 49.87831 49.92270 50.16653 49.67948 47.61876 50.25501
+##  [385] 50.42224 50.12851 48.67579 51.62127 50.39845 50.38585 51.08391 49.99862
+##  [393] 51.33605 48.06798 49.95371 49.36933 50.32575 49.77908 51.16192 48.36233
+##  [401] 48.63110 51.57415 50.73704 50.24582 50.28790 49.23306 49.17491 49.99873
+##  [409] 51.75197 49.21933 51.23966 50.46094 50.97762 48.83994 51.52187 49.73655
+##  [417] 49.01471 50.52049 49.78995 50.39016 50.25609 49.01186 52.00435 49.07458
+##  [425] 50.02406 51.41834 50.99052 50.63144 49.80627 50.97738 50.96399 52.18479
+##  [433] 51.40081 48.77043 51.74721 49.62386 49.49494 49.09165 52.63926 51.32565
+##  [441] 51.07263 50.96741 50.43812 51.13443 49.72956 49.28521 50.32186 51.29174
+##  [449] 47.92083 48.92843 49.09135 51.73562 50.52491 50.16556 48.88811 48.89898
+##  [457] 48.71741 50.38696 50.60510 50.28922 49.16613 51.02214 48.62059 50.41064
+##  [465] 49.02084 51.72976 50.85841 50.02835 48.91429 51.51431 49.51554 50.27120
+##  [473] 50.99197 51.25181 51.03353 49.43164 48.96110 49.46082 48.09395 49.63585
+##  [481] 51.18206 49.10043 50.74827 49.59883 49.35046 49.72883 51.87951 51.23296
+##  [489] 50.82243 48.14167 50.00700 49.26040 49.29598 49.60419 52.03011 50.33497
+##  [497] 48.40667 50.59729 49.01434 51.48979 49.83947 50.81103 50.14005 47.86599
+##  [505] 51.36523 49.71639 49.28656 50.19999 51.28446 50.21187 50.84202 49.82549
+##  [513] 51.30280 48.12047 50.62833 49.73054 49.25088 49.96826 49.97365 49.27007
+##  [521] 49.06740 49.47998 51.03217 49.44591 49.88237 50.02002 50.35760 50.18641
+##  [529] 49.46308 50.10985 47.98480 49.57189 47.56999 49.92718 49.31801 48.00484
+##  [537] 50.92451 49.16288 52.46524 49.93083 51.61980 49.77001 51.29771 51.01840
+##  [545] 50.04501 49.42416 48.77015 51.25116 46.82281 51.61457 49.73424 49.74423
+##  [553] 49.65605 50.62882 51.28602 49.59846 50.33425 49.74352 49.41960 48.66126
+##  [561] 49.08596 50.63307 51.12386 47.99293 49.92771 48.80901 49.46500 50.33457
+##  [569] 48.93154 48.47430 48.64964 52.24883 49.23135 48.51486 48.50354 50.30147
+##  [577] 50.57049 48.83826 48.13058 49.64298 51.88135 50.88678 50.33641 49.00620
+##  [585] 51.88477 47.46806 49.63256 51.82026 49.73100 49.31351 49.28226 49.87624
+##  [593] 48.50608 48.71087 51.14879 48.78685 48.09340 49.33300 51.35712 50.55559
+##  [601] 51.02023 50.75795 51.70137 48.05718 50.05978 50.34139 47.50927 50.31608
+##  [609] 50.43518 51.33672 48.42901 48.56501 49.26789 50.83661 49.87043 49.51727
+##  [617] 50.67064 49.47985 49.45625 49.12335 51.49891 51.94293 50.33902 50.45329
+##  [625] 50.54811 50.06662 50.67504 50.44029 50.20115 50.08063 50.99122 48.65988
+##  [633] 49.52170 50.55094 50.53074 48.47581 49.57012 49.89792 49.40006 50.12382
+##  [641] 50.18802 50.84419 50.92933 49.68971 51.71979 50.00342 48.32839 49.33887
+##  [649] 50.15283 48.80678 49.81215 50.02530 51.20214 50.28211 50.41358 49.94999
+##  [657] 49.24842 50.00476 51.72704 50.69393 50.73419 49.44758 51.54290 48.09384
+##  [665] 49.74921 51.88382 49.09823 50.28443 49.35331 48.85364 49.58144 51.62011
+##  [673] 50.93571 49.92164 48.47941 48.11764 50.15658 49.45635 49.91202 48.43572
+##  [681] 49.84943 50.53615 50.46799 50.39442 50.47509 49.91313 50.50484 51.00293
+##  [689] 50.81304 50.50417 49.05010 51.07348 49.85927 49.90268 49.04212 50.05001
+##  [697] 49.93837 49.67711 49.26103 49.38698 49.79903 48.27122 51.41470 49.63226
+##  [705] 50.80481 50.55465 49.58633 49.96705 51.31312 49.64878 50.22301 50.54322
+##  [713] 48.36586 48.69871 50.33730 50.97533 50.40778 50.31641 50.13056 50.68578
+##  [721] 48.95634 49.75250 49.95247 49.17478 50.79733 52.19146 50.41701 49.67790
+##  [729] 49.46269 51.03448 47.95875 48.81002 49.93303 52.90781 50.71971 50.24939
+##  [737] 51.25528 49.11371 51.07307 49.99938 49.10165 48.73825 49.22636 48.72501
+##  [745] 52.23936 50.84373 48.33583 50.96901 49.64489 51.44771 50.35827 49.91294
+##  [753] 50.19922 49.94547 50.20621 49.90194 51.42283 48.33764 50.86174 50.26472
+##  [761] 51.15197 47.53622 52.41391 50.92888 49.27701 50.88827 48.23490 51.54807
+##  [769] 49.77098 50.61671 49.20288 49.39310 50.91118 49.55047 49.56615 51.09613
+##  [777] 51.74622 48.51226 49.05420 47.62506 49.69307 50.50352 51.16986 49.33538
+##  [785] 50.35362 50.16748 50.26271 50.21209 51.62296 49.15749 49.79285 50.98926
+##  [793] 50.25721 49.81878 50.47782 50.94000 52.21314 48.57175 49.50672 49.11444
+##  [801] 48.93653 51.65355 49.39568 51.89362 48.94270 49.59450 50.06616 48.82362
+##  [809] 52.18677 50.86005 49.64230 50.35230 50.95614 50.85274 50.83820 49.63137
+##  [817] 51.03397 49.16294 51.81073 48.65157 50.27420 50.67049 50.11752 47.92515
+##  [825] 50.46618 48.83298 51.07491 49.52796 50.66533 50.32241 48.87255 50.57564
+##  [833] 49.12664 51.04389 50.54526 50.30214 51.07401 51.57572 50.44235 48.83052
+##  [841] 49.47268 50.86225 49.63158 50.72091 48.38726 49.18302 51.44858 51.49871
+##  [849] 48.58510 50.76177 50.98779 50.09401 49.87593 49.75610 49.66528 49.41224
+##  [857] 49.96280 49.05442 50.33684 50.04875 50.77283 49.83007 50.23227 49.42288
+##  [865] 49.93788 48.43910 49.87544 50.45401 50.17099 50.82378 50.72972 51.79576
+##  [873] 50.17764 50.31125 51.47658 50.42343 50.06940 50.68526 51.46547 48.93069
+##  [881] 50.89388 49.54160 49.30684 49.36285 49.46602 47.64251 49.23296 49.22221
+##  [889] 47.55794 49.63454 50.12347 50.47088 49.74852 50.55816 50.54083 51.97897
+##  [897] 48.58246 49.75616 51.80502 50.04729 48.94499 49.33552 51.21955 47.36583
+##  [905] 50.47596 49.94006 50.61253 51.63241 49.04585 50.67521 50.01055 50.60066
+##  [913] 49.76837 51.11887 50.04309 48.70230 51.69978 48.69990 49.99604 48.84342
+##  [921] 51.22808 48.77098 48.27192 50.45730 50.89651 49.33308 49.84213 49.22753
+##  [929] 50.77883 49.72243 50.35441 50.29376 49.97919 52.09244 48.19320 50.69648
+##  [937] 50.05960 49.08697 48.80238 50.68680 48.37501 52.62065 50.16215 50.69327
+##  [945] 49.86261 50.67462 50.34162 51.07721 50.44320 48.09425 49.34521 50.86046
+##  [953] 53.06404 49.24491 50.64829 51.26951 50.45393 49.41940 50.20520 49.45144
+##  [961] 47.54019 50.25579 49.84590 50.95357 49.44987 48.83494 50.85963 51.99508
+##  [969] 49.26440 50.02038 49.92170 49.89499 48.95318 50.33990 49.77602 51.53162
+##  [977] 48.39743 49.54507 48.85647 49.56293 48.35872 49.67648 49.01756 49.27792
+##  [985] 51.51339 49.84341 49.15909 49.40237 49.11957 49.76544 50.02106 49.31977
+##  [993] 49.07772 48.59432 50.99453 48.95550 49.93272 51.52796 48.37190 49.64762</code></pre>
+<pre class="r"><code>hist(rec1, main=&quot;n=100&quot;) #main=&quot;n=100&quot;, ラベル</code></pre>
+<p><img src="rweek2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>summary(rec1)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   46.82   49.27   49.98   49.99   50.69   53.06</code></pre>
+<blockquote>
+<p>【大数の法則】
+母集団から無作為に抜き出された標本の平均値は、標本の大きさが大きいほど、母集団平均に近い値をとる。</p>
+</blockquote>
+<p>サイコロ：母集団平均3.5</p>
+<p><span
+class="math inline">\(1*1/6+2*1/6+3*1/6+4*1/6+5*1/6+6*1/6=3.5\)</span></p>
+<p>⇒大数の法則をスクリプトで確認</p>
+<pre class="r"><code>sample(1:6, 10, replace = TRUE) #サイコロを10回振る試行</code></pre>
+<pre><code>##  [1] 3 5 6 3 2 5 3 6 3 5</code></pre>
+<pre class="r"><code>mean(sample(1:6, 1000, replace = TRUE)) #サイコロを1000回振った結果の目の平均値, 3.5に近似</code></pre>
+<pre><code>## [1] 3.467</code></pre>
+<pre class="r"><code>#サイコロ10回の標本平均×1000
+S &lt;- 1000
+rec2 &lt;- numeric(S)
+for(i in 1:S){rec2[i] &lt;- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
+summary(rec2)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.800   3.100   3.500   3.485   3.800   5.200</code></pre>
+<pre class="r"><code>#サイコロ1000回の標本平均×1000
+S&lt;-1000
+rec3 &lt;- numeric(S)
+for(i in 1:S){rec3[i]&lt;-mean(sample(1:6,1000,replace=TRUE))} #サイコロ1000回の標本平均×1000
+summary(rec3)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.324   3.459   3.497   3.497   3.536   3.661</code></pre>
+<pre class="r"><code>#サイコロ10000回の標本平均×1000
+S &lt;- 1000
+rec4 &lt;- numeric(S)
+for(i in 1:S){rec4[i] &lt;- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
+summary(rec4)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.445   3.488   3.500   3.500   3.511   3.553</code></pre>
+<p><a href="https://cognicull.com/ja/kdeqdxtn">参考: 大数の法則とは -
+Cognicull</a></p>
+</div>
+<div id="分散と標準偏差" class="section level2">
+<h2>2.4.　分散と標準偏差</h2>
+<table>
+<thead>
+<tr class="header">
+<th><code>var()</code></th>
+<th>分散</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sd()</code></td>
+<td>標準偏差</td>
+</tr>
+</tbody>
+</table>
+<p>標本平均 →標本のちらばり</p>
+<ul>
+<li>分散 variance
+標本が平均値を中心にどれだけ散らばっているかを表す指標</li>
+<li>標準偏差 standard deviaton
+分散の平方根、標本が平均値を中心にどれだけ散らばっているかを表す指標（同上）
+<a href="https://cognicull.com/ja/et7cim2q">参考</a></li>
+</ul>
+<blockquote>
+<p>分散は、計算過程において２乗しているので観測データの単位と異なります。例えば観測データの単位がg（グラム）である場合、分散の単位はg2になります。そこで、分散の平方根である標準偏差を求めることによって、観測データとの単位を揃えることが出来ます。そうすることで、分散よりも扱いやすい値となります。
+<a
+href="https://ai-trend.jp/basic-study/basic/standard-deviation/">出典:
+標準偏差の意味と求め方 | AVILEN AI Trend</a></p>
+</blockquote>
+<pre class="r"><code>#母集団N(50,10^2)から大きさ1000の標本を無作為に抽出
+x &lt;- rnorm(1000, 50, 10)
+var(x) #分散</code></pre>
+<pre><code>## [1] 107.745</code></pre>
+<pre class="r"><code>sd(x) #標準偏差 #10に近似</code></pre>
+<pre><code>## [1] 10.38003</code></pre>
+<pre class="r"><code>#分散・標準偏差における大数の法則
+#n = 1000
+S&lt;-1000; n&lt;-1000
+rec&lt;-numeric(S)
+for(i in 1:S){rec[i]&lt;-sd(rnorm(n, 50, 10))}
+summary(rec) #標準偏差10に近似</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   9.140   9.845   9.998  10.000  10.160  10.614</code></pre>
+<pre class="r"><code>#n=10000
+S &lt;- 10000; n &lt;- 10000
+rec &lt;- numeric(S)
+for(i in 1:S){rec[i]&lt;-sd(rnorm(n, 50, 10))}
+summary(rec) #より10に近似＝大数の法則</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   9.732   9.951  10.000  10.000  10.047  10.309</code></pre>
+</div>
+<div id="相関係数と共分散" class="section level2">
+<h2>2.5.　相関係数と共分散</h2>
+<table>
+<thead>
+<tr class="header">
+<th><code>plot()</code></th>
+<th>散布図</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cor()</code></td>
+<td>相関係数</td>
+</tr>
+<tr class="even">
+<td><code>cov()</code></td>
+<td>共分散</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>x &lt;- rnorm(100, 50, 10)
+y &lt;- rnorm(100, 50, 10)
+plot(x, y, main = &quot;散布図(x, y)&quot;) #x,yの散布図</code></pre>
+<p><img src="rweek2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>#xと関係のあるzを追加
+z&lt;-(x+y)/2
+plot(x, z, main = &quot;散布図(x,z)&quot;) #x,zの散布図</code></pre>
+<p><img src="rweek2_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<ul>
+<li><p>共分散: 2変数の関係の強さを表す指標の一つ。</p>
+<p>〈手順〉</p>
+<ol style="list-style-type: decimal">
+<li>それぞれの変数の平均値を求める</li>
+<li>それぞれの変数の偏差（数値 － 平均値）を求める</li>
+<li>偏差の積の平均値（＝共分散）を計算する</li>
+</ol>
+<p>ただし、データの単位の影響を受けるので値の大きさで単純に比較できない（データスケールに応じて変
+化してしまい、共分散の数値だけを見て関係性を判断することは難しい）</p>
+<p>⇒ 正規化・標準化の必要＝相関係数</p></li>
+<li><p>相関係数: 2つの確率変数間の線形関係の強さをはかる指標、</p>
+<p>-1以上+1以下の値を取り、1に近づくほど正の相関、-1に近づくほど負の相関</p></li>
+</ul>
+</div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2023- Naoshi ISAKI </p>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
