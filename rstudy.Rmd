@@ -1,7 +1,7 @@
 ---
 title: "Rによる自主勉強会"
 author: "Naoshi ISAKI"
-date: '2023年10月4日-'
+date: '2023年10月6日-'
 output:
   html_document:
     toc: true

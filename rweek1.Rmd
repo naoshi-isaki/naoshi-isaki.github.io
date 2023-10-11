@@ -1,24 +1,22 @@
 ---
-title: "Rによる自主勉強会"
+title: "Week1 | Rによる自主勉強会"
 author: "伊﨑 直志"
-date: '2023年10月6日-'
+date: '2023年10月6日'
 output: 
   html_document:
     toc: true
     toc_depth: 3
     toc_float: true
 ---
-# Week1
 ## 準備
 ### Loading Packages
-
+libraryで使用する関数の読み込み
 ```{r setup, include=FALSE}
-#libraryで使用する関数の読み込み
-library(tidyverse) #特に使わない
+library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-- `tidyverse`：データ処理および可視化
+- `tidyverse`：データ処理および可視化（今回は特に使わない）
 
 ## A.3　Rの基本操作
 ### A.3.1　数式の入力
@@ -47,9 +45,9 @@ B <- c(6,7,8) #複数要素の格納, c(a,b,c...)→各要素それぞれ計算
 
 ### A.3.2　スクリプトの利用
 ### A.3.3　データの読み込み, 基礎統計の計算
-- read.csv("data.csv")
-- read.csv("[ファイルパス]/data.csv")
-- setwd("[ファイルパス]C:/Users/Naoshi/Documents/ESR/dataset") -> read.csv("data.csv")
+- read.csv("data.csv")    or
+- read.csv("[ファイルパス]/data.csv")   or
+- setwd("[ファイルパス]") %>% read.csv("data.csv")
 ```{r}
 read.csv("data.csv") #オブジェクトへの格納→Environmentにて確認
 df <- read.csv("data.csv")
@@ -70,5 +68,3 @@ mean(df$age); sd(df$age); min(df$age); max(df$age) #$: 一つの項目だけ取�
 - 右下区画のタブ>Packages>Install
 - Command: install.packages("[パッケージ名]")
 →例略
-
-# Week2
