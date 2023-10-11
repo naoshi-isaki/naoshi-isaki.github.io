@@ -64,7 +64,7 @@ head(df) #中身の確認
 mean(df$age); sd(df$age); min(df$age); max(df$age) #$: 一つの項目だけ取り出す
 ```
 
-### A.3.4 パッケージのインストール
+### A.3.4　パッケージのインストール
 - 右下区画のタブ>Packages>Install
 - Command: install.packages("[パッケージ名]")
 →例略

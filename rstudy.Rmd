@@ -1,5 +1,5 @@
 ---
-title: "Rによる自主勉強会"
+title: "Rによる自主勉強会（2023年度）"
 author: "Naoshi ISAKI"
 date: '2023年10月6日-'
 output:
