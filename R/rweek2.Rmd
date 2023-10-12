@@ -1,0 +1,420 @@
+---
+title: "Week2 | Rによる自主勉強会"
+author: "伊﨑 直志"
+date: '2023年10月13日'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+# 準備
+## Loading Packages
+
+```{r setup, , echo=TRUE, fig.height = 5, fig.width = 7, fig.align = "center", include = TRUE}
+library(tidyverse)
+library(dplyr)
+library(gridExtra)
+windowsFonts(family_sans = windowsFont("Noto Sans JP")) 
+par(family = "family_sans")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 第1章　回帰分析の目的
+
+## 1.1. 相関と因果
+
+-   相関関係 correlation：「Xが変化すればYも変化する」
+
+-   因果関係 causality：「Xを変化させればYも変化する」
+
+-   疑似相関 spurious correlation
+
+    「変数XとYに共通の第3の要因Zが存在することによってXとYに生じる見せかけの相関関係」
+
+    e.g. 個人所得の増加 →タバコへの支出増加、医療・健康への支出増加　＝タバコと健康の疑似相関
+
+> -   時間的先行性:
+>     原因となる現象が結果となる現象に時間的に先立って起きている。
+> -   共変関係（相関関係）:
+>     原因となる現象が変動すると、結果となる現象も変動する。
+> -   他条件の同一性:
+>     原因となる現象の双方に与える現象は存在しないか、その影響は統制されている。
+
+## 1.2. 回帰と予測
+
+- 一次関数 $y=a+bx$ の形で表現 →最小二乗法（least squares
+    estimation）（図1.1 →図1.6）
+
+    回帰直線、回帰式、回帰係数
+
+- 回帰式の一方の変数に代入してもう一方の変数の値を計算、予測
+
+  ある変数Xの値をもとにして、他の変数Yの値を予測　＝回帰分析
+
+    `X：説明変数`、`Y：被説明変数`
+
+    ⇒因果解釈ではなく、あくまで予測解釈！
+
+- **回帰分析 →Xが与えられた時のYの値の予測**
+
+## 1.3. 自然科学のデータと社会科学のデータ
+
+実験の難しさ（費用等コスト、倫理）
+
+⇔自然科学：変数選択の制約・影響少、実験室実験可（変数統制）　[従来的説明]
+
+→現在、社会科学における実験多数：実験経済学等 or 自然実験...（後述）
+
+------------------------------------------------------------------------
+
+# 第2章　統計の基礎知識
+
+## 2.1. 母集団と標本
+
+- （有限集団全体）母集団－（抽出）標本
+
+- （確率分布）母集団－（観測値）標本　（←本書）
+
+正規分布 normal distribution
+
+正規分布$N(平均, 分散=標準偏差^2)$
+
+正規分布（乱数）: `rnorm(個数, 平均, 標準偏差)`
+
+```{r}
+rnorm(100, 50, 10) 
+curve(dnorm(x, 50, 10), 0, 100)　#正規分布のグラフ描画
+pnorm(60, 50, 10) #大きさ１の標本の値が60より小さくなる確率
+```
+
+| 命令             | 説明                                                                    | （英略）         |
+|------------------------|------------------------|------------------------|
+| `rnorm(n, a, b)` | 平均a, 標準偏差bの正規分布乱数をn個発生させる。                         | random+norm      |
+| `dnorm(x, a, b)` | 平均a, 標準偏差bの正規分布について, 密度関数の点xにおける値を計算する。 | density+norm     |
+| `pnorm(x, a, b)` | 平均a, 標準偏差bの正規分布について, 分布関数の点xにおける値を計算する。 | probability+norm |
+
+正規分布グラフ 描画関数
+
+`curve(dnorm(x, a, b), min, max)` #curve(関数の式, 横軸の最小値, 横軸の最大値)
+
+## 2.2. 無作為抽出
+
+母集団から標本を抽出（random sampling）
+
+```{r}
+rnorm(100, 50, 10)
+Z <- rnorm(100, 50, 10)
+Z
+hist(Z) #ヒストグラム
+Z[1:10] #最初の10個のデータを抜き出し
+a <- c(5, 10, 100)
+Z[a] #5番目,10番目,100番目の位置にある数字を抜き出し
+Z[c(5, 10, 100)] #aを使わずに同上の操作
+
+#特定の意味を持つ数値を抽出
+max(Z) #最大値
+which.max(Z) #最大値の位置
+min(Z) #最小値
+which.min(Z) #最小値の位置
+mean(Z) #平均値
+summary(Z) #基本統計量を一括表示
+```
+
+```{r}
+1:10
+sample(1:10, 3) #無作為抽出、sample(範囲, 抽出個数)
+sample(Z, 5) #sample(標本, 抽出個数)
+sample(Z, 5) #sample(標本, 抽出個数)
+
+fruits <- c("ミカン", "バナナ", "リンゴ", "レモン", "モモ")
+fruits
+sample(fruits, 1) #fruitsから1個抽出
+sample(fruits, 2) #fruitsから2個抽出
+sample(fruits, 1) #fruitsから1個抽出
+sample(fruits, 1) #fruitsから1個抽出
+```
+
+コイン投げ[^1]
+
+[^1]: 筒井淳也『数字のセンスを磨く　データの読み方・活かし方』（2023年, 光文社.）の第4章を参照のこと。
+
+```{r}
+coin <- c("Head", "Tail") 
+#sample(coin, 5) #うまくいかない　∵非復元抽出になっている
+sample(coin, 5, replace = TRUE) #復元抽出, replace=TRUE
+```
+
+## 2.3. 平均と大数の法則
+
+-   ①ベクトルrecのi番目の場所rec[i]に
+-   ②母集団N(50,10\^2)から抜き出した大きさ100の標本の平均を格納する
+
+```{r}
+mean(Z) #標本平均
+mean(rnorm(100, 50, 10))
+mean(rnorm(100, 50, 10)) #Z<-rnorm(100,50,10)
+
+#より多い試行、抽出1000回、標本の大きさ100
+S <- 1000
+rec1 <- numeric(S)
+for(i in 1:S){rec1[i]<-mean(rnorm(100, 50, 10))}
+rec1
+hist(rec1, main = "n = 100") #main = "n = 100", ラベル
+summary(rec1)
+```
+
+> 【大数の法則】
+> 母集団から無作為に抜き出された標本の平均値は、標本の大きさが大きいほど、母集団平均に近い値をとる。
+
+サイコロ：母集団平均3.5
+
+$1*1/6+2*1/6+3*1/6+4*1/6+5*1/6+6*1/6=3.5$
+
+⇒大数の法則をスクリプトで確認
+
+```{r}
+sample(1:6, 10, replace = TRUE) #サイコロを10回振る試行
+mean(sample(1:6, 1000, replace = TRUE)) #サイコロを1000回振った結果の目の平均値, 3.5に近似
+
+#サイコロ10回の標本平均×1000
+S <- 1000
+rec2 <- numeric(S)
+for(i in 1:S){rec2[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
+summary(rec2)
+
+#サイコロ1000回の標本平均×1000
+S <- 1000
+rec3 <- numeric(S)
+for(i in 1:S){rec3[i]<-mean(sample(1:6, 1000,replace=TRUE))} #サイコロ1000回の標本平均×1000
+summary(rec3)
+
+#サイコロ10000回の標本平均×1000
+S <- 1000
+rec4 <- numeric(S)
+for(i in 1:S){rec4[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
+summary(rec4)
+```
+
+[参考: 大数の法則とは - Cognicull](https://cognicull.com/ja/kdeqdxtn)
+
+## 2.4. 分散と標準偏差
+
+| 命令    | 説明     |
+|---------|----------|
+| `var()` | 分散     |
+| `sd()`  | 標準偏差 |
+
+標本平均 →標本のちらばり
+
+-   分散 variance 標本が平均値を中心にどれだけ散らばっているかを表す指標
+-   標準偏差 standard deviaton
+    分散の平方根、標本が平均値を中心にどれだけ散らばっているかを表す指標（同上）
+    
+    [参考: 標準偏差とは - Cognicull](https://cognicull.com/ja/et7cim2q)
+
+> 分散は、計算過程において２乗しているので観測データの単位と異なります。例えば観測データの単位がg（グラム）である場合、分散の単位はg2になります。そこで、分散の平方根である標準偏差を求めることによって、観測データとの単位を揃えることが出来ます。そうすることで、分散よりも扱いやすい値となります。
+
+> [出典: 標準偏差の意味と求め方 \| AVILEN AI Trend](https://ai-trend.jp/basic-study/basic/standard-deviation/)
+
+```{r}
+#母集団N(50, 10^2)から大きさ1000の標本を無作為に抽出
+x <- rnorm(1000, 50, 10)
+var(x) #分散
+sd(x) #標準偏差 #10に近似
+#分散・標準偏差における大数の法則
+#n = 1000
+S <- 1000; n <- 1000
+rec <- numeric(S)
+for(i in 1:S){rec[i]<-sd(rnorm(n, 50, 10))}
+summary(rec) #標準偏差10に近似
+
+#より大きいサイズで確認
+#n = 10000
+S <- 10000; n <- 10000
+rec <- numeric(S)
+for(i in 1:S){rec[i]<-sd(rnorm(n, 50, 10))}
+summary(rec) #より10に近似＝大数の法則
+```
+
+## 2.5. 相関係数と共分散
+
+| 命令     | 説明     |
+|----------|----------|
+| `plot()` | 散布図   |
+| `cor()`  | 相関係数 |
+| `cov()`  | 共分散   |
+
+```{r}
+x <- rnorm(100, 50, 10)
+y <- rnorm(100, 50, 10)
+plot(x, y, main = "散布図(x, y)") #x,yの散布図
+
+#xと関係のあるzを追加
+z <- (x+y)/2
+plot(x, z, main = "散布図(x,z)") #x,zの散布図
+```
+
+-   共分散: 2変数の関係の強さを表す指標の一つ。
+
+    〈手順〉
+
+    1.  それぞれの変数の平均値を求める
+    2.  それぞれの変数の偏差（数値 － 平均値）を求める
+    3.  偏差の積の平均値（＝共分散）を計算する
+
+    ただし、データの単位の影響を受けるので値の大きさで単純に比較できない（データスケールに応じて変
+    化してしまい、共分散の数値だけを見て関係性を判断することは難しい）
+
+    ⇒ 正規化・標準化の必要＝相関係数
+
+-   相関係数: 2つの確率変数間の線形関係の強さをはかる指標、
+
+    -1以上+1以下の値を取り、1に近づくほど正の相関、-1に近づくほど負の相関
+
+```{r}
+x <- rnorm(100, 50, 10)
+y <- rnorm(100, 50, 10)
+plot(x, y, main = "散布図(x, y)") #x, yの散布図
+z <- (x+y)/2 #xと関係のあるzを追加
+plot(x, z, main = "散布図(x,z)") #x, zの散布図
+```
+
+### 相関係数
+
+```{r}
+cor(x, y)
+cor(x, z)
+```
+
+### 共分散
+
+```{r}
+cov(x, y)
+cov(x, z)
+```
+
+### おまけ
+
+```{r}
+x <- rnorm(100, 50, 10)
+y <- rnorm(100, 50, 10)
+par(family="family_sans")
+plot(x, y, main = "散布図(x, y)") #x, yの散布図
+z <- (x+y)/2 #xと関係のあるzを追加
+plot(x, z, main = "散布図(x, z)") #x,zの散布図
+
+library(ggplot2)
+ggplot() +
+  geom_point(aes(x, y))+
+  labs(title="散布図(x, y)") +
+  theme_grey(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot() +
+  geom_point(aes(x, z)) +
+  labs(title="散布図(x, z)") +
+  theme_grey(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot() +
+  geom_point(aes(x, y)) +
+  labs(title="散布図(x, y)") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot() +
+  geom_point(aes(x, z)) +
+  labs(title = "散布図(x, z)") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## 練習問題
+### 問題2.1.
+
+```{r}
+#2.1.1.
+runif(100)
+
+#2.1.2.
+P <- runif(100)
+mean(P) #平均
+var(P) #分散
+sd(P) #標準偏差
+
+#2.1.3.
+S <- 1000; n = 100
+recP <- numeric(S)
+for(i in 1:S){recP[i] <- mean(P)}
+summary(recP)
+
+#Re
+x <- runif(100)
+#2.1.2.
+mean(x)
+var(x)
+sd(x)
+#2.1.3.
+S <- 1000; n <- 1000
+rec <- numeric(S)
+for(i in 1:S){rec[i] <- mean(runif(n))}
+summary(rec)
+```
+
+### 問題2.2.
+
+```{r}
+x <- runif(100)
+y <- rnorm(100, 0, 1)
+z <- 1.3*x-0.7*y
+
+#2.2.1.
+plot(x, y, main = "散布図(x, y)")
+plot(x, z, main = "散布図(x, z)")
+plot(y, z, main = "散布図(y, z)")
+cor(x, y)
+cor(x, z)
+cor(y, z)
+
+#2.2.2.
+x <- runif(n)
+y <- rnorm(n, 0, 1)
+z <- 1.3*x-0.7*y
+n = 10000
+cor(x, y)
+cor(x, z)
+cor(y, z)
+par(mfrow = c(1,3))
+plot(x, y, main = "散布図(x, y)")
+plot(x, z, main = "散布図(x, z)")
+plot(y, z, main = "散布図(y, z)")
+w <- cbind(x, y, z)
+cor(w)
+
+#おまけ
+library(ggplot2)
+x <- runif(100)
+y <- rnorm(100, 0, 1)
+z <- 1.3*x-0.7*y
+
+g1 <- ggplot() +
+  geom_point(aes(x, y)) +
+  labs(title = "散布図(x, y)") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+g2 <- ggplot() +
+  geom_point(aes(x, z)) +
+  labs(title = "散布図(x, z)") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+g3 <- ggplot() +
+  geom_point(aes(y, z)) +
+  labs(title = "散布図(y, z)") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+grid.arrange(g1, g2, g3, ncol = 3)
+```
