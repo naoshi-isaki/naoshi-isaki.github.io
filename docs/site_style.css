@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
 body {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;
   font-weight:400
   }
 h1 {
@@ -25,7 +25,9 @@ p {
   font-size: 14px;
   color: #221;
 }
-
+p code {
+  font-family: 'Noto Sans', sans-serif;
+}
 footer p {
   font-size: 12px;
   margin-top: 20px;

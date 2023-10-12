@@ -250,4 +250,3 @@ g3 <- ggplot() +
   theme_bw(base_family = "family_sans") +
   theme(plot.title = element_text(hjust = 0.5))
 grid.arrange(g1, g2, g3, ncol = 3)
-
