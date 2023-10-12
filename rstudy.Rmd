@@ -17,5 +17,5 @@ R（Rstudio）の基本操作、統計分析の基礎、パネルデータ分析
 - [著者サポートページ](https://www.rniyoru.com/)
 
 ## 一覧
-- [第1回（2023年10月6日）](https://naoshi-isaki.github.io/personal/rweek1.html)
-- [第2回（2023年10月??日）](https://naoshi-isaki.github.io/personal/rweek2.html)
+- [第1回（2023年10月6日）](https://naoshi-isaki.github.io/rweek1.html)
+- [第2回（2023年10月??日）](https://naoshi-isaki.github.io/rweek2.html)
