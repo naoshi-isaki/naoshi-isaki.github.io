@@ -4,31 +4,32 @@ body {
   font-weight:400
   }
 h1 {
-  font-size: 24px;
-  color: #000;
+  font-size: 22px;
+  margin-top: 45px;
+  color: #222;
 }
 h2 {
-  color: #333;
+  color: #222;
   font-size: 20px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #222;
   margin-top: 35px;
   padding-top: 20px;
 }
 h3 {
   color: #222;
   font-size: 18px;
-  margin-top: 20px;
+  margin-top: 25px;
   padding-top: 15px;
 }
 p {
-  font-size: 16px;
-  color: #222;
+  font-size: 14px;
+  color: #221;
 }
 
 footer p {
   font-size: 12px;
   margin-top: 20px;
-  border-top: 1px solid #000;
+  border-top: 1px solid #221;
 
 sup {
     font-size: 12px;
