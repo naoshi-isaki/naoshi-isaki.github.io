@@ -4,13 +4,13 @@ author: "伊﨑 直志"
 date: '2023年10月6日'
 output: 
   html_document:
-    css: "../resources/site_style.css"  # CSSファイルへの相対パス
+    css: ../resources/"site_style.css"  # CSSファイルへの相対パス
     toc: true
     toc_depth: 3
     toc_float: true
 params:
   my_param: "Some value"
-  site: "../resources/_site.yml"
+  site: ../resources/"_site.yml"
 ---
 ## 準備
 ### Loading Packages
