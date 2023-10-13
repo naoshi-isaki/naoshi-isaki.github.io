@@ -140,7 +140,7 @@ sample(fruits, 1) #fruitsから1個抽出
 
 コイン投げ[^1]
 
-[^1]: 筒井淳也『数字のセンスを磨く　データの読み方・活かし方』（2023年, 光文社.）の第4章を参照のこと。
+[^1]: 筒井淳也『数字のセンスを磨く　データの読み方・活かし方』（2023年, 光文社）の第4章を参照のこと。
 
 ```{r}
 coin <- c("Head", "Tail") 
@@ -153,22 +153,29 @@ sample(coin, 5, replace = TRUE) #復元抽出, replace=TRUE
 -   ①ベクトルrecのi番目の場所rec[i]に
 -   ②母集団N(50,10\^2)から抜き出した大きさ100の標本の平均を格納する
 
+> Rにおけるfor ループ（繰返処理）  
+  `for (アイテム in シーケンス) {アイテムを用いたオペレーションの指示}`  
+  [出典: 16 ループと反復処理・リストの操作 | 疫学のための R ハンドブック](https://epirhandbook.com/jp/iteration.html)
+
+
 ```{r}
 mean(Z) #標本平均
 mean(rnorm(100, 50, 10))
-mean(rnorm(100, 50, 10)) #Z<-rnorm(100,50,10)
+mean(rnorm(100, 50, 10)) #Z <- rnorm(100, 50, 10)
 
 #より多い試行、抽出1000回、標本の大きさ100
 S <- 1000
 rec1 <- numeric(S)
-for(i in 1:S){rec1[i]<-mean(rnorm(100, 50, 10))}
+for(i in 1:S){
+  rec1[i]<-mean(rnorm(100, 50, 10))
+}
 rec1
 hist(rec1, main = "n = 100") #main = "n = 100", ラベル
 summary(rec1)
 ```
 
-> 【大数の法則】
-> 母集団から無作為に抜き出された標本の平均値は、標本の大きさが大きいほど、母集団平均に近い値をとる。
+> 【大数の法則】  
+    母集団から無作為に抜き出された標本の平均値は、標本の大きさが大きいほど、母集団平均に近い値をとる。
 
 サイコロ：母集団平均3.5
 
@@ -183,19 +190,22 @@ mean(sample(1:6, 1000, replace = TRUE)) #サイコロを1000回振った結果�
 #サイコロ10回の標本平均×1000
 S <- 1000
 rec2 <- numeric(S)
-for(i in 1:S){rec2[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
+for(i in 1:S){
+  rec2[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
 summary(rec2)
 
 #サイコロ1000回の標本平均×1000
 S <- 1000
 rec3 <- numeric(S)
-for(i in 1:S){rec3[i]<-mean(sample(1:6, 1000,replace=TRUE))} #サイコロ1000回の標本平均×1000
+for(i in 1:S){
+  rec3[i]<-mean(sample(1:6, 1000, replace = TRUE))} #サイコロ1000回の標本平均×1000
 summary(rec3)
 
 #サイコロ10000回の標本平均×1000
 S <- 1000
 rec4 <- numeric(S)
-for(i in 1:S){rec4[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
+for(i in 1:S){
+  rec4[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
 summary(rec4)
 ```
 
@@ -216,9 +226,8 @@ summary(rec4)
     
     [参考: 標準偏差とは - Cognicull](https://cognicull.com/ja/et7cim2q)
 
-> 分散は、計算過程において２乗しているので観測データの単位と異なります。例えば観測データの単位がg（グラム）である場合、分散の単位はg2になります。そこで、分散の平方根である標準偏差を求めることによって、観測データとの単位を揃えることが出来ます。そうすることで、分散よりも扱いやすい値となります。
-
-> [出典: 標準偏差の意味と求め方 \| AVILEN AI Trend](https://ai-trend.jp/basic-study/basic/standard-deviation/)
+> 分散は、計算過程において２乗しているので観測データの単位と異なります。例えば観測データの単位がg（グラム）である場合、分散の単位はg2になります。そこで、分散の平方根である標準偏差を求めることによって、観測データとの単位を揃えることが出来ます。そうすることで、分散よりも扱いやすい値となります。  
+  [出典: 標準偏差の意味と求め方 \| AVILEN AI Trend](https://ai-trend.jp/basic-study/basic/standard-deviation/)
 
 ```{r}
 #母集団N(50, 10^2)から大きさ1000の標本を無作為に抽出
@@ -229,14 +238,16 @@ sd(x) #標準偏差 #10に近似
 #n = 1000
 S <- 1000; n <- 1000
 rec <- numeric(S)
-for(i in 1:S){rec[i]<-sd(rnorm(n, 50, 10))}
+for(i in 1:S){
+  rec[i]<-sd(rnorm(n, 50, 10))}
 summary(rec) #標準偏差10に近似
 
 #より大きいサイズで確認
 #n = 10000
 S <- 10000; n <- 10000
 rec <- numeric(S)
-for(i in 1:S){rec[i]<-sd(rnorm(n, 50, 10))}
+for(i in 1:S){
+  rec[i]<-sd(rnorm(n, 50, 10))}
 summary(rec) #より10に近似＝大数の法則
 ```
 
@@ -266,8 +277,7 @@ plot(x, z, main = "散布図(x,z)") #x,zの散布図
     2.  それぞれの変数の偏差（数値 － 平均値）を求める
     3.  偏差の積の平均値（＝共分散）を計算する
 
-    ただし、データの単位の影響を受けるので値の大きさで単純に比較できない（データスケールに応じて変
-    化してしまい、共分散の数値だけを見て関係性を判断することは難しい）
+    ただし、データの単位の影響を受けるので値の大きさで単純に比較できない（データスケールに応じて変化してしまい、共分散の数値だけを見て関係性を判断することは難しい）
 
     ⇒ 正規化・標準化の必要＝相関係数
 
@@ -349,7 +359,8 @@ sd(P) #標準偏差
 #2.1.3.
 S <- 1000; n = 100
 recP <- numeric(S)
-for(i in 1:S){recP[i] <- mean(P)}
+for(i in 1:S){
+  recP[i] <- mean(P)}
 summary(recP)
 
 #Re
@@ -361,7 +372,8 @@ sd(x)
 #2.1.3.
 S <- 1000; n <- 1000
 rec <- numeric(S)
-for(i in 1:S){rec[i] <- mean(runif(n))}
+for(i in 1:S){
+  rec[i] <- mean(runif(n))}
 summary(rec)
 ```
 
