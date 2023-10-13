@@ -3,7 +3,7 @@ library(tidyverse)
 library(dplyr)
 library(gridExtra)
 windowsFonts(family_sans = windowsFont("Noto Sans JP")) 
-par(family="family_sans")
+par(family = "family_sans")
 knitr::opts_chunk$set(echo = TRUE)
 
 
@@ -55,12 +55,14 @@ sample(coin, 5, replace = TRUE) #復元抽出, replace=TRUE
 ## ---------------------------------------------------------------------
 mean(Z) #標本平均
 mean(rnorm(100, 50, 10))
-mean(rnorm(100, 50, 10)) #Z<-rnorm(100,50,10)
+mean(rnorm(100, 50, 10)) #Z <- rnorm(100, 50, 10)
 
 #より多い試行、抽出1000回、標本の大きさ100
 S <- 1000
 rec1 <- numeric(S)
-for(i in 1:S){rec1[i]<-mean(rnorm(100, 50, 10))}
+for(i in 1:S){
+  rec1[i]<-mean(rnorm(100, 50, 10))
+}
 rec1
 hist(rec1, main = "n = 100") #main = "n = 100", ラベル
 summary(rec1)
@@ -73,19 +75,22 @@ mean(sample(1:6, 1000, replace = TRUE)) #サイコロを1000回振った結果�
 #サイコロ10回の標本平均×1000
 S <- 1000
 rec2 <- numeric(S)
-for(i in 1:S){rec2[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
+for(i in 1:S){
+  rec2[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
 summary(rec2)
 
 #サイコロ1000回の標本平均×1000
 S <- 1000
 rec3 <- numeric(S)
-for(i in 1:S){rec3[i]<-mean(sample(1:6, 1000,replace=TRUE))} #サイコロ1000回の標本平均×1000
+for(i in 1:S){
+  rec3[i]<-mean(sample(1:6, 1000, replace = TRUE))} #サイコロ1000回の標本平均×1000
 summary(rec3)
 
 #サイコロ10000回の標本平均×1000
 S <- 1000
 rec4 <- numeric(S)
-for(i in 1:S){rec4[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
+for(i in 1:S){
+  rec4[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
 summary(rec4)
 
 
@@ -98,14 +103,16 @@ sd(x) #標準偏差 #10に近似
 #n = 1000
 S <- 1000; n <- 1000
 rec <- numeric(S)
-for(i in 1:S){rec[i]<-sd(rnorm(n, 50, 10))}
+for(i in 1:S){
+  rec[i]<-sd(rnorm(n, 50, 10))}
 summary(rec) #標準偏差10に近似
 
 #より大きいサイズで確認
 #n = 10000
 S <- 10000; n <- 10000
 rec <- numeric(S)
-for(i in 1:S){rec[i]<-sd(rnorm(n, 50, 10))}
+for(i in 1:S){
+  rec[i]<-sd(rnorm(n, 50, 10))}
 summary(rec) #より10に近似＝大数の法則
 
 
@@ -184,7 +191,8 @@ sd(P) #標準偏差
 #2.1.3.
 S <- 1000; n = 100
 recP <- numeric(S)
-for(i in 1:S){recP[i] <- mean(P)}
+for(i in 1:S){
+  recP[i] <- mean(P)}
 summary(recP)
 
 #Re
@@ -196,7 +204,8 @@ sd(x)
 #2.1.3.
 S <- 1000; n <- 1000
 rec <- numeric(S)
-for(i in 1:S){rec[i] <- mean(runif(n))}
+for(i in 1:S){
+  rec[i] <- mean(runif(n))}
 summary(rec)
 
 
@@ -250,3 +259,4 @@ g3 <- ggplot() +
   theme_bw(base_family = "family_sans") +
   theme(plot.title = element_text(hjust = 0.5))
 grid.arrange(g1, g2, g3, ncol = 3)
+

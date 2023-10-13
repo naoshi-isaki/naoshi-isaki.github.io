@@ -172,6 +172,14 @@ for(i in 1:S){
 rec1
 hist(rec1, main = "n = 100") #main = "n = 100", ラベル
 summary(rec1)
+
+rec2 <- numeric(S)
+for(i in 1:S){
+  rec2[i] <- mean(rnorm(10000, 50, 10))
+}
+rec2
+hist(rec2, main = "n = 10000") #main = "n = 100", ラベル
+summary(rec2)
 ```
 
 > 【大数の法則】  
