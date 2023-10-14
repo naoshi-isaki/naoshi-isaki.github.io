@@ -167,7 +167,7 @@ mean(rnorm(100, 50, 10)) #Z <- rnorm(100, 50, 10)
 S <- 1000
 rec1 <- numeric(S)
 for(i in 1:S){
-  rec1[i]<-mean(rnorm(100, 50, 10))
+  rec1[i] <- mean(rnorm(100, 50, 10))
 }
 rec1
 hist(rec1, main = "n = 100") #main = "n = 100", ラベル
@@ -178,7 +178,7 @@ for(i in 1:S){
   rec2[i] <- mean(rnorm(10000, 50, 10))
 }
 rec2
-hist(rec2, main = "n = 10000") #main = "n = 100", ラベル
+hist(rec2, main = "n = 10000") #main = "n = 10000", ラベル
 summary(rec2)
 ```
 
@@ -197,24 +197,24 @@ mean(sample(1:6, 1000, replace = TRUE)) #サイコロを1000回振った結果�
 
 #サイコロ10回の標本平均×1000
 S <- 1000
-rec2 <- numeric(S)
+rec3 <- numeric(S)
 for(i in 1:S){
-  rec2[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
-summary(rec2)
+  rec3[i] <- mean(sample(1:6, 10, replace = TRUE))} #サイコロ10回の標本平均×1000
+summary(rec3)
 
 #サイコロ1000回の標本平均×1000
 S <- 1000
-rec3 <- numeric(S)
+rec4 <- numeric(S)
 for(i in 1:S){
-  rec3[i]<-mean(sample(1:6, 1000, replace = TRUE))} #サイコロ1000回の標本平均×1000
-summary(rec3)
+  rec4[i]<-mean(sample(1:6, 1000, replace = TRUE))} #サイコロ1000回の標本平均×1000
+summary(rec4)
 
 #サイコロ10000回の標本平均×1000
 S <- 1000
-rec4 <- numeric(S)
+rec5 <- numeric(S)
 for(i in 1:S){
-  rec4[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
-summary(rec4)
+  rec5[i] <- mean(sample(1:6, 10000, replace = TRUE))} #サイコロ1000回の標本平均×10000
+summary(rec5)
 ```
 
 [参考: 大数の法則とは - Cognicull](https://cognicull.com/ja/kdeqdxtn)
@@ -298,7 +298,7 @@ x <- rnorm(100, 50, 10)
 y <- rnorm(100, 50, 10)
 plot(x, y, main = "散布図(x, y)") #x, yの散布図
 z <- (x+y)/2 #xと関係のあるzを追加
-plot(x, z, main = "散布図(x,z)") #x, zの散布図
+plot(x, z, main = "散布図(x, z)") #x, zの散布図
 ```
 
 ### 相関係数
