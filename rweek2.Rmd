@@ -7,9 +7,6 @@ output:
     toc: true
     toc_depth: 3
     toc_float: true
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 # 準備
 ## Loading Packages
@@ -438,3 +435,5 @@ g3 <- ggplot() +
   theme(plot.title = element_text(hjust = 0.5))
 grid.arrange(g1, g2, g3, ncol = 3)
 ```
+
+[Back to Index](./rstudy.html)
