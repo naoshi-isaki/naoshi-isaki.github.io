@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="伊﨑 直志" />
+
+
+<title>Week3 | Rによる自主勉強会</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="site_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Naoshi <strong>ISAKI</strong></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="univ.html">Univ.</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="js_test.html">jsのテスト</a>
+</li>
+<li>
+  <a href="html_gene.html">Rでhtml生成</a>
+</li>
+<li>
+  <a href="id_class_check.html">タグチェック用</a>
+</li>
+<li>
+  <a href="grid_test.html">gridレイアウト用</a>
+</li>
+<li>
+  <a href="css_test.html">cssチェック用</a>
+</li>
+<li>
+  <a href="rstudy.html">R勉強会</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week3 | Rによる自主勉強会</h1>
+<h4 class="author">伊﨑 直志</h4>
+<h4 class="date">2023年10月27日</h4>
+
+</div>
+
+
+<div id="準備" class="section level1">
+<h1>準備</h1>
+<div id="loading-packages" class="section level2">
+<h2>Loading Packages</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Warning: パッケージ &#39;tidyverse&#39; はバージョン 4.1.3 の R の下で造られました</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.5      v purrr   0.3.4 
+## v tibble  3.1.8      v dplyr   1.0.10
+## v tidyr   1.2.0      v stringr 1.4.0 
+## v readr   2.1.2      v forcats 0.5.1</code></pre>
+<pre><code>## Warning: パッケージ &#39;ggplot2&#39; はバージョン 4.1.2 の R の下で造られました</code></pre>
+<pre><code>## Warning: パッケージ &#39;tidyr&#39; はバージョン 4.1.3 の R の下で造られました</code></pre>
+<pre><code>## Warning: パッケージ &#39;readr&#39; はバージョン 4.1.3 の R の下で造られました</code></pre>
+<pre><code>## Warning: パッケージ &#39;dplyr&#39; はバージョン 4.1.3 の R の下で造られました</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(dplyr)
+library(gridExtra)</code></pre>
+<pre><code>## 
+##  次のパッケージを付け加えます: &#39;gridExtra&#39; 
+## 
+##  以下のオブジェクトは &#39;package:dplyr&#39; からマスクされています: 
+## 
+##      combine</code></pre>
+<pre class="r"><code>windowsFonts(family_sans = windowsFont(&quot;Noto Sans JP&quot;)) 
+par(family = &quot;family_sans&quot;)
+knitr::opts_chunk$set(echo = TRUE)</code></pre>
+</div>
+</div>
+<div id="第3章-確率論の基礎" class="section level1">
+<h1>第3章　確率論の基礎</h1>
+<div id="事象と確率" class="section level2">
+<h2>3.1. 事象と確率</h2>
+<div id="試行と事象" class="section level3">
+<h3>3.1.1. 試行と事象</h3>
+<pre class="r"><code>#コイン投げ
+coin &lt;- c(&quot;Head&quot;,&quot;Tail&quot;)
+sample(coin, 100, replace = TRUE) #sample(標本/範囲, 抽出個数) #, replace = TRUE 復元抽出</code></pre>
+<pre><code>##   [1] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot;
+##  [11] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [21] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [31] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [41] &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [51] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot;
+##  [61] &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [71] &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [81] &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [91] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;</code></pre>
+</div>
+<div id="コイン投げのシミュレーション" class="section level3">
+<h3>3.1.2. コイン投げのシミュレーション</h3>
+<pre class="r"><code>#コイン投げのシミュレーション
+#P(A)=100!/50!50!=1/2^100
+factorial(100)/factorial(50)^2/2^100 #factorial(), 階乗</code></pre>
+<pre><code>## [1] 0.07958924</code></pre>
+<pre class="r"><code>#Rを用いて確認
+coin &lt;- c(1, 0) #1 = &quot;Head&quot;, 0 = &quot;Tail&quot;
+z &lt;- sample(coin, 100, replace = TRUE) #コイン投げ100回
+sum(z) #コイン投げ100回で表が出た回数</code></pre>
+<pre><code>## [1] 55</code></pre>
+<pre class="r"><code>#繰り返し, forループ
+S &lt;- 100000 #コイン投げ100回×100000
+rec &lt;- numeric(S) #rec&lt;-試行結果の記録
+coin &lt;- c(1, 0) #コイン表(=1),裏(=0)
+for(i in 1:S){ #forループ
+  z &lt;- sample(coin, 100, replace = TRUE) 
+  rec[i]&lt;-sum(z)
+}
+hist(rec, main = &quot;コイン投げ100回(表)&quot;, xlab = &quot;表の出た回数&quot;)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>summary(rec)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   30.00   47.00   50.00   50.01   53.00   75.00</code></pre>
+<pre class="r"><code>#おまけ
+library(ggplot2)
+REC &lt;- as.data.frame(rec)
+ggplot(REC, aes(rec)) +
+  geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>hist(rec, main = &quot;コイン投げ100回(表)&quot;, xlab = &quot;表の出た回数&quot;)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(REC,aes(rec)) +
+  geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(REC,aes(rec)) +
+  geom_histogram(binwidth = 2)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
+</div>
+<div id="論理演算によるカウントの方法" class="section level3">
+<h3>3.1.3. 論理演算によるカウントの方法</h3>
+<pre class="r"><code>(2&gt;1) #2は1よりも大きい&lt;-真</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>(2&gt;1000) #2は1000よりも大きい&lt;-偽</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>(200==100*2) #&quot;=&quot;ではなく&quot;==&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>TRUE + TRUE #TRUE=1, FALSE=0</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>TRUE + FALSE #TRUE=1,FALSE=0</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>count &lt;- (rec==50) #ちょうど50回表が出た
+sum(count)</code></pre>
+<pre><code>## [1] 7947</code></pre>
+<pre class="r"><code>mean(count) #相対頻度</code></pre>
+<pre><code>## [1] 0.07947</code></pre>
+<pre class="r"><code>#理論値とおよそ同じ</code></pre>
+</div>
+<div id="スクリプトまとめ" class="section level3">
+<h3>3.1.5. スクリプトまとめ</h3>
+<p>（略）</p>
+</div>
+</div>
+<div id="確率変数と独立性" class="section level2">
+<h2>3.2. 確率変数と独立性</h2>
+<div id="事象の独立性" class="section level3">
+<h3>3.2.1. 事象の独立性</h3>
+<p>事象の独立性：事象A,
+Bが独立であることは、P(A⋀B)=P(A)*P(B)が成り立つことをいう。</p>
+</div>
+<div id="確率変数の独立性" class="section level3">
+<h3>3.2.2. 確率変数の独立性</h3>
+<p>確率変数 random variable：何らかの試行によって値が確定するような変数
+離散確率変数, 連続確率変数 確率の独立性</p>
+</div>
+<div id="独立ではない例" class="section level3">
+<h3>3.2.3. 独立ではない例</h3>
+<pre class="r"><code>#独立性の確認用スクリプト
+S &lt;- 100000 #シミュレーション回数
+X &lt;- rnorm(S, 50, 10)   #Xを抽出
+Y &lt;- rnorm(S, 50, 10)   #Yを抽出
+Z &lt;- X+Y #Zを構成
+#P(X&gt;70)*P(Z&gt;100)
+mean((X&gt;70))*mean((Z&gt;100))  </code></pre>
+<pre><code>## [1] 0.01162055</code></pre>
+<pre class="r"><code>#P(X&gt;70 かつ Z&gt;100)
+mean((X&gt;70)*(Z&gt;100))</code></pre>
+<pre><code>## [1] 0.02293</code></pre>
+<pre class="r"><code>mean(X&gt;70)</code></pre>
+<pre><code>## [1] 0.02321</code></pre>
+</div>
+<div id="独立性と相関係数" class="section level3">
+<h3>3.2.4. 独立性と相関係数</h3>
+<pre class="r"><code>X &lt;- rnorm(100000, 50, 10); Y &lt;- rnorm(100000, 50, 10)
+cor(X, Y)</code></pre>
+<pre><code>## [1] -0.001273821</code></pre>
+<pre class="r"><code>Z &lt;- (X-50)^2/10
+cor(X, Z)</code></pre>
+<pre><code>## [1] -0.0007267975</code></pre>
+<pre class="r"><code>plot(X, Z)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>
+<div id="期待値と条件付期待値" class="section level2">
+<h2>3.3. 期待値と条件付期待値</h2>
+<div id="分布関数" class="section level3">
+<h3>3.3.1. 分布関数</h3>
+<pre class="r"><code>curve(pnorm(x, 50, 10), 0, 100)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>pnorm(60, 50, 10)-pnorm(40, 50, 10) #「Xが40より大きく60以下の値をとる」</code></pre>
+<pre><code>## [1] 0.6826895</code></pre>
+</div>
+<div id="確率密度" class="section level3">
+<h3>3.3.2. 確率密度</h3>
+<p>特定の値aをとる確率<code>P(X = a)</code></p>
+<pre class="r"><code>#Fx(a+h)-Fx(a)
+pnorm(50 + 0.1, 50, 10) - pnorm(50, 50, 10) #X = 50となる確率P(X = 50)</code></pre>
+<pre><code>## [1] 0.003989356</code></pre>
+<pre class="r"><code>#X = 50の確率0
+#確率をhで割って正規化, 表3.1
+#確率密度関数
+dnorm(50, 50, 10) #Xが正規分布N(50, 10^2)に従うとき、X = 50となる確率密度</code></pre>
+<pre><code>## [1] 0.03989423</code></pre>
+<pre class="r"><code>dnorm(80, 50, 10) #X = 80となる確率密度</code></pre>
+<pre><code>## [1] 0.0004431848</code></pre>
+<pre class="r"><code>#X = 80となる確率は、X = 50となる確率よりも小さい
+curve(dnorm(x, 50, 10), 0, 100)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="期待値分散" class="section level3">
+<h3>3.3.3. 期待値・分散</h3>
+</div>
+<div id="条件付確率密度条件付期待値" class="section level3">
+<h3>3.3.4. 条件付確率密度・条件付期待値</h3>
+</div>
+<div id="同時確率密度" class="section level3">
+<h3>3.3.5. 同時確率密度</h3>
+</div>
+<div id="共分散" class="section level3">
+<h3>3.3.6. 共分散</h3>
+</div>
+<div id="データによる条件期待値の推定" class="section level3">
+<h3>3.3.7. データによる条件期待値の推定</h3>
+<pre class="r"><code>malesdata &lt;- read.csv(&quot;wage.csv&quot;)
+head(malesdata)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">educ</th>
+<th align="right">exper</th>
+<th align="right">wage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">16</td>
+<td align="right">548</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">9</td>
+<td align="right">481</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">16</td>
+<td align="right">721</td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="right">10</td>
+<td align="right">250</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">16</td>
+<td align="right">729</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">8</td>
+<td align="right">500</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>summary(malesdata)</code></pre>
+<pre><code>##       educ           exper             wage       
+##  Min.   : 1.00   Min.   : 0.000   Min.   : 100.0  
+##  1st Qu.:12.00   1st Qu.: 6.000   1st Qu.: 394.2  
+##  Median :13.00   Median : 8.000   Median : 537.5  
+##  Mean   :13.26   Mean   : 8.856   Mean   : 577.3  
+##  3rd Qu.:16.00   3rd Qu.:11.000   3rd Qu.: 708.8  
+##  Max.   :18.00   Max.   :23.000   Max.   :2404.0</code></pre>
+<pre class="r"><code>plot(malesdata)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>sch12 &lt;- malesdata[malesdata$school==12, ] #高校卒業者の抜き出し
+malesdata$school</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>malesdata$exper</code></pre>
+<pre><code>##    [1] 16  9 16 10 16  8  9  9 10 11 13  8  7 13  9  4 16  9 10 14  8 10 11 10
+##   [25] 14 10  8  8  7  9  7  7  2 10 11  8 15 10 15  7 16 11 11 17  6  2  6  6
+##   [49]  5  7  8 14  8  9  9  6  8 10 13 16  6  9 12  6  8  0 12  8  7  7 17  8
+##   [73]  7  3  6  4  6  9  6  6  8 14  7  7 10  1  3  4  6  7 10  7  5 13  7  2
+##   [97]  8  4  4 12  4  8  7 11  9 12 10 12  5 15  8  4  5  6  8  8  7  6  9  6
+##  [121]  8  6 16 15  8  5 14  3  6  7  8 11 10  9  6  3  7  9  8  7  7  8 12 15
+##  [145]  4 16  9  7 13  4  7  8  2  7  3  2  1  4  6  5  4  7  6  6  4 13  9  9
+##  [169]  7  9  3  6  5 13 16 15  9 10 12  9  8 13  6  6  7  3  6 11 13  9 10 10
+##  [193]  3  3  8  5  3 10  9 10  5 11  6  9 10 10 14 14 10  6  6  9 16 16 16 14
+##  [217]  6  4 16  9  7 13  8  8  4  4  7  3 12 11  3  9  8 15  2  6  5  5 11  8
+##  [241]  8 16  3  3  1  1  4  3  7  6  6 15 14  6 14 15 13 15 12 18  7  7 14  8
+##  [265]  8  2 17 13 10  6  5  2 12  7  8  6 16 19 19  2 12  7 15  9 15  2  7  2
+##  [289]  2  6 11  5 17 20 13  8  8  7 11  9 10  1 14 10  5 13  4 10  7  6 19  7
+##  [313]  6 10  8  7  7  3 12  7  6  8  7  7  4  9 15  6  4  7  9 11  9  5  4 13
+##  [337]  7  6  4 11  3 10  7  9 10  9  8  4  6 11  8 10 12 16  4  9  4 11 14 14
+##  [361] 10  2  6  6  7  6 13 10  5  6  3  3 14 16 14  8 14 17 14 14  5  3  9  6
+##  [385]  0  4  6 16 14 10  6  8  9  5  4 10  4  6  4  9  5 15  6 11  2 15 13 13
+##  [409] 16  9  6  9  2 15 15  7 10  4  2  5  6  6  4  5  5 11  6 15 12  7  2  7
+##  [433]  4  7  4  8  7  5  2  1  7  3  9 10  8  8  5  5  6  7  2  4  5  2 14  8
+##  [457]  4  4 11  6  8  2 17  2  8 10 12  2 10  1  5 11  9 10 10 12 10 13 10  6
+##  [481]  7 13  8 15  4  7  8 16 13  6  7 16  7  6  5 11  6  7  5  2  5  8  9  8
+##  [505]  9 10 12  8 12  9 10  7  7  6  4  9  6  5 10  7  9  8 15 10 14  8  8 18
+##  [529]  8  9  9 10  8 11  3 11  8  7 16  9  2  3 17  6  9 16  7  7 11  9  6  3
+##  [553]  6  2  2 14 10  5 10  9 16  8 16 16 13 10  8  9  6 13  9 12  8  8  6  7
+##  [577]  6  9 10  8 15 10 11  9  2 13 10  6  4  9  8  7 11  3 15  8  4  7  4  5
+##  [601] 15 16 10 16  8  9  7  5 11 11 10 11 16  8  8 13  6  4  7 13 18 16  7  2
+##  [625] 10  9 18  7  4 10 10  4 16 15  4 13 16 16 10 12  5  6 10 10  6  3  5 16
+##  [649] 15 13  9  6  6 12  1  9  6  5 10  9  7  5  6  1  7  7 10 10  8 19 12 13
+##  [673] 11  8  5 10 10 14  6  3  2  8 13 14  3  4 11  2  3  8  6  9  1 11  8 10
+##  [697] 14  6 11  9  6  8  6 10  5  7  9  6 10  8 19 16  6  7 10  9 15  9  7  6
+##  [721]  9  6 10  7  5 11  7 12 12  6  9  8  7 10  3  5 10 19  6 10 10  6  4  9
+##  [745]  4  2  3  0  8 12  6  3  6  6 19  6  9  9  7  4  6  9  4  7  6  4  2 13
+##  [769]  9 10  7  9  5 10  8  7 20  1  6  2  6  9 11  7  6  7  3  7  9  9  6  6
+##  [793]  5 16  3 18 11  9  7  3  5  7 12 11 12 12  9 13 11  7  5 13  8  7  8  9
+##  [817]  6  7  4  1  2 11  1  4 10  6  3 10  6  6 11 10  8 10 11 14  7  6 11 11
+##  [841]  8 14  9 13 13  2 11  7  9  8 12  9  9  8 17 17  8  5  0 11 14  7 11  8
+##  [865]  6  1 14  7 13 11 11 12  7 12  9  9  5  4  9  7  9  6  7 15  7  7 10  9
+##  [889] 12  8  4  7 10 13  9  9 16 11  3  2 15 14  7  5 12 15  8  6  4  7  7  5
+##  [913]  6  6 13  7  8  7  7 20  2  6 14  8  5  7  7  4  8 15 10 13  6  2  7 11
+##  [937] 16  6  9 10  6  7 12 15  5 11  5  3 11  6  6 11  6  5  8  9  6  5  3  8
+##  [961] 10 10  8  4  2 12 15 10 10  7  4  4 12  3 11  9  6  4  9  3  6  7  7  8
+##  [985]  5 14  7 15  4  3 10 12  8  6  8 16  7  5  3  4  7 13  4 11 14  7 16  2
+## [1009]  6  7  9  3  9  6  3 10 14  6  2  7 11  7  8  6  6  6  2  4  2  6  6 16
+## [1033]  8  9 20  7  2  5  6  9  2 12 10  6 14 17 13  5  8  6  6  8 12  8 10  2
+## [1057] 16  7  7  7  2 14 11 15 10 12  3  8  6  8 14  8  8  4  0  6 15  9  9  7
+## [1081]  2  6 10  8 11  9  7 14 13  5  5 11 12 16 15  0 13  0  7  8  4  6  3  5
+## [1105] 10  9  8  6  6 12  6  8  5 14  3 15  9 14 15 15 13 10 10 13  8  7  6  6
+## [1129] 15 16  7  8  3  8 16  4  8  6 15  8  6 12 10  8  9 16  7 13  4  1  5  4
+## [1153] 13  4  7  5  4 17 10 10  9  5 10 10 10 12  2  6  5  3 13  3 14  7 12  4
+## [1177]  5  4  7 14 10 12  8  3  2  8  6  7  7 14 11 15  9  6 20 10 10 10  6 13
+## [1201]  9  5 10  3 11 15  6 12 16  9  7 11 10  7  9  5  5  8 11  3  6  7 11 13
+## [1225] 12 19 19 13 15  6 16  8  4  7  6 13 12  3  9  2  4  1 10  8  8 12  8 11
+## [1249]  9  5  6 10  8 14 10  5  9 12  2  5 14 15 12  7 16 11 11  7  8  9 14  6
+## [1273]  9  9  9  5 10 10  4  8  9 10  6  3 14 14  6  2 11 12  9  7 16  6  4 14
+## [1297] 13 16  2  6  6 12 12  5 19  5  8  9  5  1  6 13  2  5  8  6 10 15  6 10
+## [1321] 11 13  7 15  6  6 10 10 10 16  7  5 11 13  9  5  2  7  7  6  9 10  6  2
+## [1345] 13 14  7 11  4 13  5  9  9  2  7  5 14 10  8  3  2  9  8  9 19 11  6  5
+## [1369]  5 18  3 10  9  8  6  8  7 13  8  7 15 10  8  6  7  9  4  7  6 13  9 15
+## [1393]  5  6 16  8  4  6  7 11 13  6 10  8  7  8  4 10 10  8 12 14  8  8 18  4
+## [1417] 10  4  7 14 12  9  6  7 12 14 16  7 10 15  6 10  7  5 11  7  5 12  2  7
+## [1441] 10  5 15 16 11 11  4  7 12 10  7  8  8  7  3 14  7 11 10 16 14 13  8 13
+## [1465]  8 15 13  5  4  7  7 14  7  5  5 14 11  5  3 16 10  9 14  8  5  2  6 14
+## [1489] 15  9  3 14  5 11  5  7  3 16  7  8 16  6  9 12  4 19 16  6  3  6  9  6
+## [1513] 13 14  6  6  3  6 15  4  5  7  9  8  8  8 16 11 12  8  8  4  9  5  9 12
+## [1537]  5  7 13  7  7  3 16 12  9  7 12  8 12  9  5  5  7  9 18  7  6 10  5  4
+## [1561]  2 16 12 14  3  7 10  9 13 11 12  8 10 18 12 13 12 14  8 11  7  8 10  9
+## [1585] 14 12  7 14  5 17  9 16 12  8 14  5  8  6  9 11  8  5  7 10  7  3 16  6
+## [1609]  6  5  4  6  3  6  6  4  5  6  7  6  8  7 13 10 13  4  8 14  5  6  5  6
+## [1633]  5  4  8  9 10  9 21 10 14  6  8  9  8 23 10  6 15 11  2 17 13  6 14 12
+## [1657]  9  5  7  6 18  4 10  4  8 17  8 13  6  3 11  9 12 18  6  9  9  9  6 16
+## [1681] 15  3  7  8 10 11  4  5 10 15  8  4 17 10 16  5 11 14 11  8  4 10 13  4
+## [1705] 22  8  9 13 14  8 10  7 13  8 15  8  9  1  5  7  3  8 13  8 10  6  8  2
+## [1729] 13  6  4  7 12  5  6  7  2  6  3 13 12 10  8  6  3  2  5 15  9  8  7 19
+## [1753] 16  5 15  4  6 12  5  2  4  1 14  6 13  9  5 11 10  5 15  8  8  3 13  8
+## [1777] 20  9 12 10  8  3  6 18  5 16 18  5 15 12  8  6 10  6 15 16  6 10  8  6
+## [1801]  0  7 15 15 15 19 10  6  7 12  6 10 16 11 20 16  9  9  9  5  7 11 14  5
+## [1825]  7  6 16  8  8 16  3  8  8 15  6 17 10  2 12  7 10 18  7 14 13  3  3 10
+## [1849]  5  6 19  7 10 16  6 13  6  5  8  5  7  7 19 13 12 10 15  8  7 10 16  6
+## [1873] 11  5 10 12  8  8  5  6  5  6 14  7  5  5  2  4  8  5  9  4 14  7 11 15
+## [1897]  5  8  9 10 10  6  8 18 16 13  1 11 10 12 12  4 14 21 12 11  7  8  9 11
+## [1921]  7  8 10 14  9 15 11  3  5  5  7 18 15  8 14 10  6 19  5  5  7  9 10  7
+## [1945] 15 13  9  4 15  5  5  2 12 14  8 15  4  7 19  9  8 12  8 10 17 15 12 14
+## [1969] 13  4  6  9  9 13 12 10  9 13 14 18 10 11  5  6 14  6  4  6  5 10  3 20
+## [1993]  6  6 15  4  6 16  5 13 10  7  8  7 11  8  7  7 14  7  6 10  6  7  9 10
+## [2017] 14  8 14 11  8 13 12  6 12  7  6  6  4  3 14 14 21 11 10  9 15 13 16 18
+## [2041]  4  8  9  8 10  8  7  1  9  7  5 19  4  8  7  7 18 12 11  7 14 18  4  9
+## [2065] 16 19  7  3  4 16  8  6 15 17 12  6  4  9  8  6  9  9 12  8  6  4 14 15
+## [2089]  7  8  7 11  9 20  6  8  5  5 13 10  5  1 10  7  8 14  7 15  5 10 14  4
+## [2113]  2 14  8  6  5  7 15  7  4  9  9 11  7  5 10  2  7  4  8 10 11  8  6  4
+## [2137]  7 11  8  8  6  7  7  6  3 11  8 10  8  4  7 12  5  9  6  5  7 16 11  5
+## [2161]  8 13 16  5 10 11 12  8 11  6 15  6 14  9  6 16  3  7 12 11  7 11 13  7
+## [2185]  3 15  6  5  8  2  8  7  9  8 13  6  6  7  7  7  8  9  8 11 11  8 10  8
+## [2209]  1 14 11 11  8 15 20  5  5  4  3 13 10  5  5  5  5  5  8 11 11  8  6  5
+## [2233]  2  9 10 19 11 10 10  7  5 14  8  9  5  7  7 13  9  2 14  3  8  9 10 12
+## [2257] 10  6  6  8  3  4  2  6  4 11  7  7  9  4  1  4  6 15  6  6  4  6  6  7
+## [2281]  6  6  8 16  6 11 10 13 10  8  7  9  6  6  9 11 14  8 10 13 16 12 14  4
+## [2305] 15  6 16 11  8 10 13 14  7  7  3  5  6  9 14  4  5 15 12  6  2  2  8 15
+## [2329] 12 11 12 17  3  4  2 12 15 11  8  4  6  9  3 10 16  7  7 10  9  6  8  9
+## [2353]  9  7  5  3 13 11  4 16 16  9  3  7  7 11 10  5  7  3  4 15  9 13  6  9
+## [2377]  7 10  7  4 12 11  6 11 10  7  6  3 13 10  4 16  9 12  3 10  7 10 14  8
+## [2401]  4  8  4 15 12  7 18  9 10  8  4  1 17 14  7  3 10 10 15 13 13  7  7 11
+## [2425] 14  8  6  4  7 13  5  5  3  5  6  7 15  3  7  7  4  8  7 15  7  3  7  5
+## [2449]  7 11 11  9  5  8 18 13 18  2 11 15 12  0  8  8 15 11  9 10  8 10  7  4
+## [2473]  8 13  5  5 12  9 16  7  6  7 11  3  3 11  8  9  3  5  8  7 13  8 10  5
+## [2497] 10  7 10  7  7  3  9  3 10 12 10  3  6  6  9  5 10  9  6 12  9  7  4 10
+## [2521]  7 17  7  6 14  9  3 14 18  8 10 15  8  9  9 17 10  8  7  9  3  4 18 17
+## [2545] 15 10  6  9  6  6  7  6  6  8  9  8  9 19  9 11  9 11  6  9  7 11  8 11
+## [2569] 10  6 15 13  9  6 13  6  9 10  2  2 14 16 10 18 17  6  9 11 10  6 12 10
+## [2593]  8  4 17 10  9 15 16 15  6  6  9  8  9  9  3  9  8  5 12  9 12  7 14  6
+## [2617]  7 16 13  3  6  9  5  5 15 11  9 14  4  2 15 16  9 10 13  6 10  6  7 22
+## [2641]  2 11 15  5 14  6  5  2 11 16 14  9 15  4  9 15  3  7  6 14  7  3 10  8
+## [2665]  8  8  6 10  8 11  8 16 16  6  9  6  6  7  2 15  9 17 18 15 16  6  9 15
+## [2689] 19  6 13 10 18 16  8  3  8 10 10  8  7 12 14 11  8 10  8  9 20 13  7  7
+## [2713]  3 18  4  8 12 13 11  7 22  7  7  6  7 12 11 12  9 13 10  8 23  4  4  3
+## [2737] 15 13  4  8 16  3  9 10  9 12  9  9  8  8  4  7  3  7 16 12  8  9  8 10
+## [2761]  4  8  4  7  2 11  4  8  9  6  5  4 17  7 13 12  8 11  8  9 15  8 18  8
+## [2785] 11  6 17  5  8  6  8  8  6  8 12  3  6  6  9  6  9 16  9  3  7 14  6 21
+## [2809]  8  9  9 17 10 10  9 10  9 11 10 12  7 21  6 20 16 10  8  9 12  8 14 18
+## [2833] 11 12 10  6 16  8 17  8 16 15 12 13  8 10  8 18 18  5  5  7 14 10 17 12
+## [2857] 15  7  2 16 20 18  8  8 10  4  9 10 18  9 17 10 12  7 17 18 17 12  7 14
+## [2881]  7  4  7  8  6  8  8  8  3 18 13 16  9  7  3 11 13 14 15  9 22 19  9  9
+## [2905]  8  9  7 10 16 10  2  7 20 12  9  5 17 17  7  4  2  2  5  4 11  5  5  6
+## [2929] 14  7  2  3  4  3  9  6 11  8 14 11  4  3  9 14  6 12 14  9  7  8  5  4
+## [2953]  6 10 10 15  9 12 13  9 18 16 15  9  7  6 11  6 10 15  7  9  9 13 11 14
+## [2977] 11 14 12  3  8 12 12  6  8  8  3  7 15 10 21 15 11  9  7 14 14  8 11  4
+## [3001]  8  8  5  6  6  7 15  6 13  7</code></pre>
+<pre class="r"><code>mean(sch12$wage)</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<pre class="r"><code>sch16 &lt;- malesdata[malesdata$school==16, ] #学部卒業者の抜き出し
+exp(mean(sch12$wage)) #高校卒業者の平均賃金</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<pre class="r"><code>exp(mean(sch16$wage)) #学部卒業者の平均賃金</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<pre class="r"><code>#学部卒業者よりも高校卒業者の平均賃金が高くなっている
+#正しい推定
+malesdata &lt;- read.csv(&quot;wage.csv&quot;)
+sch11 &lt;- malesdata[malesdata$school==11, ] #高校未満の抜き出し
+sch12 &lt;- malesdata[malesdata$school&gt;=12, ] #高卒以上の抜き出し
+exp(mean(sch11$wage)) #高卒未満の平均賃金</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<pre class="r"><code>exp(mean(sch12$wage)) #高卒以上の平均賃金</code></pre>
+<pre><code>## [1] NaN</code></pre>
+</div>
+</div>
+<div id="中心極限定理" class="section level2">
+<h2>3.4. 中心極限定理</h2>
+<div id="中心極限定理と信頼区間" class="section level3">
+<h3>3.4.1. 中心極限定理と信頼区間</h3>
+<p>中心極限定理 -&gt; 信頼区間 ### 3.4.2.
+中心極限定理のシミュレーション</p>
+<pre class="r"><code>X &lt;- rnorm(10000, 50, 10)
+Xbar &lt;- mean(X); Sn &lt;- var(X) #標本平均、標本分散
+Zn &lt;- sqrt(10000)*(Xbar-50)/sqrt(Sn)
+
+#中心極限定理、繰り返し計算シミュレーション
+S &lt;- 10000 #シミュレーション回数
+n &lt;- 10000 #標本の大きさ
+
+Zn &lt;- numeric(S) #結果記録用のリスト
+for(i in 1:S){ #繰り返し開始
+  X &lt;- rnorm(n, 50, 10) #N(50,10)から標本抽出
+  Xbar &lt;- mean(X)
+  Sn &lt;- var(X)
+  Zn[i] &lt;- sqrt(n)*(Xbar-50)/sqrt(Sn)
+}   #繰り返し終了
+
+hist(Zn) #ヒストグラム作成</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>hist(Zn, main = &quot;CLT (Figure 3.5)&quot;) #ヒストグラム作成</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+</div>
+<div id="信頼区間のシミュレーション" class="section level3">
+<h3>3.4.3. 信頼区間のシミュレーション</h3>
+<pre class="r"><code>S &lt;- 10000
+n &lt;- 10000
+rec &lt;- numeric(S)
+for(i in 1:S){
+  X &lt;- rnorm(n, 50, 10)
+  Xbar &lt;- mean(X); Sn &lt;- var(X)
+  rec[i] &lt;- (Xbar - 1.96*sqrt(Sn/n) &lt; 50)*(50 &lt; Xbar + 1.96*sqrt(Sn/n))
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 0.9532</code></pre>
+</div>
+<div id="信頼区間の導出" class="section level3">
+<h3>3.4.4. 信頼区間の導出</h3>
+<pre class="r"><code>pnorm(50 + (1.96*10), 50, 10) - pnorm(50 - (1.96*10), 50, 10)</code></pre>
+<pre><code>## [1] 0.9500042</code></pre>
+</div>
+</div>
+</div>
+<div id="練習問題" class="section level1">
+<h1>練習問題</h1>
+<div id="問題3.1." class="section level2">
+<h2>問題3.1.</h2>
+<p>（skip）</p>
+</div>
+<div id="問題3.2." class="section level2">
+<h2>問題3.2.</h2>
+<pre class="r"><code>data &lt;- read.csv(&quot;temperature.csv&quot;)</code></pre>
+<div id="問題3.2.1." class="section level3">
+<h3>問題3.2.1.</h3>
+<pre class="r"><code>mean(data$temp) #気温平均</code></pre>
+<pre><code>## [1] 16.64065</code></pre>
+</div>
+<div id="問題3.2.2." class="section level3">
+<h3>問題3.2.2.</h3>
+<pre class="r"><code>mean(data$temp[1:100]) #気温平均（100番目まで）</code></pre>
+<pre><code>## [1] 7.204</code></pre>
+<pre class="r"><code>mean(data$temp); mean(data$temp[1:100]) #1と比較</code></pre>
+<pre><code>## [1] 16.64065</code></pre>
+<pre><code>## [1] 7.204</code></pre>
+</div>
+<div id="問題3.2.3." class="section level3">
+<h3>問題3.2.3.</h3>
+<pre class="r"><code>sample(data$temp, 100) #無作為抽出</code></pre>
+<pre><code>##   [1] 22.8 16.4 21.0  2.2 10.1  2.5 30.3  4.0 24.6 27.0 18.5  9.5 23.2 28.2 23.5
+##  [16] 19.6 19.7 15.2 14.9 21.5 19.2 22.0  1.3  2.0 10.0 20.0 20.9 16.8 17.8 16.3
+##  [31]  7.1 20.9 20.2 25.0 11.4 22.9  9.5 13.4  5.7 18.7 16.6  7.8  0.7 11.6  5.8
+##  [46] 17.8  7.7  4.1 20.3 21.1  4.3 21.6  9.7 24.4 24.1 24.9 20.2 10.9 27.6 22.4
+##  [61] 17.9  8.0 26.6 13.3 24.0 26.8 19.7 27.9 23.0 28.5 15.8  6.2  4.0  3.2 18.8
+##  [76] 18.3 24.5 27.4  5.0 11.9 24.0 23.4 26.0 20.9 23.1 23.0 18.9 17.1 13.8  7.1
+##  [91] 16.4 23.3 34.3 13.8  8.6 21.0 24.1 16.1 26.0 25.9</code></pre>
+<pre class="r"><code>mean(sample(data$temp, 100))</code></pre>
+<pre><code>## [1] 16.256</code></pre>
+<pre class="r"><code>mean(data$temp); mean(sample(data$temp, 100)) #1と比較</code></pre>
+<pre><code>## [1] 16.64065</code></pre>
+<pre><code>## [1] 17.105</code></pre>
+</div>
+<div id="問題3.2.4." class="section level3">
+<h3>問題3.2.4.</h3>
+<p>違いがなぜ生じたのか（略）</p>
+</div>
+</div>
+<div id="問題3.3." class="section level2">
+<h2>問題3.3.</h2>
+<div id="問題3.3.1." class="section level3">
+<h3>問題3.3.1.</h3>
+<pre class="r"><code>data2 &lt;- read.csv(&quot;icecream.csv&quot;, fileEncoding = &quot;utf8&quot;)
+max(data2$icecream)</code></pre>
+<pre><code>## [1] 10059</code></pre>
+<pre class="r"><code>which.max(data2$icecream)</code></pre>
+<pre><code>## [1] 17</code></pre>
+<pre class="r"><code>data2$city[which.max(data2$icecream)] #17番目は富山市</code></pre>
+<pre><code>## [1] &quot;富山市&quot;</code></pre>
+</div>
+<div id="問題3.3.2." class="section level3">
+<h3>問題3.3.2.</h3>
+<pre class="r"><code>x &lt;- data2$icecream
+y &lt;- data2$income
+plot(x, y, main = &quot;Figure 3.2.2.&quot;)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre class="r"><code>cor(x, y)</code></pre>
+<pre><code>## [1] 0.3113555</code></pre>
+</div>
+<div id="問題3.3.3." class="section level3">
+<h3>問題3.3.3.</h3>
+<pre class="r"><code>z &lt;- data2$u15
+plot(x, z, main = &quot;Figure 3.2.3.&quot;)</code></pre>
+<p><img src="rweek3_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>cor(x, z)</code></pre>
+<pre><code>## [1] -0.05910997</code></pre>
+</div>
+<div id="問題3.3.4" class="section level3">
+<h3>問題3.3.4</h3>
+<p>（略）</p>
+</div>
+</div>
+<div id="問題3.4." class="section level2">
+<h2>問題3.4.</h2>
+<div id="問題3.4.1." class="section level3">
+<h3>問題3.4.1.</h3>
+<pre class="r"><code>S &lt;- 1000
+X &lt;- rnorm(S, 50, 10)
+rec&lt;-numeric(S)
+for(i in 1:S){
+  rec[i]&lt;-(X[i]&gt;10)
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="問題3.4.2." class="section level3">
+<h3>問題3.4.2.</h3>
+<pre class="r"><code>S &lt;- 1000
+X &lt;- rnorm(S, 50, 10)
+rec &lt;- numeric(S)
+for(i in 1:S){
+  rec[i] &lt;- (-10&lt;X[i])&amp;(X[i]&lt;10)
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="問題3.4.3." class="section level3">
+<h3>問題3.4.3.</h3>
+<pre class="r"><code>S &lt;- 1000
+X &lt;- rnorm(S, 50, 10)
+Y &lt;- rnorm(S, 50, 10)
+rec &lt;- numeric(S)
+for(i in 1:S){
+  rec[i] &lt;- (X[i]&gt;Y[i]^2)
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 0</code></pre>
+</div>
+</div>
+<div id="問題3.4.10000でシミュレーション" class="section level2">
+<h2>問題3.4’.（10000でシミュレーション）</h2>
+<div id="問題3.4.1.-1" class="section level3">
+<h3>問題3.4’.1.</h3>
+<pre class="r"><code>S &lt;- 10000
+n &lt;- 10000
+X &lt;- rnorm(n, 50, 10)
+Y &lt;- rnorm(n, 50, 10)
+rec &lt;- numeric(S)
+for(i in 1:S){
+    rec[i] &lt;- (10 &lt; X[i])
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 0.9999</code></pre>
+<pre class="r"><code>#recの中身
+#X[1]
+#10 &lt; X[i]
+#rec[1] &lt;- 10 &lt; X[i]
+#rec[1]</code></pre>
+</div>
+<div id="問題3.4.2.-1" class="section level3">
+<h3>問題3.4’.2.</h3>
+<pre class="r"><code>for(i in 1:S){
+    rec[i] &lt;- (-10 &lt; X[i]) &amp; (X[i] &lt; 10)
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 1e-04</code></pre>
+</div>
+<div id="問題3.4.3.-1" class="section level3">
+<h3>問題3.4’.3.</h3>
+<pre class="r"><code>for(i in 1:S){
+    rec[i] &lt;- (X[i] &gt; Y[i]^2)
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 0</code></pre>
+</div>
+</div>
+<div id="問題3.5." class="section level2">
+<h2>問題3.5.</h2>
+<pre class="r"><code>S &lt;- 10000
+n &lt;- 10000
+rec &lt;- numeric(S)
+for(i in 1:S){
+  X &lt;- rnorm(n, 50, 10)
+  Xbar &lt;- mean(X)
+  Vn &lt;- var(X)
+  Sn &lt;- var(X)
+  rec[i] &lt;- (Xbar - 1.64*sqrt(Sn/n) &lt;50)&amp;(50 &lt; Xbar + 1.64*sqrt(Sn/n))
+}
+mean(rec)</code></pre>
+<pre><code>## [1] 0.9033</code></pre>
+</div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2023- Naoshi ISAKI </p>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
