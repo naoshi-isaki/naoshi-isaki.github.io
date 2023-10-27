@@ -1,7 +1,7 @@
 ---
 title: "Week3 | Rによる自主勉強会"
 author: "伊﨑 直志"
-date: '2023年10月20日'
+date: '2023年10月27日'
 output: 
   html_document:
     toc: true
@@ -13,27 +13,31 @@ editor_options:
 ---
 # 準備
 ## Loading Packages
-
-```{r setup, echo=TRUE, fig.height = 5, fig.width = 7, fig.align = "center", include = TRUE}
+```{r setup, echo = TRUE, fig.height = 5, fig.width = 7, fig.align = "center", include = TRUE}
 library(tidyverse)
 library(dplyr)
 library(gridExtra)
+windowsFonts(family_sans = windowsFont("Noto Sans JP")) 
 par(family = "family_sans")
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # 第3章　確率論の基礎
 ## 3.1. 事象と確率
+### 3.1.1. 試行と事象
 ```{r}
 #コイン投げ
 coin <- c("Head","Tail")
-sample(coin, 100, replace = TRUE) #sample(標本/範囲, 抽出個数) #, replace=TRUE 復元抽出
+sample(coin, 100, replace = TRUE) #sample(標本/範囲, 抽出個数) #, replace = TRUE 復元抽出
+```
 
+### 3.1.2. コイン投げのシミュレーション
+```{r}
 #コイン投げのシミュレーション
 #P(A)=100!/50!50!=1/2^100
 factorial(100)/factorial(50)^2/2^100 #factorial(), 階乗
 
 #Rを用いて確認
-coin <- c(1, 0) #1="Head", 0="Tail"
+coin <- c(1, 0) #1 = "Head", 0 = "Tail"
 z <- sample(coin, 100, replace = TRUE) #コイン投げ100回
 sum(z) #コイン投げ100回で表が出た回数
 
@@ -45,7 +49,7 @@ for(i in 1:S){ #forループ
   z <- sample(coin, 100, replace = TRUE) 
   rec[i]<-sum(z)
 }
-hist(rec, main = "コイン投げ100回(表)", family = "family_sans", xlab = "表の出た回数")
+hist(rec, main = "コイン投げ100回(表)", xlab = "表の出た回数")
 summary(rec)
 ```
 
@@ -55,14 +59,14 @@ library(ggplot2)
 REC <- as.data.frame(rec)
 ggplot(REC, aes(rec)) +
   geom_histogram()
-hist(rec, main = "コイン投げ100回(表)", family = "family_sans", xlab = "表の出た回数")
+hist(rec, main = "コイン投げ100回(表)", xlab = "表の出た回数")
 ggplot(REC,aes(rec)) +
   geom_histogram()
 ggplot(REC,aes(rec)) +
   geom_histogram(binwidth = 2)
 ```
 
-### 3.1.4. 論理関数
+### 3.1.3. 論理演算によるカウントの方法
 ```{r}
 (2>1) #2は1よりも大きい<-真
 (2>1000) #2は1000よりも大きい<-偽
@@ -75,21 +79,21 @@ mean(count) #相対頻度
 #理論値とおよそ同じ
 ```
 
-### 3.1.5 スクリプトまとめ
-略
+### 3.1.5. スクリプトまとめ
+（略）
 
-## 3.2. 
-### 3.2.1 事象の独立性
-#事象の独立性：事象A,Bが独立であることは、P(A⋀B)=P(A)*P(B)が成り立つことをいう。
+## 3.2. 確率変数と独立性
+### 3.2.1. 事象の独立性
+事象の独立性：事象A, Bが独立であることは、P(A⋀B)=P(A)*P(B)が成り立つことをいう。
 
-# 3.2.2. 確率変数の独立性
+### 3.2.2. 確率変数の独立性
 確率変数 random variable：何らかの試行によって値が確定するような変数
 離散確率変数, 連続確率変数
 確率の独立性
 
-# 3.2.3. 独立ではない例
-### 独立性の確認用スクリプト
+### 3.2.3. 独立ではない例
 ```{r}
+#独立性の確認用スクリプト
 S <- 100000	#シミュレーション回数
 X <- rnorm(S, 50, 10)	#Xを抽出
 Y <- rnorm(S, 50, 10)	#Yを抽出
@@ -101,7 +105,7 @@ mean((X>70)*(Z>100))
 mean(X>70)
 ```
 
-### 3.2.4. 
+### 3.2.4. 独立性と相関係数
 ```{r}
 X <- rnorm(100000, 50, 10); Y <- rnorm(100000, 50, 10)
 cor(X, Y)
@@ -137,23 +141,22 @@ curve(dnorm(x, 50, 10), 0, 100)
 ### 3.3.6. 共分散
 ### 3.3.7. データによる条件期待値の推定
 ```{r}
-read.csv("data_Males.csv")
-X <- read.csv("data_Males.csv")
-head(X)
-summary(X)
-plot(X)
-sch12 <- X[X$school==12, ] #高校卒業者の抜き出し
-X$school
-X$exper
+malesdata <- read.csv("wage.csv")
+head(malesdata)
+summary(malesdata)
+plot(malesdata)
+sch12 <- malesdata[malesdata$school==12, ] #高校卒業者の抜き出し
+malesdata$school
+malesdata$exper
 mean(sch12$wage)
-sch16 <- X[X$school==16, ] #学部卒業者の抜き出し
+sch16 <- malesdata[malesdata$school==16, ] #学部卒業者の抜き出し
 exp(mean(sch12$wage)) #高校卒業者の平均賃金
 exp(mean(sch16$wage)) #学部卒業者の平均賃金
 #学部卒業者よりも高校卒業者の平均賃金が高くなっている
 #正しい推定
-X <- read.csv("data_Males.csv")
-sch11 <- X[X$school==11, ] #高校未満の抜き出し
-sch12 <- X[X$school>=12, ] #高卒以上の抜き出し
+malesdata <- read.csv("wage.csv")
+sch11 <- malesdata[malesdata$school==11, ] #高校未満の抜き出し
+sch12 <- malesdata[malesdata$school>=12, ] #高卒以上の抜き出し
 exp(mean(sch11$wage)) #高卒未満の平均賃金
 exp(mean(sch12$wage)) #高卒以上の平均賃金
 ```
@@ -173,14 +176,14 @@ n <- 10000 #標本の大きさ
 
 Zn <- numeric(S) #結果記録用のリスト
 for(i in 1:S){ #繰り返し開始
-  X <- rnorm(n,50,10)	#N(50,10)から標本抽出
+  X <- rnorm(n, 50, 10)	#N(50,10)から標本抽出
   Xbar <- mean(X)
   Sn <- var(X)
   Zn[i] <- sqrt(n)*(Xbar-50)/sqrt(Sn)
 }	#繰り返し終了
 
 hist(Zn) #ヒストグラム作成
-hist(Zn, family = "family_sans", main = "CLT (Figure 3.5)") #ヒストグラム作成
+hist(Zn, main = "CLT (Figure 3.5)") #ヒストグラム作成
 ```
 
 ### 3.4.3. 信頼区間のシミュレーション
@@ -202,50 +205,64 @@ pnorm(50 + (1.96*10), 50, 10) - pnorm(50 - (1.96*10), 50, 10)
 ```
 
 # 練習問題
-## 3.1.
+## 問題3.1.
+（skip）
+
+## 問題3.2.
 ```{r}
-read.csv("data_3_1.csv")
-data <- read.csv("data_3_1.csv")
-
-#3.1.1.
+data <- read.csv("temperature.csv")
+```
+### 問題3.2.1.
+```{r}
 mean(data$temp) #気温平均
+```
 
-#3.1.2.
+### 問題3.2.2.
+```{r}
 mean(data$temp[1:100]) #気温平均（100番目まで）
 mean(data$temp); mean(data$temp[1:100]) #1と比較
+```
 
-#3.1.3.
+### 問題3.2.3.
+```{r}
 sample(data$temp, 100) #無作為抽出
 mean(sample(data$temp, 100))
 mean(data$temp); mean(sample(data$temp, 100)) #1と比較
-
-#3.1.4.
-#違いがなぜ生じたのか
 ```
 
-## 3.2. 
+### 問題3.2.4.
+違いがなぜ生じたのか（略）
+
+## 問題3.3. 
+### 問題3.3.1.
 ```{r}
-#3.2.1.
-data2 <- read.csv("data_3_2.csv")
+data2 <- read.csv("icecream.csv", fileEncoding = "utf8")
 max(data2$icecream)
 which.max(data2$icecream)
-data2 #17番目は富山市
+data2$city[which.max(data2$icecream)] #17番目は富山市
+```
 
-#3.2.2.
+### 問題3.3.2.
+```{r}
 x <- data2$icecream
 y <- data2$income
-plot(x, y, family = "family_sans", main = "Figure 3.2.2.")
+plot(x, y, main = "Figure 3.2.2.")
 cor(x, y)
+```
 
-#3.2.3
+### 問題3.3.3.
+```{r}
 z <- data2$u15
-plot(x, z, family = "family_sans", main = "Figure 3.2.3.")
+plot(x, z, main = "Figure 3.2.3.")
 cor(x, z)
+```
 
-#3.2.4
-#略
+### 問題3.3.4
+（略）
 
-#3.3.1
+## 問題3.4.
+### 問題3.4.1.
+```{r}
 S <- 1000
 X <- rnorm(S, 50, 10)
 rec<-numeric(S)
@@ -253,8 +270,10 @@ for(i in 1:S){
   rec[i]<-(X[i]>10)
 }
 mean(rec)
+```
 
-#3.3.2. 
+### 問題3.4.2. 
+```{r}
 S <- 1000
 X <- rnorm(S, 50, 10)
 rec <- numeric(S)
@@ -262,8 +281,10 @@ for(i in 1:S){
   rec[i] <- (-10<X[i])&(X[i]<10)
 }
 mean(rec)
+```
 
-#3.3.3
+### 問題3.4.3.
+```{r}
 S <- 1000
 X <- rnorm(S, 50, 10)
 Y <- rnorm(S, 50, 10)
@@ -272,17 +293,54 @@ for(i in 1:S){
   rec[i] <- (X[i]>Y[i]^2)
 }
 mean(rec)
+```
 
-#3.4.
+## 問題3.4'.（10000でシミュレーション）
+### 問題3.4'.1.
+```{r}
+S <- 10000
+n <- 10000
+X <- rnorm(n, 50, 10)
+Y <- rnorm(n, 50, 10)
+rec <- numeric(S)
+for(i in 1:S){
+    rec[i] <- (10 < X[i])
+}
+mean(rec)
+#recの中身
+#X[1]
+#10 < X[i]
+#rec[1] <- 10 < X[i]
+#rec[1]
+```
+
+### 問題3.4'.2.
+```{r}
+for(i in 1:S){
+    rec[i] <- (-10 < X[i]) & (X[i] < 10)
+}
+mean(rec)
+```
+
+### 問題3.4'.3.
+```{r}
+for(i in 1:S){
+    rec[i] <- (X[i] > Y[i]^2)
+}
+mean(rec)
+```
+
+## 問題3.5.
+```{r}
 S <- 10000
 n <- 10000
 rec <- numeric(S)
 for(i in 1:S){
   X <- rnorm(n, 50, 10)
   Xbar <- mean(X)
+  Vn <- var(X)
   Sn <- var(X)
-  rec[i] <- (Xbar-1.64*sqrt(Sn/n)<50)&(50<Xbar+1.64*sqrt(Sn/n))
+  rec[i] <- (Xbar - 1.64*sqrt(Sn/n) <50)&(50 < Xbar + 1.64*sqrt(Sn/n))
 }
 mean(rec)
 ```
-
