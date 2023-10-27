@@ -402,16 +402,16 @@ knitr::opts_chunk$set(echo = TRUE)</code></pre>
 <pre class="r"><code>#コイン投げ
 coin &lt;- c(&quot;Head&quot;,&quot;Tail&quot;)
 sample(coin, 100, replace = TRUE) #sample(標本/範囲, 抽出個数) #, replace = TRUE 復元抽出</code></pre>
-<pre><code>##   [1] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot;
-##  [11] &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot;
-##  [21] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
-##  [31] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
-##  [41] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot;
-##  [51] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot;
-##  [61] &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot;
-##  [71] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot;
-##  [81] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot;
-##  [91] &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot;</code></pre>
+<pre><code>##   [1] &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [11] &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [21] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [31] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [41] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [51] &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [61] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [71] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [81] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [91] &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;</code></pre>
 </div>
 <div id="コイン投げのシミュレーション" class="section level3">
 <h3>3.1.2. コイン投げのシミュレーション</h3>
@@ -423,7 +423,7 @@ factorial(100)/factorial(50)^2/2^100 #factorial(), 階乗</code></pre>
 coin &lt;- c(1, 0) #1 = &quot;Head&quot;, 0 = &quot;Tail&quot;
 z &lt;- sample(coin, 100, replace = TRUE) #コイン投げ100回
 sum(z) #コイン投げ100回で表が出た回数</code></pre>
-<pre><code>## [1] 50</code></pre>
+<pre><code>## [1] 57</code></pre>
 <pre class="r"><code>#繰り返し, forループ
 S &lt;- 100000 #コイン投げ100回×100000
 rec &lt;- numeric(S) #rec&lt;-試行結果の記録
@@ -436,7 +436,7 @@ hist(rec, main = &quot;コイン投げ100回(表)&quot;, xlab = &quot;表の出�
 <p><img src="rweek3_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>summary(rec)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   29.00   47.00   50.00   49.98   53.00   73.00</code></pre>
+##      30      47      50      50      53      71</code></pre>
 <pre class="r"><code>#おまけ
 library(ggplot2)
 REC &lt;- as.data.frame(rec)
@@ -468,9 +468,9 @@ ggplot(REC, aes(rec)) +
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>count &lt;- (rec==50) #ちょうど50回表が出た
 sum(count)</code></pre>
-<pre><code>## [1] 8156</code></pre>
+<pre><code>## [1] 7979</code></pre>
 <pre class="r"><code>mean(count) #相対頻度</code></pre>
-<pre><code>## [1] 0.08156</code></pre>
+<pre><code>## [1] 0.07979</code></pre>
 <pre class="r"><code>#理論値とおよそ同じ</code></pre>
 </div>
 <div id="スクリプトまとめ" class="section level3">
@@ -499,21 +499,21 @@ Y &lt;- rnorm(S, 50, 10)   #Yを抽出
 Z &lt;- X+Y #Zを構成
 #P(X&gt;70)*P(Z&gt;100)
 mean((X&gt;70))*mean((Z&gt;100))  </code></pre>
-<pre><code>## [1] 0.01124373</code></pre>
+<pre><code>## [1] 0.01166597</code></pre>
 <pre class="r"><code>#P(X&gt;70 かつ Z&gt;100)
 mean((X&gt;70)*(Z&gt;100))</code></pre>
-<pre><code>## [1] 0.02234</code></pre>
+<pre><code>## [1] 0.02313</code></pre>
 <pre class="r"><code>mean(X&gt;70)</code></pre>
-<pre><code>## [1] 0.02261</code></pre>
+<pre><code>## [1] 0.02342</code></pre>
 </div>
 <div id="独立性と相関係数" class="section level3">
 <h3>3.2.4. 独立性と相関係数</h3>
 <pre class="r"><code>X &lt;- rnorm(100000, 50, 10); Y &lt;- rnorm(100000, 50, 10)
 cor(X, Y)</code></pre>
-<pre><code>## [1] -0.0006933661</code></pre>
+<pre><code>## [1] -0.0009277699</code></pre>
 <pre class="r"><code>Z &lt;- (X-50)^2/10
 cor(X, Z)</code></pre>
-<pre><code>## [1] -0.002583553</code></pre>
+<pre><code>## [1] -0.01369238</code></pre>
 <pre class="r"><code>plot(X, Z)</code></pre>
 <p><img src="rweek3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
@@ -765,8 +765,10 @@ exp(mean(sch11$wage)) #高卒未満の平均賃金</code></pre>
 <h2>3.4. 中心極限定理</h2>
 <div id="中心極限定理と信頼区間" class="section level3">
 <h3>3.4.1. 中心極限定理と信頼区間</h3>
-<p>中心極限定理 -&gt; 信頼区間 ### 3.4.2.
-中心極限定理のシミュレーション</p>
+<p>中心極限定理 -&gt; 信頼区間</p>
+</div>
+<div id="中心極限定理のシミュレーション" class="section level3">
+<h3>3.4.2. 中心極限定理のシミュレーション</h3>
 <pre class="r"><code>X &lt;- rnorm(10000, 50, 10)
 Xbar &lt;- mean(X); Sn &lt;- var(X) #標本平均、標本分散
 Zn &lt;- sqrt(10000)*(Xbar-50)/sqrt(Sn)
@@ -799,7 +801,7 @@ for(i in 1:S){
   rec[i] &lt;- (Xbar - 1.96*sqrt(Sn/n) &lt; 50)*(50 &lt; Xbar + 1.96*sqrt(Sn/n))
 }
 mean(rec)</code></pre>
-<pre><code>## [1] 0.9511</code></pre>
+<pre><code>## [1] 0.9488</code></pre>
 </div>
 <div id="信頼区間の導出" class="section level3">
 <h3>3.4.4. 信頼区間の導出</h3>
@@ -833,18 +835,18 @@ mean(rec)</code></pre>
 <div id="問題3.2.3." class="section level3">
 <h3>問題3.2.3.</h3>
 <pre class="r"><code>sample(data$temp, 100) #無作為抽出</code></pre>
-<pre><code>##   [1] 22.3 24.3 17.7 33.0  4.1 22.9 25.0  5.7 14.2 11.4  6.5 15.1 30.2 10.5  6.2
-##  [16]  0.1  4.2 17.1 26.1  9.4 12.6  6.1 18.8 28.4 19.5 16.1 30.7 17.4 22.8 12.6
-##  [31]  4.9 22.8 30.3 23.5 10.9  7.2 22.8 13.4 21.7 24.3 24.5 25.5 20.3 21.6 21.4
-##  [46] 15.7 12.1  7.7 27.7 15.6 13.0 24.9 20.5  3.5 13.0 22.5 23.0 21.8 22.9 21.1
-##  [61] 19.9  5.8 24.1 15.3 15.4 11.0 19.5 18.6 13.6  6.7 10.5 12.1 18.7  4.5  1.2
-##  [76] 14.5 13.5 32.1  6.9  7.4 29.5  3.9 15.9 16.1 25.8  7.8 24.7  7.2 16.5 12.9
-##  [91] 24.3 28.2  7.3 17.2 30.9 29.1 21.0 11.5  6.4 25.0</code></pre>
+<pre><code>##   [1] 17.6 28.4 21.9 16.9 18.5 26.1 20.1 12.7 14.3 20.3 30.6 20.4 30.9  0.0 23.1
+##  [16] 32.6 13.8 22.8  8.5  5.2 22.0 31.0 27.0 27.0  3.5 16.7  9.6 22.2  3.3  4.2
+##  [31] 15.6 28.2 13.9 21.4 28.3 13.5 21.0  0.5  3.5 26.5 18.9 16.7  7.5 26.0  7.3
+##  [46] 28.0  4.1 14.5  4.3  8.5 25.8 22.5  8.3 23.1  4.3 22.6 20.5 16.0 24.5  2.9
+##  [61]  8.4 26.3 17.9  8.9 17.7 17.2  5.2  4.6 20.8 19.9 23.1  9.7 20.2 25.6 16.6
+##  [76] 33.9 23.7 22.4 20.3 23.2 24.8 10.8 24.4 12.6 21.9 23.9 23.8  8.7 11.1 27.4
+##  [91] 24.4 22.1 24.5  2.8  6.1 22.7  0.3  1.3 18.9 16.7</code></pre>
 <pre class="r"><code>mean(sample(data$temp, 100))</code></pre>
-<pre><code>## [1] 16.714</code></pre>
+<pre><code>## [1] 16.664</code></pre>
 <pre class="r"><code>mean(data$temp); mean(sample(data$temp, 100)) #1と比較</code></pre>
 <pre><code>## [1] 16.64065</code></pre>
-<pre><code>## [1] 15.589</code></pre>
+<pre><code>## [1] 15.379</code></pre>
 </div>
 <div id="問題3.2.4." class="section level3">
 <h3>問題3.2.4.</h3>
@@ -896,7 +898,7 @@ for(i in 1:S){
   rec[i]&lt;-(X[i]&gt;10)
 }
 mean(rec)</code></pre>
-<pre><code>## [1] 0.999</code></pre>
+<pre><code>## [1] 1</code></pre>
 </div>
 <div id="問題3.4.2." class="section level3">
 <h3>問題3.4.2.</h3>
@@ -972,7 +974,7 @@ for(i in 1:S){
   rec[i] &lt;- (Xbar - 1.64*sqrt(Sn/n) &lt;50)&amp;(50 &lt; Xbar + 1.64*sqrt(Sn/n))
 }
 mean(rec)</code></pre>
-<pre><code>## [1] 0.8986</code></pre>
+<pre><code>## [1] 0.8982</code></pre>
 </div>
 </div>
 
