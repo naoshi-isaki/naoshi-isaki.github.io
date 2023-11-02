@@ -49,21 +49,26 @@ for(i in 1:S){ #forループ
   z <- sample(coin, 100, replace = TRUE) 
   rec[i]<-sum(z)
 }
-hist(rec, main = "コイン投げ100回(表)", xlab = "表の出た回数")
+hist(rec, main = "コイン投げ100回(表)", 
+     xlab = "表の出た回数", ylab = "頻度")
 summary(rec)
 ```
 
 ```{r}
 #おまけ
-library(ggplot2)
+
 REC <- as.data.frame(rec)
 ggplot(REC, aes(rec)) +
-  geom_histogram()
-hist(rec, main = "コイン投げ100回(表)", xlab = "表の出た回数")
-ggplot(REC,aes(rec)) +
-  geom_histogram()
-ggplot(REC,aes(rec)) +
-  geom_histogram(binwidth = 2)
+  geom_histogram() +
+  labs(title = "コイン投げ100回(表)", x = "表の出た回数", y = "頻度") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+#bin幅指定
+ggplot(REC, aes(rec)) +
+  geom_histogram(binwidth = 2) +
+  labs(title = "コイン投げ100回(表)", x = "表の出た回数", y = "頻度") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ### 3.1.3. 論理演算によるカウントの方法
@@ -73,7 +78,7 @@ ggplot(REC,aes(rec)) +
 (200==100*2) #"="ではなく"=="
 TRUE + TRUE #TRUE=1, FALSE=0
 TRUE + FALSE #TRUE=1,FALSE=0
-count <- (rec==50) #ちょうど50回表が出た
+count <- (rec==50) #ちょうど50回表が出た場合
 sum(count)
 mean(count) #相対頻度
 #理論値とおよそ同じ
@@ -88,7 +93,9 @@ mean(count) #相対頻度
 
 ### 3.2.2. 確率変数の独立性
 確率変数 random variable：何らかの試行によって値が確定するような変数
+
 離散確率変数, 連続確率変数
+
 確率の独立性
 
 ### 3.2.3. 独立ではない例
@@ -146,19 +153,17 @@ head(malesdata)
 summary(malesdata)
 plot(malesdata)
 sch12 <- malesdata[malesdata$school==12, ] #高校卒業者の抜き出し
-malesdata$school
-malesdata$exper
-mean(sch12$wage)
 sch16 <- malesdata[malesdata$school==16, ] #学部卒業者の抜き出し
 exp(mean(sch12$wage)) #高校卒業者の平均賃金
 exp(mean(sch16$wage)) #学部卒業者の平均賃金
 #学部卒業者よりも高校卒業者の平均賃金が高くなっている
-#正しい推定
+
 malesdata <- read.csv("wage.csv")
-sch11 <- malesdata[malesdata$school==11, ] #高校未満の抜き出し
+sch11 <- malesdata[malesdata$school==11, ] #高卒未満の抜き出し
 sch12 <- malesdata[malesdata$school>=12, ] #高卒以上の抜き出し
 exp(mean(sch11$wage)) #高卒未満の平均賃金
 exp(mean(sch12$wage)) #高卒以上の平均賃金
+#正しい推定
 ```
 
 ## 3.4. 中心極限定理
@@ -296,7 +301,7 @@ for(i in 1:S){
 mean(rec)
 ```
 
-## 問題3.4'.（10000でシミュレーション）
+## 問題3.4'.（n = 10000で再シミュレーション）
 ### 問題3.4'.1.
 ```{r}
 S <- 10000

@@ -402,16 +402,16 @@ knitr::opts_chunk$set(echo = TRUE)</code></pre>
 <pre class="r"><code>#コイン投げ
 coin &lt;- c(&quot;Head&quot;,&quot;Tail&quot;)
 sample(coin, 100, replace = TRUE) #sample(標本/範囲, 抽出個数) #, replace = TRUE 復元抽出</code></pre>
-<pre><code>##   [1] &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot;
-##  [11] &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot;
-##  [21] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
-##  [31] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
-##  [41] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot;
-##  [51] &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot;
-##  [61] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
-##  [71] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
-##  [81] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot;
-##  [91] &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;</code></pre>
+<pre><code>##   [1] &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [11] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;
+##  [21] &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [31] &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [41] &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Head&quot;
+##  [51] &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot;
+##  [61] &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [71] &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [81] &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Tail&quot;
+##  [91] &quot;Head&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot; &quot;Head&quot; &quot;Tail&quot; &quot;Head&quot;</code></pre>
 </div>
 <div id="コイン投げのシミュレーション" class="section level3">
 <h3>3.1.2. コイン投げのシミュレーション</h3>
@@ -423,7 +423,7 @@ factorial(100)/factorial(50)^2/2^100 #factorial(), 階乗</code></pre>
 coin &lt;- c(1, 0) #1 = &quot;Head&quot;, 0 = &quot;Tail&quot;
 z &lt;- sample(coin, 100, replace = TRUE) #コイン投げ100回
 sum(z) #コイン投げ100回で表が出た回数</code></pre>
-<pre><code>## [1] 57</code></pre>
+<pre><code>## [1] 56</code></pre>
 <pre class="r"><code>#繰り返し, forループ
 S &lt;- 100000 #コイン投げ100回×100000
 rec &lt;- numeric(S) #rec&lt;-試行結果の記録
@@ -432,27 +432,29 @@ for(i in 1:S){ #forループ
   z &lt;- sample(coin, 100, replace = TRUE) 
   rec[i]&lt;-sum(z)
 }
-hist(rec, main = &quot;コイン投げ100回(表)&quot;, xlab = &quot;表の出た回数&quot;)</code></pre>
+hist(rec, main = &quot;コイン投げ100回(表)&quot;, 
+     xlab = &quot;表の出た回数&quot;, ylab = &quot;頻度&quot;)</code></pre>
 <p><img src="rweek3_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>summary(rec)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      30      47      50      50      53      71</code></pre>
+##   28.00   47.00   50.00   50.01   53.00   72.00</code></pre>
 <pre class="r"><code>#おまけ
-library(ggplot2)
+
 REC &lt;- as.data.frame(rec)
 ggplot(REC, aes(rec)) +
-  geom_histogram()</code></pre>
+  geom_histogram() +
+  labs(title = &quot;コイン投げ100回(表)&quot;, x = &quot;表の出た回数&quot;, y = &quot;頻度&quot;) +
+  theme_bw(base_family = &quot;family_sans&quot;) +
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="rweek3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r"><code>hist(rec, main = &quot;コイン投げ100回(表)&quot;, xlab = &quot;表の出た回数&quot;)</code></pre>
+<pre class="r"><code>#bin幅指定
+ggplot(REC, aes(rec)) +
+  geom_histogram(binwidth = 2) +
+  labs(title = &quot;コイン投げ100回(表)&quot;, x = &quot;表の出た回数&quot;, y = &quot;頻度&quot;) +
+  theme_bw(base_family = &quot;family_sans&quot;) +
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
 <p><img src="rweek3_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
-<pre class="r"><code>ggplot(REC,aes(rec)) +
-  geom_histogram()</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="rweek3_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
-<pre class="r"><code>ggplot(REC,aes(rec)) +
-  geom_histogram(binwidth = 2)</code></pre>
-<p><img src="rweek3_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
 </div>
 <div id="論理演算によるカウントの方法" class="section level3">
 <h3>3.1.3. 論理演算によるカウントの方法</h3>
@@ -466,11 +468,11 @@ ggplot(REC, aes(rec)) +
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>TRUE + FALSE #TRUE=1,FALSE=0</code></pre>
 <pre><code>## [1] 1</code></pre>
-<pre class="r"><code>count &lt;- (rec==50) #ちょうど50回表が出た
+<pre class="r"><code>count &lt;- (rec==50) #ちょうど50回表が出た場合
 sum(count)</code></pre>
-<pre><code>## [1] 7979</code></pre>
+<pre><code>## [1] 8072</code></pre>
 <pre class="r"><code>mean(count) #相対頻度</code></pre>
-<pre><code>## [1] 0.07979</code></pre>
+<pre><code>## [1] 0.08072</code></pre>
 <pre class="r"><code>#理論値とおよそ同じ</code></pre>
 </div>
 <div id="スクリプトまとめ" class="section level3">
@@ -487,8 +489,10 @@ Bが独立であることは、P(A⋀B)=P(A)*P(B)が成り立つことをいう�
 </div>
 <div id="確率変数の独立性" class="section level3">
 <h3>3.2.2. 確率変数の独立性</h3>
-<p>確率変数 random variable：何らかの試行によって値が確定するような変数
-離散確率変数, 連続確率変数 確率の独立性</p>
+<p>確率変数 random
+variable：何らかの試行によって値が確定するような変数</p>
+<p>離散確率変数, 連続確率変数</p>
+<p>確率の独立性</p>
 </div>
 <div id="独立ではない例" class="section level3">
 <h3>3.2.3. 独立ではない例</h3>
@@ -499,21 +503,21 @@ Y &lt;- rnorm(S, 50, 10)   #Yを抽出
 Z &lt;- X+Y #Zを構成
 #P(X&gt;70)*P(Z&gt;100)
 mean((X&gt;70))*mean((Z&gt;100))  </code></pre>
-<pre><code>## [1] 0.01166597</code></pre>
+<pre><code>## [1] 0.01132785</code></pre>
 <pre class="r"><code>#P(X&gt;70 かつ Z&gt;100)
 mean((X&gt;70)*(Z&gt;100))</code></pre>
-<pre><code>## [1] 0.02313</code></pre>
+<pre><code>## [1] 0.02235</code></pre>
 <pre class="r"><code>mean(X&gt;70)</code></pre>
-<pre><code>## [1] 0.02342</code></pre>
+<pre><code>## [1] 0.0225</code></pre>
 </div>
 <div id="独立性と相関係数" class="section level3">
 <h3>3.2.4. 独立性と相関係数</h3>
 <pre class="r"><code>X &lt;- rnorm(100000, 50, 10); Y &lt;- rnorm(100000, 50, 10)
 cor(X, Y)</code></pre>
-<pre><code>## [1] -0.0009277699</code></pre>
+<pre><code>## [1] -0.005989662</code></pre>
 <pre class="r"><code>Z &lt;- (X-50)^2/10
 cor(X, Z)</code></pre>
-<pre><code>## [1] -0.01369238</code></pre>
+<pre><code>## [1] 0.001861687</code></pre>
 <pre class="r"><code>plot(X, Z)</code></pre>
 <p><img src="rweek3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
@@ -614,151 +618,21 @@ head(malesdata)</code></pre>
 <pre class="r"><code>plot(malesdata)</code></pre>
 <p><img src="rweek3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>sch12 &lt;- malesdata[malesdata$school==12, ] #高校卒業者の抜き出し
-malesdata$school</code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>malesdata$exper</code></pre>
-<pre><code>##    [1] 16  9 16 10 16  8  9  9 10 11 13  8  7 13  9  4 16  9 10 14  8 10 11 10
-##   [25] 14 10  8  8  7  9  7  7  2 10 11  8 15 10 15  7 16 11 11 17  6  2  6  6
-##   [49]  5  7  8 14  8  9  9  6  8 10 13 16  6  9 12  6  8  0 12  8  7  7 17  8
-##   [73]  7  3  6  4  6  9  6  6  8 14  7  7 10  1  3  4  6  7 10  7  5 13  7  2
-##   [97]  8  4  4 12  4  8  7 11  9 12 10 12  5 15  8  4  5  6  8  8  7  6  9  6
-##  [121]  8  6 16 15  8  5 14  3  6  7  8 11 10  9  6  3  7  9  8  7  7  8 12 15
-##  [145]  4 16  9  7 13  4  7  8  2  7  3  2  1  4  6  5  4  7  6  6  4 13  9  9
-##  [169]  7  9  3  6  5 13 16 15  9 10 12  9  8 13  6  6  7  3  6 11 13  9 10 10
-##  [193]  3  3  8  5  3 10  9 10  5 11  6  9 10 10 14 14 10  6  6  9 16 16 16 14
-##  [217]  6  4 16  9  7 13  8  8  4  4  7  3 12 11  3  9  8 15  2  6  5  5 11  8
-##  [241]  8 16  3  3  1  1  4  3  7  6  6 15 14  6 14 15 13 15 12 18  7  7 14  8
-##  [265]  8  2 17 13 10  6  5  2 12  7  8  6 16 19 19  2 12  7 15  9 15  2  7  2
-##  [289]  2  6 11  5 17 20 13  8  8  7 11  9 10  1 14 10  5 13  4 10  7  6 19  7
-##  [313]  6 10  8  7  7  3 12  7  6  8  7  7  4  9 15  6  4  7  9 11  9  5  4 13
-##  [337]  7  6  4 11  3 10  7  9 10  9  8  4  6 11  8 10 12 16  4  9  4 11 14 14
-##  [361] 10  2  6  6  7  6 13 10  5  6  3  3 14 16 14  8 14 17 14 14  5  3  9  6
-##  [385]  0  4  6 16 14 10  6  8  9  5  4 10  4  6  4  9  5 15  6 11  2 15 13 13
-##  [409] 16  9  6  9  2 15 15  7 10  4  2  5  6  6  4  5  5 11  6 15 12  7  2  7
-##  [433]  4  7  4  8  7  5  2  1  7  3  9 10  8  8  5  5  6  7  2  4  5  2 14  8
-##  [457]  4  4 11  6  8  2 17  2  8 10 12  2 10  1  5 11  9 10 10 12 10 13 10  6
-##  [481]  7 13  8 15  4  7  8 16 13  6  7 16  7  6  5 11  6  7  5  2  5  8  9  8
-##  [505]  9 10 12  8 12  9 10  7  7  6  4  9  6  5 10  7  9  8 15 10 14  8  8 18
-##  [529]  8  9  9 10  8 11  3 11  8  7 16  9  2  3 17  6  9 16  7  7 11  9  6  3
-##  [553]  6  2  2 14 10  5 10  9 16  8 16 16 13 10  8  9  6 13  9 12  8  8  6  7
-##  [577]  6  9 10  8 15 10 11  9  2 13 10  6  4  9  8  7 11  3 15  8  4  7  4  5
-##  [601] 15 16 10 16  8  9  7  5 11 11 10 11 16  8  8 13  6  4  7 13 18 16  7  2
-##  [625] 10  9 18  7  4 10 10  4 16 15  4 13 16 16 10 12  5  6 10 10  6  3  5 16
-##  [649] 15 13  9  6  6 12  1  9  6  5 10  9  7  5  6  1  7  7 10 10  8 19 12 13
-##  [673] 11  8  5 10 10 14  6  3  2  8 13 14  3  4 11  2  3  8  6  9  1 11  8 10
-##  [697] 14  6 11  9  6  8  6 10  5  7  9  6 10  8 19 16  6  7 10  9 15  9  7  6
-##  [721]  9  6 10  7  5 11  7 12 12  6  9  8  7 10  3  5 10 19  6 10 10  6  4  9
-##  [745]  4  2  3  0  8 12  6  3  6  6 19  6  9  9  7  4  6  9  4  7  6  4  2 13
-##  [769]  9 10  7  9  5 10  8  7 20  1  6  2  6  9 11  7  6  7  3  7  9  9  6  6
-##  [793]  5 16  3 18 11  9  7  3  5  7 12 11 12 12  9 13 11  7  5 13  8  7  8  9
-##  [817]  6  7  4  1  2 11  1  4 10  6  3 10  6  6 11 10  8 10 11 14  7  6 11 11
-##  [841]  8 14  9 13 13  2 11  7  9  8 12  9  9  8 17 17  8  5  0 11 14  7 11  8
-##  [865]  6  1 14  7 13 11 11 12  7 12  9  9  5  4  9  7  9  6  7 15  7  7 10  9
-##  [889] 12  8  4  7 10 13  9  9 16 11  3  2 15 14  7  5 12 15  8  6  4  7  7  5
-##  [913]  6  6 13  7  8  7  7 20  2  6 14  8  5  7  7  4  8 15 10 13  6  2  7 11
-##  [937] 16  6  9 10  6  7 12 15  5 11  5  3 11  6  6 11  6  5  8  9  6  5  3  8
-##  [961] 10 10  8  4  2 12 15 10 10  7  4  4 12  3 11  9  6  4  9  3  6  7  7  8
-##  [985]  5 14  7 15  4  3 10 12  8  6  8 16  7  5  3  4  7 13  4 11 14  7 16  2
-## [1009]  6  7  9  3  9  6  3 10 14  6  2  7 11  7  8  6  6  6  2  4  2  6  6 16
-## [1033]  8  9 20  7  2  5  6  9  2 12 10  6 14 17 13  5  8  6  6  8 12  8 10  2
-## [1057] 16  7  7  7  2 14 11 15 10 12  3  8  6  8 14  8  8  4  0  6 15  9  9  7
-## [1081]  2  6 10  8 11  9  7 14 13  5  5 11 12 16 15  0 13  0  7  8  4  6  3  5
-## [1105] 10  9  8  6  6 12  6  8  5 14  3 15  9 14 15 15 13 10 10 13  8  7  6  6
-## [1129] 15 16  7  8  3  8 16  4  8  6 15  8  6 12 10  8  9 16  7 13  4  1  5  4
-## [1153] 13  4  7  5  4 17 10 10  9  5 10 10 10 12  2  6  5  3 13  3 14  7 12  4
-## [1177]  5  4  7 14 10 12  8  3  2  8  6  7  7 14 11 15  9  6 20 10 10 10  6 13
-## [1201]  9  5 10  3 11 15  6 12 16  9  7 11 10  7  9  5  5  8 11  3  6  7 11 13
-## [1225] 12 19 19 13 15  6 16  8  4  7  6 13 12  3  9  2  4  1 10  8  8 12  8 11
-## [1249]  9  5  6 10  8 14 10  5  9 12  2  5 14 15 12  7 16 11 11  7  8  9 14  6
-## [1273]  9  9  9  5 10 10  4  8  9 10  6  3 14 14  6  2 11 12  9  7 16  6  4 14
-## [1297] 13 16  2  6  6 12 12  5 19  5  8  9  5  1  6 13  2  5  8  6 10 15  6 10
-## [1321] 11 13  7 15  6  6 10 10 10 16  7  5 11 13  9  5  2  7  7  6  9 10  6  2
-## [1345] 13 14  7 11  4 13  5  9  9  2  7  5 14 10  8  3  2  9  8  9 19 11  6  5
-## [1369]  5 18  3 10  9  8  6  8  7 13  8  7 15 10  8  6  7  9  4  7  6 13  9 15
-## [1393]  5  6 16  8  4  6  7 11 13  6 10  8  7  8  4 10 10  8 12 14  8  8 18  4
-## [1417] 10  4  7 14 12  9  6  7 12 14 16  7 10 15  6 10  7  5 11  7  5 12  2  7
-## [1441] 10  5 15 16 11 11  4  7 12 10  7  8  8  7  3 14  7 11 10 16 14 13  8 13
-## [1465]  8 15 13  5  4  7  7 14  7  5  5 14 11  5  3 16 10  9 14  8  5  2  6 14
-## [1489] 15  9  3 14  5 11  5  7  3 16  7  8 16  6  9 12  4 19 16  6  3  6  9  6
-## [1513] 13 14  6  6  3  6 15  4  5  7  9  8  8  8 16 11 12  8  8  4  9  5  9 12
-## [1537]  5  7 13  7  7  3 16 12  9  7 12  8 12  9  5  5  7  9 18  7  6 10  5  4
-## [1561]  2 16 12 14  3  7 10  9 13 11 12  8 10 18 12 13 12 14  8 11  7  8 10  9
-## [1585] 14 12  7 14  5 17  9 16 12  8 14  5  8  6  9 11  8  5  7 10  7  3 16  6
-## [1609]  6  5  4  6  3  6  6  4  5  6  7  6  8  7 13 10 13  4  8 14  5  6  5  6
-## [1633]  5  4  8  9 10  9 21 10 14  6  8  9  8 23 10  6 15 11  2 17 13  6 14 12
-## [1657]  9  5  7  6 18  4 10  4  8 17  8 13  6  3 11  9 12 18  6  9  9  9  6 16
-## [1681] 15  3  7  8 10 11  4  5 10 15  8  4 17 10 16  5 11 14 11  8  4 10 13  4
-## [1705] 22  8  9 13 14  8 10  7 13  8 15  8  9  1  5  7  3  8 13  8 10  6  8  2
-## [1729] 13  6  4  7 12  5  6  7  2  6  3 13 12 10  8  6  3  2  5 15  9  8  7 19
-## [1753] 16  5 15  4  6 12  5  2  4  1 14  6 13  9  5 11 10  5 15  8  8  3 13  8
-## [1777] 20  9 12 10  8  3  6 18  5 16 18  5 15 12  8  6 10  6 15 16  6 10  8  6
-## [1801]  0  7 15 15 15 19 10  6  7 12  6 10 16 11 20 16  9  9  9  5  7 11 14  5
-## [1825]  7  6 16  8  8 16  3  8  8 15  6 17 10  2 12  7 10 18  7 14 13  3  3 10
-## [1849]  5  6 19  7 10 16  6 13  6  5  8  5  7  7 19 13 12 10 15  8  7 10 16  6
-## [1873] 11  5 10 12  8  8  5  6  5  6 14  7  5  5  2  4  8  5  9  4 14  7 11 15
-## [1897]  5  8  9 10 10  6  8 18 16 13  1 11 10 12 12  4 14 21 12 11  7  8  9 11
-## [1921]  7  8 10 14  9 15 11  3  5  5  7 18 15  8 14 10  6 19  5  5  7  9 10  7
-## [1945] 15 13  9  4 15  5  5  2 12 14  8 15  4  7 19  9  8 12  8 10 17 15 12 14
-## [1969] 13  4  6  9  9 13 12 10  9 13 14 18 10 11  5  6 14  6  4  6  5 10  3 20
-## [1993]  6  6 15  4  6 16  5 13 10  7  8  7 11  8  7  7 14  7  6 10  6  7  9 10
-## [2017] 14  8 14 11  8 13 12  6 12  7  6  6  4  3 14 14 21 11 10  9 15 13 16 18
-## [2041]  4  8  9  8 10  8  7  1  9  7  5 19  4  8  7  7 18 12 11  7 14 18  4  9
-## [2065] 16 19  7  3  4 16  8  6 15 17 12  6  4  9  8  6  9  9 12  8  6  4 14 15
-## [2089]  7  8  7 11  9 20  6  8  5  5 13 10  5  1 10  7  8 14  7 15  5 10 14  4
-## [2113]  2 14  8  6  5  7 15  7  4  9  9 11  7  5 10  2  7  4  8 10 11  8  6  4
-## [2137]  7 11  8  8  6  7  7  6  3 11  8 10  8  4  7 12  5  9  6  5  7 16 11  5
-## [2161]  8 13 16  5 10 11 12  8 11  6 15  6 14  9  6 16  3  7 12 11  7 11 13  7
-## [2185]  3 15  6  5  8  2  8  7  9  8 13  6  6  7  7  7  8  9  8 11 11  8 10  8
-## [2209]  1 14 11 11  8 15 20  5  5  4  3 13 10  5  5  5  5  5  8 11 11  8  6  5
-## [2233]  2  9 10 19 11 10 10  7  5 14  8  9  5  7  7 13  9  2 14  3  8  9 10 12
-## [2257] 10  6  6  8  3  4  2  6  4 11  7  7  9  4  1  4  6 15  6  6  4  6  6  7
-## [2281]  6  6  8 16  6 11 10 13 10  8  7  9  6  6  9 11 14  8 10 13 16 12 14  4
-## [2305] 15  6 16 11  8 10 13 14  7  7  3  5  6  9 14  4  5 15 12  6  2  2  8 15
-## [2329] 12 11 12 17  3  4  2 12 15 11  8  4  6  9  3 10 16  7  7 10  9  6  8  9
-## [2353]  9  7  5  3 13 11  4 16 16  9  3  7  7 11 10  5  7  3  4 15  9 13  6  9
-## [2377]  7 10  7  4 12 11  6 11 10  7  6  3 13 10  4 16  9 12  3 10  7 10 14  8
-## [2401]  4  8  4 15 12  7 18  9 10  8  4  1 17 14  7  3 10 10 15 13 13  7  7 11
-## [2425] 14  8  6  4  7 13  5  5  3  5  6  7 15  3  7  7  4  8  7 15  7  3  7  5
-## [2449]  7 11 11  9  5  8 18 13 18  2 11 15 12  0  8  8 15 11  9 10  8 10  7  4
-## [2473]  8 13  5  5 12  9 16  7  6  7 11  3  3 11  8  9  3  5  8  7 13  8 10  5
-## [2497] 10  7 10  7  7  3  9  3 10 12 10  3  6  6  9  5 10  9  6 12  9  7  4 10
-## [2521]  7 17  7  6 14  9  3 14 18  8 10 15  8  9  9 17 10  8  7  9  3  4 18 17
-## [2545] 15 10  6  9  6  6  7  6  6  8  9  8  9 19  9 11  9 11  6  9  7 11  8 11
-## [2569] 10  6 15 13  9  6 13  6  9 10  2  2 14 16 10 18 17  6  9 11 10  6 12 10
-## [2593]  8  4 17 10  9 15 16 15  6  6  9  8  9  9  3  9  8  5 12  9 12  7 14  6
-## [2617]  7 16 13  3  6  9  5  5 15 11  9 14  4  2 15 16  9 10 13  6 10  6  7 22
-## [2641]  2 11 15  5 14  6  5  2 11 16 14  9 15  4  9 15  3  7  6 14  7  3 10  8
-## [2665]  8  8  6 10  8 11  8 16 16  6  9  6  6  7  2 15  9 17 18 15 16  6  9 15
-## [2689] 19  6 13 10 18 16  8  3  8 10 10  8  7 12 14 11  8 10  8  9 20 13  7  7
-## [2713]  3 18  4  8 12 13 11  7 22  7  7  6  7 12 11 12  9 13 10  8 23  4  4  3
-## [2737] 15 13  4  8 16  3  9 10  9 12  9  9  8  8  4  7  3  7 16 12  8  9  8 10
-## [2761]  4  8  4  7  2 11  4  8  9  6  5  4 17  7 13 12  8 11  8  9 15  8 18  8
-## [2785] 11  6 17  5  8  6  8  8  6  8 12  3  6  6  9  6  9 16  9  3  7 14  6 21
-## [2809]  8  9  9 17 10 10  9 10  9 11 10 12  7 21  6 20 16 10  8  9 12  8 14 18
-## [2833] 11 12 10  6 16  8 17  8 16 15 12 13  8 10  8 18 18  5  5  7 14 10 17 12
-## [2857] 15  7  2 16 20 18  8  8 10  4  9 10 18  9 17 10 12  7 17 18 17 12  7 14
-## [2881]  7  4  7  8  6  8  8  8  3 18 13 16  9  7  3 11 13 14 15  9 22 19  9  9
-## [2905]  8  9  7 10 16 10  2  7 20 12  9  5 17 17  7  4  2  2  5  4 11  5  5  6
-## [2929] 14  7  2  3  4  3  9  6 11  8 14 11  4  3  9 14  6 12 14  9  7  8  5  4
-## [2953]  6 10 10 15  9 12 13  9 18 16 15  9  7  6 11  6 10 15  7  9  9 13 11 14
-## [2977] 11 14 12  3  8 12 12  6  8  8  3  7 15 10 21 15 11  9  7 14 14  8 11  4
-## [3001]  8  8  5  6  6  7 15  6 13  7</code></pre>
-<pre class="r"><code>mean(sch12$wage)</code></pre>
-<pre><code>## [1] NaN</code></pre>
-<pre class="r"><code>sch16 &lt;- malesdata[malesdata$school==16, ] #学部卒業者の抜き出し
+sch16 &lt;- malesdata[malesdata$school==16, ] #学部卒業者の抜き出し
 exp(mean(sch12$wage)) #高校卒業者の平均賃金</code></pre>
 <pre><code>## [1] NaN</code></pre>
 <pre class="r"><code>exp(mean(sch16$wage)) #学部卒業者の平均賃金</code></pre>
 <pre><code>## [1] NaN</code></pre>
 <pre class="r"><code>#学部卒業者よりも高校卒業者の平均賃金が高くなっている
-#正しい推定
+
 malesdata &lt;- read.csv(&quot;wage.csv&quot;)
-sch11 &lt;- malesdata[malesdata$school==11, ] #高校未満の抜き出し
+sch11 &lt;- malesdata[malesdata$school==11, ] #高卒未満の抜き出し
 sch12 &lt;- malesdata[malesdata$school&gt;=12, ] #高卒以上の抜き出し
 exp(mean(sch11$wage)) #高卒未満の平均賃金</code></pre>
 <pre><code>## [1] NaN</code></pre>
 <pre class="r"><code>exp(mean(sch12$wage)) #高卒以上の平均賃金</code></pre>
 <pre><code>## [1] NaN</code></pre>
+<pre class="r"><code>#正しい推定</code></pre>
 </div>
 </div>
 <div id="中心極限定理" class="section level2">
@@ -801,7 +675,7 @@ for(i in 1:S){
   rec[i] &lt;- (Xbar - 1.96*sqrt(Sn/n) &lt; 50)*(50 &lt; Xbar + 1.96*sqrt(Sn/n))
 }
 mean(rec)</code></pre>
-<pre><code>## [1] 0.9488</code></pre>
+<pre><code>## [1] 0.9484</code></pre>
 </div>
 <div id="信頼区間の導出" class="section level3">
 <h3>3.4.4. 信頼区間の導出</h3>
@@ -835,18 +709,18 @@ mean(rec)</code></pre>
 <div id="問題3.2.3." class="section level3">
 <h3>問題3.2.3.</h3>
 <pre class="r"><code>sample(data$temp, 100) #無作為抽出</code></pre>
-<pre><code>##   [1] 17.6 28.4 21.9 16.9 18.5 26.1 20.1 12.7 14.3 20.3 30.6 20.4 30.9  0.0 23.1
-##  [16] 32.6 13.8 22.8  8.5  5.2 22.0 31.0 27.0 27.0  3.5 16.7  9.6 22.2  3.3  4.2
-##  [31] 15.6 28.2 13.9 21.4 28.3 13.5 21.0  0.5  3.5 26.5 18.9 16.7  7.5 26.0  7.3
-##  [46] 28.0  4.1 14.5  4.3  8.5 25.8 22.5  8.3 23.1  4.3 22.6 20.5 16.0 24.5  2.9
-##  [61]  8.4 26.3 17.9  8.9 17.7 17.2  5.2  4.6 20.8 19.9 23.1  9.7 20.2 25.6 16.6
-##  [76] 33.9 23.7 22.4 20.3 23.2 24.8 10.8 24.4 12.6 21.9 23.9 23.8  8.7 11.1 27.4
-##  [91] 24.4 22.1 24.5  2.8  6.1 22.7  0.3  1.3 18.9 16.7</code></pre>
+<pre><code>##   [1] 20.9  7.0  4.2  7.4 22.0 21.5  5.7  4.5 19.4 18.4 19.6  7.7 28.5 16.9 18.6
+##  [16] 25.4 12.5  4.5 12.3 20.8 17.9 16.1  4.9 10.0 23.8 25.0  0.7  8.7 32.0 21.2
+##  [31] 29.8 24.2 27.1 15.3  7.4 12.9 21.5  4.3 19.6  7.6  3.5 10.2 10.1 28.4 24.5
+##  [46] 26.6 21.1 23.2 16.3 22.9 11.6 27.8 21.3 15.8 13.9 24.1 20.3 24.3  8.3 12.7
+##  [61]  4.4 17.9 25.0 21.9 24.1 12.5 14.8  6.0 21.7 13.9 20.2  0.4  4.2 33.1 18.1
+##  [76] 27.1  7.1 27.0 12.0 20.8 27.1 13.6  5.2 24.3 13.1  4.0 26.0 -0.3  8.5 28.4
+##  [91] 23.4  6.8 18.8 21.9 21.0 16.3  2.8 17.4 21.4 26.8</code></pre>
 <pre class="r"><code>mean(sample(data$temp, 100))</code></pre>
-<pre><code>## [1] 16.664</code></pre>
+<pre><code>## [1] 16.518</code></pre>
 <pre class="r"><code>mean(data$temp); mean(sample(data$temp, 100)) #1と比較</code></pre>
 <pre><code>## [1] 16.64065</code></pre>
-<pre><code>## [1] 15.379</code></pre>
+<pre><code>## [1] 15.712</code></pre>
 </div>
 <div id="問題3.2.4." class="section level3">
 <h3>問題3.2.4.</h3>
@@ -924,8 +798,8 @@ mean(rec)</code></pre>
 <pre><code>## [1] 0</code></pre>
 </div>
 </div>
-<div id="問題3.4.10000でシミュレーション" class="section level2">
-<h2>問題3.4’.（10000でシミュレーション）</h2>
+<div id="問題3.4.n-10000で再シミュレーション" class="section level2">
+<h2>問題3.4’.（n = 10000で再シミュレーション）</h2>
 <div id="問題3.4.1.-1" class="section level3">
 <h3>問題3.4’.1.</h3>
 <pre class="r"><code>S &lt;- 10000
@@ -974,7 +848,7 @@ for(i in 1:S){
   rec[i] &lt;- (Xbar - 1.64*sqrt(Sn/n) &lt;50)&amp;(50 &lt; Xbar + 1.64*sqrt(Sn/n))
 }
 mean(rec)</code></pre>
-<pre><code>## [1] 0.8982</code></pre>
+<pre><code>## [1] 0.9001</code></pre>
 </div>
 </div>
 
