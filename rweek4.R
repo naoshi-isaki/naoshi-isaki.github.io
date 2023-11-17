@@ -24,7 +24,7 @@ head(tempdata) #データフレーム：項目名と番号という枠（フレ�
 print(tempdata, n = 100)
 #特定の行や列を抽出 [行, 列]
 tempdata[3, ]
-tempdata[, 2]
+head(tempdata[, 2])
 tempdata[3, 2]
 tempdata$time
 tempdata$time[3]
@@ -49,13 +49,13 @@ tempdata %>%
   summarise(mean_temp = mean(temp)) %>%
   ggplot(aes(x = time, y = mean_temp)) +
   geom_line() +
-  labs(title = , x = "時間", y = "気温") + 
+  labs(title = "図4.3　ノンパラメトリック回帰の結果", x = "時間", y = "気温") + 
   theme_bw()
 
 tempdata %>% 
   ggplot(aes(x = time, y = temp)) +
-  stat_summary(geom = "line", fun = "mean") +
-  labs(title = , x = "時間", y = "気温") + 
+  stat_summary(geom = "line", fun = "mean") + #stat_summary(geom = , fun = ): 引数yに与えられた変数を対象にして、統計量を計算して描画
+  labs(title = "", x = "時間", y = "気温") + 
   theme_bw()
 
 
@@ -64,7 +64,7 @@ tempdata %>%
   ggplot(aes(x = time, y = temp)) +
   geom_point() +
   stat_summary(geom = "line", fun = "mean") +
-  labs(title = , x = "時間", y = "気温") + 
+  labs(title = "図4.4　回帰曲線と散布図の関係", x = "時間", y = "気温") + 
   coord_cartesian(ylim = c(20, 30)) +
   theme_bw()
 
@@ -129,7 +129,8 @@ tempdata %>%
            (date == "2014/8/10") |
            (date == "2014/8/17") |
            (date == "2014/8/24") |
-           (date == "2014/8/31"))
+           (date == "2014/8/31")) %>%
+  head()
 tempdata <- tempdata %>% 
   mutate(date = ymd(date))
 tempdata %>% print(n = 4)
@@ -190,37 +191,88 @@ library(dplyr)
 library(lubridate)
 library(broom)
 
-elecdata <- read.csv("temprature_aug.csv")
+
+## ------------------------------------------------------------------------
+elecdata <- read.csv("temperature_aug.csv")
+elecdata <- elecdata %>%
+  mutate(morning = 1*(6 <= time & time <= 12), 
+         afternoon = 1*(13 <= time & time <= 18))
+elecdata %>%
+  select(time, morning, afternoon)
 
 
 ## ------------------------------------------------------------------------
-
-
-
-## ------------------------------------------------------------------------
-
-
-
-## ------------------------------------------------------------------------
-
+elecdata <- read.csv("temperature_aug.csv")
+elecdata <- elecdata %>%
+  mutate(data = ymd(data), 
+         dow  = wdat(data, label = TRUE),
+         saturday = 1*(dow == "土"))
 
 
 ## ------------------------------------------------------------------------
-
-
-
-## ------------------------------------------------------------------------
-
-
-
-## ------------------------------------------------------------------------
-
-
-
-## ------------------------------------------------------------------------
-
+elecdata <- read.csv("temperature_aug.csv")
+elecdata <- elecdata %>%
+  mutate(sunday = 1*(dow == "日"), 
+         recess = 1*("2014-08-11" <= data & data <= "2014-08-16"))
+electdata %>%
+  lm(elec~temp + prec + sunday +
+       recess + morning + afternoon + saturday, data =.) %>%
+  tidy()
 
 
 ## ------------------------------------------------------------------------
+elecdata <- read.csv("temperature_aug.csv")
+elecdata %>%
+  lm(elec ~ temp + prec + sunday +
+       recess + morning + afternonn + saturday,
+     data = .) %>%
+  glance() %>%
+  pull(r.squared)
 
 
+## ------------------------------------------------------------------------
+icedata <- read.csv("icecream.csv")
+icedata %>%
+  ggplot(aes(x = income, y = icecream)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+
+## ------------------------------------------------------------------------
+icedata <- read.csv("icecream.csv")
+icedata %>%
+  lm(icecream ~ income + u15, data =.) %>%
+  glance %>%
+  pull(r.squared)
+
+
+## ------------------------------------------------------------------------
+wagedata <- read.csv("wage.csv")
+
+
+## ------------------------------------------------------------------------
+wagedata <- read.csv("wage.csv")
+wagedata %>%
+  lm(log(wage) ~ educ, data =.) %>%
+  augment() %>%
+  ggplot(aes(x = educ, y = `log(wage)`)) +
+  geom_point() +
+  geom_line(colour = "blue", aes(y = .fitted))
+
+
+## ------------------------------------------------------------------------
+wagedata <- read.csv("wage.csv")
+wagedata %>%
+  lm(log(wage) ~ educ + exper, data = .) %>%
+  tidy()
+
+
+
+wagedata <- read.csv("wage.csv")
+wagedata %>%
+  lm(log(wage) ~ educ, data =.) %>%
+  summary()
+
+wagedata %>%
+  lm(log(wage) ~ educ + exper, data =.) %>%
+  summary()
