@@ -1,0 +1,311 @@
+---
+title: "Week4 | Rによる自主勉強会"
+author: "伊﨑 直志"
+date: '2023年11月17日'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+# 準備
+## Loading Packages
+```{r setup, echo = TRUE, fig.height = 5, fig.width = 7, fig.align = "center", include = TRUE}
+library(tidyverse)
+library(dplyr)
+library(gridExtra)
+library(readr)
+library(lubridate)
+windowsFonts(family_sans = windowsFont("Noto Sans JP")) 
+par(family = "family_sans")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 第4章　回帰分析の基礎
+## 4.1. 回帰分析の考え方
+### 4.1.1. 回帰＝予測
+回帰：「興味のある変数yの値を、他の変数xを用いて予測すること」
+
+x-説明変数、独立変数
+
+y-被説明変数、従属変数
+
+回帰関数 regression function：xを用いて予測されたyの値 m(x)
+
+誤差項 error term：回帰関数m(x)による予測の誤差 y-m(x)
+
+
+### 4.1.2. 最小二乗法 least squares estimation
+
+（例）教育年数xから賃金yを予測
+
+予測誤差 prediction error をできるだけ小さく
+
+⇒平均二乗誤差 mean squared errors: MSE
+
+### 4.1.3. 条件付期待値と回帰分析
+### 4.1.4. 数値例：気温と電力使用量
+```{r}
+tempdata <- read_csv("temperature_aug.csv")
+
+ggplot(tempdata, aes(x = time, y = temp)) +
+  geom_point() +
+  labs(title = "図4.2 2014年8月の東京都における時刻と気温", x = "時刻", y = "気温") +
+  theme_bw(base_family = "family_sans") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+### 4.1.5. データフレームとティブル
+```{r}
+head(tempdata) #データフレーム：項目名と番号という枠（フレーム）を備えた、さまざまな属性のデータの塊
+print(tempdata, n = 100)
+#特定の行や列を抽出 [行, 列]
+tempdata[3, ]
+head(tempdata[, 2])
+tempdata[3, 2]
+tempdata$time
+tempdata$time[3]
+```
+
+### 4.1.6. ノンパラメトリック回帰の実行
+```{r}
+tempdata %>% 
+  summarise(mean_temp = mean(temp))
+
+tempdata %>% 
+  summarise(mean_temp = mean(temp),
+            sd_temp   = sd(temp),
+            max_temp  = max(temp),
+            min_temp  = min(temp))
+
+tempdata %>%
+  group_by(time) %>% 
+  summarise(mean_temp = mean(temp))
+
+tempdata %>%
+  group_by(time) %>%
+  summarise(mean_temp = mean(temp)) %>%
+  ggplot(aes(x = time, y = mean_temp)) +
+  geom_line() +
+  labs(title = , x = "時間", y = "気温") + 
+  theme_bw()
+
+tempdata %>% 
+  ggplot(aes(x = time, y = temp)) +
+  stat_summary(geom = "line", fun = "mean") +
+  labs(title = , x = "時間", y = "気温") + 
+  theme_bw()
+```
+
+### 4.1.7. グラフを重ねる
+```{r}
+tempdata %>% 
+  ggplot(aes(x = time, y = temp)) +
+  geom_point() +
+  stat_summary(geom = "line", fun = "mean") +
+  labs(title = , x = "時間", y = "気温") + 
+  coord_cartesian(ylim = c(20, 30)) +
+  theme_bw()
+```
+
+## 4.2. 単回帰分析
+### 4.2.1. ノンパラメトリック回帰の限界
+```{r}
+with(tempdata, cor(temp, elec))
+tempdata %>% 
+  summarise(cor(temp, elec))
+
+tempdata %>% 
+  with(cor(temp, elec))
+
+tempdata %>% 
+  ggplot(aes(x = temp, y = elec)) +
+  stat_summary(geom = "line", fun = "mean") + 
+  labs(title = "図4.6　電気使用量の回帰曲線",
+       x = "電気使用量の回帰曲線", y = "電気使用量（万kw）") +
+  theme_bw()
+```
+
+### 4.2.3. 単回帰の計算方法
+
+（略）
+
+### 4.2.4. Rによる線形回帰分析
+```{r}
+lm(elec ~ temp, data = tempdata)
+```
+
+### 4.2.5. 推定量と推定値
+### 4.2.6. 単回帰の図示
+```{r}
+result <- lm(elec ~ temp,
+             data = tempdata)
+result$coefficients
+
+tempdata %>% 
+  ggplot(aes(x = temp, y = elec)) +
+  geom_point() +
+  geom_abline(intercept = result$coefficients[1],
+              slope     = result$coefficients[2]) +
+  labs(title = "図4.7　単回帰の結果", x ="気温", y = "電気使用量（万kw）") +
+  theme_bw()
+```
+
+## 4.3. 重回帰分析
+### 4.3.1. 説明変数を追加する
+```{r}
+tempdata %>% 
+  ggplot(aes(x = time, y = elec)) +
+  geom_point() +
+  labs(title = "図4.8　電力使用量の時間推移", x = "時刻", y = "電気使用量（万kw）") +
+  theme_bw()
+
+tempdata$daytime <- 
+  (tempdata$time >= 9) & (tempdata$time <= 18)
+
+tempdata <- tempdata %>% 
+  mutate(daytime = 1 * (9 <= time & time <= 18),
+         elec100 = elec / 100,
+         time12  = time %% 12,
+         ampm    = ifelse(time < 12, "a.m.", "p.m."))
+```
+
+### 4.3.2. 重回帰分析
+### 4.3.3. Rによる重回帰分析
+```{r}
+lm(elec ~ temp + daytime, data = tempdata)
+lm(elec ~ temp + daytime + prec, data = tempdata)
+tempdata %>%
+  mutate(sunday = 1 * 
+           (date == "2014/8/3")  |
+           (date == "2014/8/10") |
+           (date == "2014/8/17") |
+           (date == "2014/8/24") |
+           (date == "2014/8/31")) %>%
+  head()
+tempdata <- tempdata %>% 
+  mutate(date = ymd(date))
+tempdata %>% print(n = 4)
+
+wday(tempdata$date, label = TRUE)
+tempdata <- tempdata %>% 
+  mutate(dow    = wday(date, label = TRUE),
+         sunday = 1 * (dow == "日"))
+
+tempdata <- tempdata %>% 
+  mutate(recess = 1 * ("2014-08-11" <= date & 
+                         date <= "2014-08-16"))
+
+lm(elec ~ temp + daytime + prec + sunday + recess,
+   data = tempdata)
+
+179.07 + 113.48 * 28 + 563.53 * 1 + 14.27 * 0 - 448.39 * 0 - 438.23 * 0
+
+result <- lm(elec ~ temp + daytime + prec + sunday + recess, data = tempdata)
+sum(result$coefficients * c(1, 28, 1, 0, 0, 0))
+```
+
+### 補足：多重共線性
+
+
+## 4.4. 決定係数と回帰分析
+### 4.4.1. 決定計数
+決定係数R\^2
+
+### 4.4.2. 決定係数の出力
+```{r}
+lm(elec ~ temp + daytime + prec + sunday + recess,
+   data = tempdata) %>% 
+  summary()
+
+lm(elec ~ temp,
+   data = tempdata) %>% 
+  summary()
+```
+
+### 4.4.3. 決定係数は「モデルの正しさ」を保証しない
+```{r}
+set.seed(2022) #set.seed(): 常に同じ乱数を発生, 解析ごとに結果が変わってしまうことを防止
+
+a <- sample(1:6, 15, replace = TRUE)
+b <- sample(1:6, 15, replace = TRUE)
+c <- sample(1:6, 15, replace = TRUE)
+d <- sample(1:6, 15, replace = TRUE)
+e <- sample(1:6, 15, replace = TRUE)
+f <- sample(1:6, 15, replace = TRUE)
+g <- sample(1:6, 15, replace = TRUE)
+
+summary(lm(a ~ b + c + d + e + f + g))
+```
+
+-   過剰適合（overfitting）, 過学習
+-   どの説明変数をモデルに含めるべきか？
+    -   先験的モデル
+    -   「モデル推定用」標本と「モデル検証用」標本
+    -   情報量基準 e.g. Akaike Information Criterion: AIC
+
+## 補足: 残差の性質と回帰係数の計算公式
+```{r}
+tempdata <- read_csv("temperature_aug.csv")
+result <- lm(elec ~ temp,
+             data = tempdata)
+ehat <- result$residuals
+sum(ehat)
+sum(tempdata$temp*ehat)
+```
+
+# 練習問題
+## 問題4.1.
+```{r}
+library(dplyr)
+library(lubridate)
+library(broom)
+
+elecdata <- read.csv("temperature_aug.csv")
+```
+
+### 問題4.1.1.
+```{r}
+
+```
+
+### 問題4.1.2.
+```{r}
+
+```
+
+### 問題4.1.3.
+```{r}
+
+```
+
+### 問題4.1.4.
+```{r}
+
+```
+
+## 問題4.2.
+### 問題4.2.1.
+```{r}
+
+```
+
+### 問題4.2.2.
+```{r}
+
+```
+
+
+## 問題4.3.
+### 問題4.3.1.
+```{r}
+
+```
+
+### 問題4.3.2.
+```{r}
+
+```
