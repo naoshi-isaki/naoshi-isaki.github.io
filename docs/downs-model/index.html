@@ -1,165 +1,436 @@
 <!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="light">
-<title>ダウンズの空間競争モデル</title>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<title>ダウンズの空間競争モデル｜投影用・解説付き</title>
 <style>
-:root{--ink:#172333;--muted:#647283;--line:#dce3eb;--bg:#f3f6fa;--paper:#fff;--teal:#148278}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:"Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
-button,input,select{font:inherit}.app{height:100vh;padding:14px 18px;display:grid;grid-template-rows:auto 1fr;gap:10px;max-width:1600px;margin:auto}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:clamp(22px,2.2vw,34px);margin:0;letter-spacing:-.04em}header p{margin:2px 0 0;color:var(--muted);font-size:12px}.headBtns{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
-button,select{border:1px solid #c9d4e2;border-radius:9px;background:white;padding:8px 10px;color:var(--ink);font-weight:700}button{cursor:pointer}button:hover{background:#eef3f8}.main{min-height:0;display:grid;grid-template-columns:minmax(0,2.1fr) minmax(290px,.75fr);gap:12px}
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 9px #18304c08}.chartPanel{min-height:0;padding:13px 16px;display:grid;grid-template-rows:auto 1fr auto auto;gap:7px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row h2,.control h2{font-size:16px;margin:0}.hint{font-size:11px;color:var(--muted)}
-#chartWrap{min-height:0;position:relative}svg{display:block;width:100%;height:100%;min-height:280px}.grid{stroke:#e7ecf2;stroke-width:1}.axis{stroke:#8997a7;stroke-width:1.2}.density{fill:#e8edf2;stroke:#66788b;stroke-width:2}.median{stroke:var(--teal);stroke-width:2;stroke-dasharray:5 5}.marker{cursor:ew-resize}.axisText{fill:#697a8d;font-size:12px;font-weight:700}.partyLabel{font-size:12px;font-weight:900}
-.scores{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.score{border:1px solid #e2e7ee;background:#fafbfd;border-radius:9px;padding:7px 8px;min-width:0}.scoreName{font-size:11px;font-weight:700;display:flex;gap:5px;align-items:center}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}.scoreVal{display:block;font-size:clamp(18px,2vw,27px);font-weight:900;line-height:1.2;margin-top:2px}.score.off .scoreVal{color:#8793a0!important}.bar{height:16px;border-radius:7px;overflow:hidden;display:flex;background:#dce3ea}.bar div{height:100%}.explain{font-size:12px;line-height:1.55;color:#45576a;margin:0}
-.control{min-height:0;padding:13px 14px;overflow:auto}.control::-webkit-scrollbar{width:7px}.control::-webkit-scrollbar-thumb{background:#cbd4df;border-radius:10px}.block{padding:9px 0;border-top:1px solid var(--line)}.block:first-of-type{border-top:0}.labelrow{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800}.num{font-size:17px;font-weight:900;font-variant-numeric:tabular-nums}
-input[type=range]{width:100%;margin:5px 0 0;cursor:pointer}.partyCtl{padding:7px 0;border-top:1px solid #edf0f4}.partyCtl:first-child{border-top:0}.selects{display:grid;grid-template-columns:1fr 1fr;gap:7px}.selects label{font-size:11px;color:var(--muted);font-weight:700}.selects select{width:100%;margin-top:3px;padding:7px 8px}.medianBox{display:flex;align-items:center;justify-content:space-between;background:#e9f5f3;border-radius:9px;padding:8px 10px;margin-top:7px}.medianBox span{color:#376f68;font-size:11px;font-weight:800}.medianBox strong{color:#10796e;font-size:21px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.actions button{padding:7px 6px;font-size:12px}.wide{grid-column:1/-1}.small{font-size:10px;color:var(--muted);line-height:1.45;margin-top:5px}.preset{display:grid;grid-template-columns:1fr 1fr;gap:6px}.preset button{font-size:11px;padding:6px}
-@media(max-width:900px){html,body{overflow:auto}.app{height:auto;min-height:100vh}.main{grid-template-columns:1fr}.control{overflow:visible}.chartPanel{min-height:650px}.scores{grid-template-columns:repeat(2,1fr)}}
-</style>
-</head>
-<body>
-<div class="app">
-<header>
-<div><h1>ダウンズの空間競争モデル</h1><p>政策空間上の政党位置と有権者分布から、最も近い政党への投票を計算する単純化モデルである。</p></div>
-<div class="headBtns"><button id="reset">初期化</button><button id="fullscreen">⛶ 全画面</button></div>
+:root{--ink:#172333;--muted:#647283;--line:#dce3eb;--canvas:#f3f6fa;--paper:#fff;--blue:#2867ba;--blue-light:#e9f1fc;--orange:#b65d26;--orange-light:#fff0e5;--teal:#148278;--focus:#165bd5;--radius:15px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;color:var(--ink);font-size:15px;line-height:1.6;font-feature-settings:"palt"}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8bb0f4;outline-offset:3px}
+.shell{max-width:1440px;padding:28px 34px 56px;margin:auto}.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-bottom:18px}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em}.top h1{font-size:clamp(26px,3vw,40px);letter-spacing:-.045em;line-height:1.34;margin:5px 0 6px}.subtitle{color:var(--muted);font-size:14px;margin:0;max-width:810px}.topbuttons{display:flex;gap:8px;flex-wrap:wrap;justify-content:end;margin-top:8px}.button{border:1px solid #cad6e4;border-radius:9px;padding:8px 12px;background:white;color:var(--ink);font-size:13px;font-weight:700;white-space:nowrap;transition:background .15s}.button:hover{background:#eaf0f9}.button.dark{background:#223a57;color:#fff;border-color:#223a57}.button.dark:hover{background:#385677}.button.chosen{border-color:#487eb6;background:#e5f1fe;color:#224a86}.button.accent{color:var(--blue);border-color:#b4cbea;background:#edf4fe}
+.layout{display:grid;grid-template-columns:minmax(0,1.78fr) minmax(285px,.90fr);gap:18px;align-items:start}.panel{border:1px solid var(--line);background:var(--paper);border-radius:var(--radius);box-shadow:0 2px 10px rgba(24,46,76,.028)}.chart-panel{padding:20px 23px 18px}.sectionhead{display:flex;gap:10px;align-items:baseline;justify-content:space-between}.sectionhead h2{font-size:17px;margin:0;font-weight:800}.sectionhead span{font-size:12px;color:var(--muted)}
+.legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:10px 0 -2px;font-size:12px;color:#556578}.legend i{width:10px;height:10px;display:inline-block;border-radius:50%;margin-right:5px}.legend i.blue{background:var(--blue)}.legend i.orange{background:var(--orange)}.legend i.teal{background:var(--teal)}.legend i.dash{height:0;width:18px;border-top:2px dashed var(--teal);border-radius:0;vertical-align:middle;background:transparent}
+.chart-wrap{width:100%;position:relative;touch-action:pan-y;user-select:none}.chart-wrap svg{display:block;width:100%;height:auto;max-height:430px;overflow:visible}.graph-tooltip{position:absolute;left:0;top:0;padding:5px 9px;background:#23364d;color:white;border-radius:7px;white-space:nowrap;font-size:12px;pointer-events:none;opacity:0;transform:translate(-50%,-115%);transition:opacity .1s;z-index:2}.graph-tooltip.visible{opacity:1}.help{color:var(--muted);font-size:12px;margin:4px 0 0}.gridline{stroke:#e6ebf2;stroke-width:1}.axisline{stroke:#8c99a9;stroke-width:1.2}.axislabel{fill:#677789;font-size:13px;font-weight:600}.smalltag{font-size:13px;font-weight:800}.pointerhit{cursor:ew-resize}.marker-a{fill:var(--blue)}.marker-b{fill:var(--orange)}
+.scorecard{margin-top:10px;border-top:1px solid var(--line);padding-top:13px}.scorelabels{display:flex;justify-content:space-between;gap:8px;align-items:end}.scorename{font-size:13px;color:#4e6075;font-weight:700}.scorevalue{display:block;font-size:clamp(22px,3vw,31px);line-height:1.25;font-weight:900;letter-spacing:-.025em}.scorevalue.a{color:var(--blue)}.scorevalue.b{color:var(--orange)}.scorevalue.hidden{color:#7e8894}.scoreleft{text-align:left}.scoreright{text-align:right}.scorebar{display:flex;height:20px;overflow:hidden;border-radius:7px;background:#e1e6ec;margin-top:10px}.scorebar .a{background:var(--blue);transition:width .15s}.scorebar .b{background:var(--orange);flex:1;transition:width .15s}.scorebar.hidden .a,.scorebar.hidden .b{background:#cbd3de}
+.control-panel{padding:20px 20px 18px}.control-panel h2{font-size:17px;margin:0 0 4px}.control-panel>.lead{font-size:12px;color:var(--muted);margin:0 0 16px}.controlbox{padding:14px 0;border-top:1px solid var(--line)}.controlbox:first-of-type{border-top:0;padding-top:0}.controlhead{display:flex;justify-content:space-between;align-items:center;gap:8px}.controlhead label{font-weight:800;font-size:14px}.numeric{font-size:18px;font-weight:900;min-width:42px;text-align:right;font-variant-numeric:tabular-nums}.numeric.a{color:var(--blue)}.numeric.b{color:var(--orange)}input[type=range]{display:block;width:100%;height:25px;cursor:pointer;accent-color:var(--blue);margin:9px 0 3px}input[type=range].b{accent-color:var(--orange)}input[type=range].voters{accent-color:var(--teal)}input[type=range]:disabled{opacity:.3;cursor:not-allowed}.ticks{display:flex;justify-content:space-between;color:#8290a0;font-size:11px}.tiny{font-size:11px;color:var(--muted);margin-top:5px}.selectrow{display:flex;gap:9px;margin-top:9px}select{min-width:0;width:100%;border:1px solid #c9d4e2;border-radius:9px;background:#fff;padding:10px 12px;font-weight:700;color:var(--ink)}.medianbox{background:#e9f5f3;border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;margin-top:12px}.medianbox span{color:#376f68;font-size:12px;font-weight:700}.medianbox strong{font-size:22px;color:#10796e;font-variant-numeric:tabular-nums}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.actions .full{grid-column:1/-1}.togglebar{margin-top:15px;padding-top:13px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
+.below{margin-top:18px;display:grid;grid-template-columns:minmax(0,1.78fr) minmax(285px,.90fr);gap:18px}.teacher-panel{padding:18px 23px}.teacher-panel h2,.note-panel h2{font-size:15px;margin:0 0 7px}.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.preset{border:1px solid #c8d5e4;border-radius:9px;padding:9px 12px;background:white;font-size:13px;font-weight:700}.preset:hover{background:#edf4fd}.note-panel{padding:18px 19px}.note-panel p{font-size:12px;color:#5d6b7c;margin:8px 0}.assumptions{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.assumptions span{font-size:11px;border-radius:7px;background:#f0f4f8;color:#586b7f;padding:4px 7px;font-weight:700}.sources{max-width:1440px;margin:15px auto 0;padding:0 2px;font-size:11px;color:#718092}.sources a{color:#617b9c;text-decoration:underline;text-underline-offset:2px}
+body.presenter .shell{max-width:none;padding:16px 20px}body.presenter .top h1{font-size:40px}body.presenter .subtitle{font-size:17px}body.presenter .chart-panel{padding:18px}body.presenter .control-panel{padding:18px}body.presenter .below{display:none}body.presenter .sources{display:none}body.presenter .layout{grid-template-columns:minmax(0,2.15fr) minmax(280px,.7fr)}body.presenter .sectionhead h2,body.presenter .control-panel h2{font-size:19px}body.presenter .chart-wrap svg{max-height:55vh}
+@media(max-width:940px){.shell{padding:19px 17px 44px}.layout,.below{grid-template-columns:1fr}.top{flex-wrap:wrap}.topbuttons{justify-content:flex-start}.chart-wrap svg{max-height:none}.below{gap:13px}.chart-panel{padding:15px 14px}.control-panel{padding:16px}.teacher-panel{padding:15px}.note-panel{padding:15px}}@media(max-width:510px){.legend{gap:9px}.chart-wrap svg{min-height:290px}.scorevalue{font-size:25px}.top h1{font-size:29px}.actions{grid-template-columns:1fr}.actions .full{grid-column:auto}.controlbox{padding:11px 0}}@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Multiparty multiparty extension */
+:root{--party-c:#7857a9;--party-d:#138273;--party-e:#b44665}
+.top h1{font-size:clamp(25px,2.8vw,38px)}.subtitle{max-width:925px}
+.party-count-row{display:flex;gap:10px;align-items:center;margin-top:8px}.party-count-row select{max-width:190px}
+.party-controls .controlbox{padding:11px 0}.party-controls .controlbox:first-child{padding-top:9px}
+.party-compact{border-top:1px solid var(--line)}
+.party-compact label{display:flex;gap:8px;align-items:center}.partydot{display:inline-block;border-radius:50%;height:11px;width:11px;flex:none}
+.party-compact input[type=range]{margin:3px 0 0}
+.party-compact .ticks{margin-top:0}.party-compact output{font-size:17px}
+.party-compact .ticks.party-ticks{font-size:10px}
+.legend{gap:12px;margin:13px 0 -1px}
+.legend .legendParty{white-space:nowrap;font-weight:700}.legend .legendParty i{vertical-align:middle}
+.chart-wrap svg{max-height:440px}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(102px,1fr));gap:8px}
+.party-score{padding:9px 10px 8px;border-radius:9px;border:1px solid #e1e7ef;background:#fafbfd;min-width:0}
+.party-score .scorename{font-size:12px;display:flex;align-items:center;gap:5px}
+.party-score .scorename i{display:inline-block;height:9px;width:9px;border-radius:50%;flex:none}
+.party-score .scorevalue{font-size:clamp(19px,2.1vw,28px);margin-top:2px}
+.scorebar{margin-top:10px}.scorebar div{min-width:0;transition:width .14s}
+.scorebar.hidden div{background:#cbd3de!important}
+.scorecard{padding-top:14px}
+.control-panel .actions{grid-template-columns:1fr 1fr}
+
+.note-panel p{font-size:12px}.note-panel strong{color:#273d57}
+.preset:focus-visible{outline:3px solid #87aef0}
+@media(max-width:510px){.scores{grid-template-columns:repeat(2,minmax(0,1fr))}.party-score .scorevalue{font-size:22px}.legend{gap:10px}.control-panel .actions{grid-template-columns:1fr 1fr}}
+@media print{.layout,.below{grid-template-columns:1fr}.control-panel{break-inside:avoid}.teacher-panel{break-inside:avoid}}
+
+/* Single-screen single-screen edition; all primary controls are always visible on desktop. */
+html,body{width:100%;height:100%;min-height:0;overflow:hidden;scroll-behavior:auto}
+body{font-size:13px;line-height:1.35}
+.shell{max-width:none;width:100%;height:100dvh;min-height:0;padding:10px 16px 12px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.top{flex:none;display:flex;align-items:center;margin:0;min-height:50px;gap:12px}
+.top h1,.top h1{font-size:clamp(21px,1.9vw,29px);line-height:1.17;margin:1px 0 0;letter-spacing:-.04em}
+.eyebrow{font-size:9px;line-height:1.2;letter-spacing:.10em}
+.subtitle{font-size:11px;max-width:900px;margin:3px 0 0;line-height:1.2}
+.topbuttons{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;margin:0;flex:none}
+.button{font-size:11px;padding:6px 9px;border-radius:7px;min-height:29px}
+.topbuttons .button{height:32px;white-space:nowrap}
+.topbuttons .scenario-picker{width:clamp(135px,14vw,220px);max-width:220px;height:32px;padding:5px 7px;border-radius:8px;font-size:12px;font-weight:700}
+.layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,360px);gap:11px;align-items:stretch}
+.panel{min-height:0;border-radius:11px}
+.chart-panel{display:flex;flex-direction:column;min-width:0;min-height:0;padding:11px 14px 10px;overflow:hidden}
+.sectionhead{flex:none;align-items:center;gap:8px}.sectionhead h2{font-size:14px}.sectionhead span{font-size:10px}
+.legend{flex:none;gap:10px;margin:5px 0 0;font-size:10px;min-height:17px}
+.chart-wrap{flex:1;min-height:150px;max-height:none;overflow:hidden;display:flex;align-items:center;justify-content:center;touch-action:none}
+.chart-wrap svg{width:100%;height:100%;max-height:none;object-fit:contain;overflow:hidden}
+.help{flex:none;display:none}
+.scorecard{flex:none;margin-top:2px;padding-top:6px}
+.scores{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.party-score{padding:5px 8px 4px;min-height:49px}
+.party-score .scorename{font-size:10px}.party-score .scorevalue{font-size:clamp(18px,2vw,25px);line-height:1.05;margin-top:3px}
+.scorebar{height:12px;margin-top:6px;border-radius:5px}
+
+
+
+.control-panel{display:flex;flex-direction:column;padding:10px 13px 9px;min-height:0;overflow:hidden}
+.control-panel h2{font-size:14px;margin:0 0 6px;flex:none}.control-panel>.lead{display:none}
+.controlbox{padding:8px 0;border-top:1px solid var(--line);flex:none}.controlbox:first-of-type{padding-top:0;border-top:0}
+.controlhead label{font-size:11px}.numeric{font-size:15px;min-width:30px}
+.party-count-row{margin-top:3px;gap:7px}.party-count-row select{max-width:none;height:31px}
+.party-count-row .tiny{white-space:nowrap;margin:0}
+select{font-size:12px;padding:5px 9px;height:32px;border-radius:7px}
+.party-controls{margin-top:5px;display:flex;flex-direction:column;gap:0}
+.party-controls .party-compact,.party-controls .controlbox{padding:4px 0;border-top:1px solid #f0f2f6}
+.party-controls .party-compact:first-child{border-top:0}
+.party-compact{display:grid;grid-template-columns:87px minmax(0,1fr) 34px;align-items:center;column-gap:5px;min-height:31px}
+.party-compact .controlhead{display:contents}
+.party-compact .controlhead label{grid-column:1;font-size:11px;white-space:nowrap}
+.party-compact .controlhead output{grid-column:3;grid-row:1;font-size:14px;text-align:right}
+.party-compact input[type=range]{grid-column:2;grid-row:1;margin:0;height:24px}
+.party-compact .party-ticks{display:none}
+.partydot{width:9px;height:9px}
+.selectrow{margin-top:5px}
+#voterCenter{margin:1px 0;height:23px}
+#centerTicks{font-size:9px}
+#centerHint{display:none}
+#distribution{height:32px}
+#distributionHead{margin-top:6px!important}
+.medianbox{margin-top:4px;padding:5px 9px;min-height:30px;border-radius:7px}
+.medianbox span{font-size:11px}.medianbox strong{font-size:18px}
+.actions{gap:5px;margin-top:5px}.actions .button{height:29px;padding:3px 4px}
+.togglebar{padding-top:6px;margin-top:6px;gap:5px;flex-wrap:nowrap}.togglebar .button{flex:1;padding:4px 2px;white-space:nowrap;font-size:10.5px}
+
+.info-popup{position:relative}
+.info-popup summary{list-style:none;cursor:pointer;border:1px solid #cad6e4;border-radius:7px;padding:6px 9px;background:white;font-size:11px;font-weight:700;height:32px;white-space:nowrap;display:flex;align-items:center}
+.info-popup summary::-webkit-details-marker{display:none}
+.info-content{position:absolute;z-index:20;right:0;top:37px;width:min(420px,calc(100vw - 28px));max-height:calc(100dvh - 92px);overflow-y:auto;border:1px solid var(--line);background:white;box-shadow:0 10px 24px #17233335;border-radius:9px;padding:12px 15px;font-size:12px;line-height:1.5}
+.info-content p{margin:8px 0}.info-content h2{font-size:14px;margin:0}.info-content .sources{display:block;margin:8px 0 0;padding:8px 0 0;border-top:1px solid var(--line);font-size:10px}
+.mobile-switch{display:none}
+/* Projection uses the same one-screen composition, with the distraction-free full-screen API. */
+body.presenter .shell{padding:10px 16px 12px;max-width:none}
+body.presenter .top h1{font-size:clamp(21px,1.9vw,29px)}
+body.presenter .subtitle{font-size:11px}
+body.presenter .chart-panel,body.presenter .control-panel{padding:10px 13px}
+body.presenter .layout{grid-template-columns:minmax(0,1fr) minmax(320px,360px)}
+body.presenter .sectionhead h2,body.presenter .control-panel h2{font-size:14px}
+body.presenter .chart-wrap svg{max-height:none}
+/* Compact viewport heights: preserve the graph and every sidebar control. */
+@media(max-height:760px){
+ .shell{padding:7px 11px;gap:6px}.top{min-height:40px}.subtitle{display:none}
+ .chart-panel{padding:7px 11px}.control-panel{padding:7px 10px}
+ .party-controls .party-compact,.party-controls .controlbox{padding:2px 0;min-height:28px}
+ .controlbox{padding:5px 0}.chart-wrap{min-height:120px}
+ .party-score{min-height:42px;padding:3px 6px}.party-score .scorevalue{font-size:19px}
+ .scorebar{height:10px;margin-top:4px}
+ .control-panel h2{margin-bottom:3px}
+}
+@media(max-height:630px){
+ .eyebrow,.legend{display:none}.top h1{font-size:20px}
+ .control-panel h2{display:none}.controlbox{padding:3px 0}
+ .medianbox{padding:2px 6px}.party-score{min-height:36px}
+ 
+}
+/* Narrow screens use two full-viewport tabs rather than page scrolling. */
+@media(max-width:820px){
+ .shell{padding:8px;gap:7px}.top{min-height:37px}.top h1{font-size:clamp(16px,3.4vw,22px)}
+ .eyebrow,.subtitle,.topbuttons #resetTop,.topbuttons #present,.topbuttons .info-popup{display:none}
+ .topbuttons .scenario-picker{width:150px;max-width:150px;height:30px;font-size:10px;padding:4px}
+ .mobile-switch{display:inline-flex;font-size:11px;padding:5px 8px;min-width:64px;justify-content:center}
+ .layout,body.presenter .layout{display:block;min-height:0;flex:1}
+ .chart-panel{height:100%;padding:8px;display:flex;min-height:0}
+ .control-panel{height:100%;padding:9px 12px;display:none;overflow:hidden}
+ body.mobile-controls .chart-panel{display:none}
+ body.mobile-controls .control-panel{display:flex}
+ .scores{gap:3px}.party-score{padding:5px;min-height:45px}.party-score .scorevalue{font-size:clamp(15px,3.1vw,21px)}
+ .chart-wrap{min-height:140px}.sectionhead span{display:none}
+ .legend{margin:3px 0}
+ .control-panel h2{display:block}.party-controls .party-compact,.party-controls .controlbox{min-height:29px}
+}
+@media(max-width:430px){
+ .top h1{font-size:15px}.topbuttons .scenario-picker{width:115px;max-width:115px}
+ .legend{gap:5px;font-size:9px}.party-score .scorename{font-size:9px}
+ .scorebar{height:10px}
+ .scores{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(max-width:820px) and (max-height:630px){
+ .control-panel{padding:5px 10px}.control-panel h2{margin-bottom:2px}
+ .party-controls .party-compact,.party-controls .controlbox{min-height:24px;padding:0}
+ .party-compact input[type=range]{height:20px}
+ .controlbox{padding:2px 0}.medianbox{margin-top:2px;min-height:25px}
+ #centerTicks{display:none}.actions{margin-top:3px}.togglebar{margin-top:3px;padding-top:3px}
+}
+@media print{html,body{height:auto;overflow:visible}.shell{height:auto;overflow:visible}.layout{display:grid}.info-popup,.mobile-switch{display:none}}
+
+
+/* Projection edition: compact descriptive explanation, without classroom prompts. */
+.resulttext{flex:none;display:block;margin:5px 0 0;padding:5px 8px;min-height:26px;border-left:3px solid #91a5bc;border-radius:3px;background:#f4f7fa;color:#34485d;font-size:clamp(11px,.9vw,13px);line-height:1.38;font-weight:600}
+@media(max-height:630px){.resulttext{display:block;font-size:10px;margin-top:3px;padding:3px 6px;min-height:20px}}
+@media(max-width:820px){.resulttext{font-size:11px}}
+</style></head>
+<body><main class="shell">
+<header class="top">
+ <div class="brand"><div class="eyebrow">POLITICAL SCIENCE · SPATIAL COMPETITION</div><h1>ダウンズの空間競争モデル</h1><p class="subtitle">有権者が最も近い政党に投票するとの仮定に基づき、政策位置と得票率の関係を示す。</p></div>
+ <div class="topbuttons">
+  <select class="scenario-picker" id="scenario" aria-label="配置プリセット">
+   <option value="initial">① 二党が離れている</option><option value="one">② Aだけ中央値へ</option><option value="both">③ 両党とも中央値へ</option><option value="bimodal">④ 二峰型・二党</option><option value="trimodal">⑤ 三峰型・三党</option><option value="quadmodal">⑥ 四峰型・四党</option><option value="pentamodal">⑦ 五峰型・五党</option><option value="median3">発展：三党が中央値</option>
+  </select>
+  <button class="button mobile-switch" id="viewSwitch" type="button" aria-pressed="false">⚙ 操作</button>
+  <button class="button" id="resetTop" type="button">↶ 初期化</button>
+  <details class="info-popup" id="infoPopup"><summary>ⓘ 前提・出典</summary><div class="info-content"><h2>モデルの前提と解釈</h2>
+  <p>一次元の政策空間、近接投票、全員投票、全党の非政策的魅力が同等という仮定。同じ政策位置の政党には、その位置に集まる票を均等配分する。</p>
+  <p><strong>二党：</strong> 得票最大化を仮定した中央値への収斂を検討する。<strong>三党以上：</strong> 同じ仕組みの教育上の拡張であり、中央値への全党集結が均衡とは限らない。</p>
+  <p>連立、議席配分、棄権、党派的忠誠は含まれない。山（最頻値）と中央値は区別する。</p>
+  <div class="sources">Downs, A. (1957), <em>An Economic Theory of Democracy</em>; Grofman, B. (2004), <a href="https://doi.org/10.1146/annurev.polisci.7.012003.104711" target="_blank" rel="noreferrer">“Downs and Two-Party Convergence”</a>。これは教育用の単純化で、分布・数値は仮想的なもの。</div>
+  </div></details>
+  <button class="button dark" id="present" type="button">⛶ 全画面</button>
+ </div>
 </header>
-<div class="main">
-<section class="panel chartPanel">
-<div class="row"><h2>政策空間と有権者分布</h2><span class="hint">政党の丸印はドラッグできる</span></div>
-<div id="chartWrap"><svg id="chart" viewBox="0 0 1000 430" preserveAspectRatio="xMidYMid meet"></svg></div>
-<div><div id="scores" class="scores"></div><div id="bar" class="bar"></div></div>
-<p id="explain" class="explain"></p>
+<div class="layout">
+<section class="panel chart-panel" aria-label="有権者分布と政党の位置">
+ <div class="sectionhead"><h2>政策空間と有権者の分布</h2><span id="dragHint">政党A・Bの丸印をドラッグ</span></div>
+ <div class="legend" id="legend"></div>
+ <div class="chart-wrap" id="plotwrap"><svg id="plot" viewBox="0 0 900 425" role="group" aria-label="0から10までの左右政策軸上の有権者分布と、移動可能な各政党の政策位置"></svg></div>
+ <p class="help">色付き領域は各党の支持域。同位置の複数党は均等配分。</p>
+ <div class="scorecard" aria-live="polite"><div class="scores" id="scores"></div><div class="scorebar" id="scorebar" role="img" aria-label="各政党の得票率"></div><p class="resulttext" id="result" aria-label="結果の解説"></p></div>
 </section>
-<aside class="panel control">
-<h2>モデル設定</h2>
-<div class="block">
-<div class="selects">
-<label>政党数<select id="partyCount"><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
-<label>有権者分布<select id="shape">
-<option value="normal">単峰型</option><option value="uniform">一様分布</option><option value="bimodal">2峰型</option><option value="trimodal">3峰型</option><option value="quadmodal">4峰型</option><option value="pentamodal">5峰型</option>
-</select></label>
-</div>
-<div class="labelrow" style="margin-top:8px"><span>分布の中心</span><output id="centerVal" class="num">5.0</output></div>
-<input id="center" type="range" min="3.5" max="6.5" step=".1" value="5">
-<div class="medianBox"><span>有権者の中央値</span><strong id="medianVal">5.00</strong></div>
-</div>
-<div id="partyControls" class="block"></div>
-<div class="block">
-<div class="actions">
-<button id="allMedian" class="wide">全党を中央値へ</button>
-<button id="toggleMedian">中央値を隠す</button>
-<button id="toggleVotes">得票率を隠す</button>
-</div>
-</div>
-<div class="block">
-<div class="labelrow"><span>配置例</span></div>
-<div class="preset" style="margin-top:6px">
-<button data-case="two">2党・単峰型</button><button data-case="bi">2党・2峰型</button>
-<button data-case="tri">3党・3峰型</button><button data-case="quad">4党・4峰型</button>
-<button data-case="penta">5党・5峰型</button><button data-case="median">全党・中央値</button>
-</div>
-<p class="small">一次元の政策空間、近接投票、各党への距離以外を考慮しないという仮定に基づく。多党制では二党競争の中央値への収斂をそのまま一般化できない。</p>
-</div>
-</aside>
-</div>
-</div>
-<script>
+<aside class="panel control-panel" aria-label="シミュレーションの操作">
+ <h2>モデルを操作する</h2><p class="lead">政党数・位置・有権者分布を変えると、得票率を即座に再計算します。</p>
+ <div class="controlbox"><div class="controlhead"><label for="partyCount">政党数</label></div>
+  <div class="party-count-row"><select id="partyCount" aria-label="政党数"><option value="2">2党（基本モデル）</option><option value="3">3党</option><option value="4">4党</option><option value="5">5党</option></select><span class="tiny">2〜5党から選択</span></div>
+  <div id="partyControls" class="party-controls" aria-label="各政党の位置"></div>
+ </div>
+ <div class="controlbox"><div class="controlhead"><label for="distribution">有権者分布の形</label></div>
+  <div class="selectrow"><select id="distribution" aria-label="有権者分布"><option value="normal">中央集中型（単峰）</option><option value="uniform">一様分布</option><option value="bimodal">二峰型（2つの山）</option><option value="trimodal">三峰型（3つの山）</option><option value="quadmodal">四峰型（4つの山）</option><option value="pentamodal">五峰型（5つの山）</option></select></div>
+  <div class="controlhead" id="distributionHead" style="margin-top:12px"><label for="voterCenter">分布の中心設定</label><output class="numeric" style="color:var(--teal)" for="voterCenter" id="valCenter">5.0</output></div>
+  <input id="voterCenter" class="voters" type="range" min="3" max="7" step="0.1" value="5" aria-label="有権者分布の中心"><div class="ticks" id="centerTicks"><span>3.0　左寄り</span><span>5.0</span><span>7.0　右寄り</span></div>
+  <p class="tiny" id="centerHint">分布の移動パラメータであり、中央値とは区別する。</p>
+  <div class="medianbox"><span>有権者の中央値</span><strong id="medianNum">5.00</strong></div>
+ </div>
+ <div class="controlbox"><div class="controlhead"><label>政策位置を動かす</label></div><div class="actions">
+  <button type="button" class="button" id="moveA">Aを中央値へ</button><button type="button" class="button" id="moveB">Bを中央値へ</button><button type="button" class="button accent full" id="moveAll">全党を中央値へ</button>
+  </div><div class="togglebar"><button type="button" class="button" id="hideMedian" aria-pressed="false">中央値を隠す</button><button type="button" class="button" id="hideResults" aria-pressed="false">得票率を隠す</button></div>
+ </div>
+</aside></div>
+</main><script>
+'use strict';
 const $=id=>document.getElementById(id);
-const COLORS=["#2867ba","#b65d26","#7857a9","#138273","#b44665"];
-const NAMES=["A","B","C","D","E"];
-const X0=65,X1=955,YBASE=340,YTOP=35,W=X1-X0;
-const state={n:2,pos:[2.5,7.5],shape:"normal",center:5,showMedian:true,showVotes:true,drag:null};
-const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
-const gauss=(x,m,s)=>Math.exp(-.5*((x-m)/s)**2);
-function rawDensity(x){
- const c=state.center,d=state.shape;
- if(d==="uniform") return 1;
- if(d==="normal") return gauss(x,c,1.45);
- if(d==="bimodal") return .5*gauss(x,c-1.75,.82)+.5*gauss(x,c+1.75,.82);
- if(d==="trimodal") return .32*gauss(x,c-2.25,.62)+.36*gauss(x,c,.72)+.32*gauss(x,c+2.25,.62);
- if(d==="quadmodal") return .25*(gauss(x,c-2.7,.52)+gauss(x,c-.9,.52)+gauss(x,c+.9,.52)+gauss(x,c+2.7,.52));
- return .2*(gauss(x,c-3,.43)+gauss(x,c-1.5,.43)+gauss(x,c,.48)+gauss(x,c+1.5,.43)+gauss(x,c+3,.43));
+const PARTY=[{name:'A',color:'#2867ba'},{name:'B',color:'#b65d26'},{name:'C',color:'#7857a9'},{name:'D',color:'#138273'},{name:'E',color:'#b44665'}];
+const DEFAULT_POS={2:[2.5,7.5],3:[2,5,8],4:[1.5,3.7,6.3,8.5],5:[1,3,5,7,9]};
+const SHAPES={normal:{offsets:[0],sigma:1.35,min:3,max:7},uniform:{offsets:[],sigma:1,min:3,max:7},bimodal:{offsets:[-1.9,1.9],sigma:.72,min:3,max:7},trimodal:{offsets:[-2.6,0,2.6],sigma:.54,min:3.5,max:6.5},quadmodal:{offsets:[-2.7,-.86,.86,2.7],sigma:.45,min:3.5,max:6.5},pentamodal:{offsets:[-2.8,-1.4,0,1.4,2.8],sigma:.38,min:3.5,max:6.5}};
+const S={count:2,positions:DEFAULT_POS[2].slice(),shape:'normal',center:5,showMedian:true,showResults:true,drag:null};
+const W=900,L=64,R=30,T=58,B=268,CW=W-L-R;
+const xx=x=>L+x*CW/10;
+const clamp=(v,lo,hi)=>Math.min(hi,Math.max(lo,v));
+const round=x=>Math.round(x*10)/10;
+const fmt=p=>(p*100).toFixed(1)+'%';
+const gauss=(x,mu,sigma)=>Math.exp(-.5*((x-mu)/sigma)**2)/(sigma*Math.sqrt(2*Math.PI));
+let model=null;
+
+function density(x,shape,center){
+ const s=SHAPES[shape];
+ if(shape==='uniform')return .1;
+ return s.offsets.reduce((sum,shift)=>sum+gauss(x,center+shift,s.sigma),0)/s.offsets.length;
 }
-function model(){
- const xs=[],ds=[];let sum=0;
- for(let i=0;i<=1200;i++){let x=10*i/1200,v=rawDensity(x);xs.push(x);ds.push(v);sum+=v}
- ds.forEach((_,i)=>ds[i]/=sum);
- let cum=0,med=5;for(let i=0;i<xs.length;i++){cum+=ds[i];if(cum>=.5){med=xs[i];break}}
- return {xs,ds,med,max:Math.max(...ds)};
+function buildModel(shape,center){
+ const N=2400,dx=10/N,vals=new Float64Array(N+1),cum=new Float64Array(N+1);
+ for(let i=0;i<=N;i++)vals[i]=density(i*dx,shape,center);
+ for(let i=1;i<=N;i++)cum[i]=cum[i-1]+(vals[i-1]+vals[i])*dx/2;
+ const total=cum[N];
+ for(let i=0;i<=N;i++){vals[i]/=total;cum[i]/=total;}
+ const cdf=x=>{let f=clamp(x,0,10)/dx,i=Math.min(N-1,Math.floor(f));return cum[i]+(cum[i+1]-cum[i])*(f-i);};
+ let lo=0,hi=10;for(let j=0;j<44;j++){let mid=(lo+hi)/2;if(cdf(mid)<.5)lo=mid;else hi=mid;}
+ return {N,dx,vals,cdf,median:(lo+hi)/2,shape,center};
 }
-function votes(m){
- let s=Array(state.n).fill(0);
- m.xs.forEach((x,k)=>{
-  let dist=state.pos.map(p=>Math.abs(x-p)),min=Math.min(...dist),wins=[];
-  dist.forEach((v,i)=>{if(Math.abs(v-min)<1e-8)wins.push(i)});
-  wins.forEach(i=>s[i]+=m.ds[k]/wins.length);
+/* Unique positions partition the line at adjacent midpoints. Co-located parties
+   split the entire Voronoi cell evenly. Boundary points have zero mass here. */
+function voteShares(positions,m){
+ const sorted=positions.map((x,index)=>({x,index})).sort((a,b)=>a.x-b.x||a.index-b.index);
+ const groups=[];
+ for(const item of sorted){
+  const last=groups[groups.length-1];
+  if(last && Math.abs(last.x-item.x)<1e-9)last.indices.push(item.index);
+  else groups.push({x:item.x,indices:[item.index]});
+ }
+ const shares=positions.map(()=>0),regions=[],cuts=[];
+ groups.forEach((g,i)=>{
+  const left=i===0?0:(groups[i-1].x+g.x)/2;
+  const right=i===groups.length-1?10:(g.x+groups[i+1].x)/2;
+  let mass=Math.max(0,m.cdf(right)-m.cdf(left));
+  g.indices.forEach(idx=>shares[idx]=mass/g.indices.length);
+  regions.push({left,right,indices:g.indices.slice(),mass});
+  if(i<groups.length-1)cuts.push(right);
  });
- let z=s.reduce((a,b)=>a+b,0);return s.map(v=>v/z);
+ return {shares,regions,cuts,groups};
 }
-const sx=x=>X0+x/10*W;
-function renderChart(m){
- let grid="",ticks="";
- for(let i=0;i<=10;i++){let x=sx(i);grid+=`<line x1="${x}" y1="${YTOP}" x2="${x}" y2="${YBASE}" class="grid"/>`;ticks+=`<text x="${x}" y="${YBASE+27}" text-anchor="middle" class="axisText">${i}</text>`}
- let pts=m.xs.map((x,i)=>[sx(x),YBASE-m.ds[i]/m.max*245]);
- let path=`M ${X0} ${YBASE} L `+pts.map(p=>p.join(" ")).join(" L ")+` L ${X1} ${YBASE} Z`;
- let median=state.showMedian?`<line x1="${sx(m.med)}" y1="${YTOP}" x2="${sx(m.med)}" y2="${YBASE}" class="median"/><text x="${sx(m.med)+7}" y="${YTOP+15}" fill="#148278" font-size="11" font-weight="800">中央値 ${m.med.toFixed(2)}</text>`:"";
- let markers=state.pos.map((p,i)=>{
-  let x=sx(p),c=COLORS[i],dy=(i%2)*22;
-  return `<g class="marker" data-i="${i}"><rect x="${x-18}" y="${YBASE-38-dy}" width="36" height="66" fill="transparent"/><line x1="${x}" y1="${YBASE}" x2="${x}" y2="${YBASE-18-dy}" stroke="${c}" stroke-width="2.2"/><circle cx="${x}" cy="${YBASE-28-dy}" r="14" fill="${c}" stroke="white" stroke-width="2"/><text x="${x}" y="${YBASE-23-dy}" text-anchor="middle" fill="white" font-size="11" font-weight="900">${NAMES[i]}</text><text x="${x}" y="${YBASE+48+dy}" text-anchor="middle" fill="${c}" class="partyLabel">${NAMES[i]} ${p.toFixed(1)}</text></g>`
- }).join("");
- $("chart").innerHTML=`${grid}<path d="${path}" class="density"/>${median}<line x1="${X0}" y1="${YBASE}" x2="${X1}" y2="${YBASE}" class="axis"/>${ticks}<text x="${X0}" y="${YBASE+58}" class="axisText">左派</text><text x="${X1}" y="${YBASE+58}" text-anchor="end" class="axisText">右派</text><text x="${X0}" y="${YTOP-10}" class="axisText">有権者の分布（密度）</text>${markers}`;
+// Backwards compatible helper for the original 2-party demonstration.
+function shares(a,b,m){const o=voteShares([a,b],m);return {a:o.shares[0],b:o.shares[1],cut:o.cuts.length?o.cuts[0]:null};}
+function densityPath(m){
+ const max=Math.max(...m.vals),scale=175/max;let d=`M ${xx(0)} ${B}`;
+ for(let i=0;i<=m.N;i+=4)d+=` L ${xx(i*m.dx).toFixed(2)} ${(B-m.vals[i]*scale).toFixed(2)}`;
+ return d+` L ${xx(10)} ${B} Z`;
+}
+function markerOffsets(pos){
+ const points=pos.map((value,i)=>({value,i,px:xx(value)})).sort((a,b)=>a.px-b.px),groups=[];
+ for(const item of points){
+  const g=groups[groups.length-1];
+  if(g && Math.abs(item.px-g[0].px)<24)g.push(item);
+  else groups.push([item]);
+ }
+ const out=pos.map(()=>({dx:0,dy:0}));
+ groups.forEach(g=>g.forEach((item,k)=>{
+  out[item.i]={dx: g.length===1?0:(k-(g.length-1)/2)*13,dy: g.length===1?0:k*16};
+ }));
+ return out;
+}
+function renderGraph(m,v){
+ const path=densityPath(m);let grid='',ticks='';
+ for(let n=0;n<=10;n+=2){let x=xx(n);grid+=`<line x1="${x}" x2="${x}" y1="${T+3}" y2="${B}" class="gridline"/>`;ticks+=`<text x="${x}" y="${B+23}" class="axislabel" text-anchor="middle">${n}</text>`;}
+ let patterns='',fills='';
+ if(S.showResults){
+  v.regions.forEach((g,i)=>{
+   const a=xx(g.left),b=xx(g.right),width=Math.max(0,b-a);
+   if(g.indices.length===1)fills+=`<rect x="${a}" y="${T}" width="${width}" height="${B-T}" fill="${PARTY[g.indices[0]].color}" fill-opacity=".35"/>`;
+   else{
+    const size=12*g.indices.length;
+    patterns+=`<pattern id="split${i}" patternUnits="userSpaceOnUse" width="${size}" height="${size}">${g.indices.map((p,k)=>`<rect x="${k*12}" y="0" width="12" height="${size}" fill="${PARTY[p].color}" fill-opacity=".43"/>`).join('')}</pattern>`;
+    fills+=`<rect x="${a}" y="${T}" width="${width}" height="${B-T}" fill="url(#split${i})"/>`;
+   }
+  });
+ }
+ const mX=xx(m.median);
+ const medianLine=S.showMedian?`<line x1="${mX}" y1="${T+6}" x2="${mX}" y2="${B}" stroke="#148278" stroke-width="2" stroke-dasharray="6 5"/><rect x="${mX-43}" y="${T-34}" width="86" height="21" rx="5" fill="#e4f4f0"/><text x="${mX}" y="${T-19}" fill="#087768" font-size="12" text-anchor="middle" font-weight="800">中央値 ${m.median.toFixed(2)}</text>`:'';
+ const cuts=S.showResults?v.cuts.map(c=>`<line x1="${xx(c)}" x2="${xx(c)}" y1="${T+8}" y2="${B}" stroke="#6d7888" stroke-width="1.3" stroke-dasharray="3 6"/><text x="${xx(c)}" y="${B+43}" text-anchor="middle" fill="#5a6d82" font-size="11">${c.toFixed(2)}</text>`).join(''):'';
+ const offsets=markerOffsets(S.positions);
+ const markers=S.positions.map((p,i)=>{
+  const o=offsets[i],x=xx(p)+o.dx,c=PARTY[i].color,name=PARTY[i].name;
+  const labelY=B+59+o.dy;
+  return `<g class="pointerhit partyMarker" data-party="${i}" tabindex="0" role="slider" aria-orientation="horizontal" aria-label="政党${name}の政策位置" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${p.toFixed(1)}" transform="translate(${x},0)"><rect x="-17" y="${B-27}" width="34" height="45" rx="8" fill="transparent"/><line x1="${xx(p)-x}" x2="0" y1="${B+8}" y2="${B-7}" stroke="${c}" stroke-width="2.3"/><circle cx="${xx(p)-x}" cy="${B+8}" r="2.4" fill="${c}"/><circle cy="${B-14-o.dy*.45}" r="12.5" fill="${c}" stroke="white" stroke-width="2"/><text y="${B-9-o.dy*.45}" text-anchor="middle" font-size="10.5" fill="white" font-weight="900">${name}</text><text x="0" y="${labelY}" text-anchor="middle" font-size="12" fill="${c}" font-weight="800">${name} ${p.toFixed(1)}</text></g>`;
+ }).join('');
+ $('plot').innerHTML=`<defs><clipPath id="densityClip"><path d="${path}"/></clipPath>${patterns}</defs>${grid}<path d="${path}" fill="#e7ecf1"/><g clip-path="url(#densityClip)">${fills}</g><path d="${path}" fill="none" stroke="#65778b" stroke-width="2.2"/>${medianLine}${cuts}<line x1="${L}" y1="${B}" x2="${xx(10)}" y2="${B}" class="axisline"/>${ticks}<text x="${L}" y="${B+94}" class="axislabel">左派</text><text x="${xx(10)}" y="${B+94}" text-anchor="end" class="axislabel">右派</text><text x="${L}" y="${T-18}" font-size="12" font-weight="700" fill="#657689">有権者の分布（密度）</text>${markers}`;
 }
 function renderControls(){
- $("partyCount").value=state.n;$("shape").value=state.shape;$("center").value=state.center;$("center").disabled=state.shape==="uniform";$("centerVal").textContent=state.center.toFixed(1);
- $("partyControls").innerHTML=state.pos.map((p,i)=>`<div class="partyCtl"><div class="labelrow"><span><i class="dot" style="background:${COLORS[i]}"></i> 政党${NAMES[i]}</span><output class="num" id="pv${i}" style="color:${COLORS[i]}">${p.toFixed(1)}</output></div><input class="ps" data-i="${i}" type="range" min="0" max="10" step=".1" value="${p}" style="accent-color:${COLORS[i]}"></div>`).join("");
+ $('partyCount').value=String(S.count);
+ $('partyControls').innerHTML=S.positions.map((p,i)=>{
+  const info=PARTY[i];
+  return `<div class="party-compact controlbox"><div class="controlhead"><label for="party${info.name}"><i class="partydot" style="background:${info.color}"></i>政党${info.name}</label><output class="numeric" id="val${info.name}" style="color:${info.color}" for="party${info.name}">${p.toFixed(1)}</output></div><input id="party${info.name}" class="partyslider" data-party="${i}" type="range" min="0" max="10" step="0.1" value="${p}" style="accent-color:${info.color}" aria-label="政党${info.name}の政策位置"/><div class="ticks party-ticks"><span>0 左派</span><span>5 中間</span><span>10 右派</span></div></div>`;
+ }).join('');
+ $('legend').innerHTML=S.positions.map((_,i)=>`<span class="legendParty"><i style="background:${PARTY[i].color}"></i>政党${PARTY[i].name}</span>`).join('')+'<span><i class="dash"></i>中央値</span>';
+ $('dragHint').textContent='丸印をドラッグ／位置はスライダーでも変更可能';
 }
-function renderScores(sh,m){
- $("scores").style.gridTemplateColumns=`repeat(${state.n},minmax(0,1fr))`;
- $("scores").innerHTML=sh.map((v,i)=>`<div class="score ${state.showVotes?"":"off"}"><span class="scoreName"><i class="dot" style="background:${COLORS[i]}"></i>政党${NAMES[i]}</span><span class="scoreVal" style="color:${COLORS[i]}">${state.showVotes?(v*100).toFixed(1)+"%":"？？？"}</span></div>`).join("");
- $("bar").innerHTML=sh.map((v,i)=>`<div style="width:${state.showVotes?v*100:100/state.n}%;background:${state.showVotes?COLORS[i]:"#cbd3de"}"></div>`).join("");
- $("medianVal").textContent=state.showMedian?m.med.toFixed(2):"？？？";
- let e="";
- if(!state.showVotes)e="得票率を非表示にしている。各党の支持領域は、他党との政策距離によって定まる。";
- else if(state.n===2){
-   if(Math.abs(state.pos[0]-state.pos[1])<.02)e="両党が同じ政策位置にあるため、得票は均等に分かれる。";
-   else e=`両党の中間点（${((state.pos[0]+state.pos[1])/2).toFixed(2)}）が支持の境界となる。政党の移動は、この境界と得票率を変化させる。`;
+function renderScores(v){
+ const scores=$('scores'),bar=$('scorebar');
+ scores.innerHTML=S.positions.map((p,i)=>{
+  const info=PARTY[i];return `<div class="party-score"><span class="scorename"><i style="background:${info.color}"></i>政党${info.name}</span><span class="scorevalue${S.showResults?'':' hidden'}" style="${S.showResults?'color:'+info.color:''}">${S.showResults?fmt(v.shares[i]):'？？？'}</span></div>`;
+ }).join('');
+ bar.innerHTML=S.positions.map((_,i)=>`<div style="width:${S.showResults?v.shares[i]*100:100/S.count}%;background:${PARTY[i].color}" title="政党${PARTY[i].name}${S.showResults?' '+fmt(v.shares[i]):' 得票率は非表示'}"></div>`).join('');
+ bar.classList.toggle('hidden',!S.showResults);
+ bar.setAttribute('aria-label',S.showResults?v.shares.map((p,i)=>`政党${PARTY[i].name}${fmt(p)}`).join('、'):'得票率は非表示');
+ let explanation='';
+ if(!S.showResults){
+  explanation='得票率を非表示にしている。各党の支持領域は、他党との位置関係によって定まる。';
+ }else if(S.count===2){
+  const [a,b]=S.positions,mid=model.median;
+  if(Math.abs(a-b)<1e-9 && Math.abs(a-mid)<.051){
+   explanation='両党が中央値で同じ政策位置を取るため、得票は均等に分かれる。';
+  }else if(Math.abs(a-b)<1e-9){
+   explanation='両党が同じ政策位置にあるため、得票は均等に分かれる。中央値とは異なる位置である。';
+  }else{
+   explanation=`両党の中間点（${((a+b)/2).toFixed(2)}）が支持の境界となる。政党の移動は、この境界と得票率を変化させる。`;
+  }
  }else{
-   let top=Math.max(...sh),leaders=sh.map((v,i)=>Math.abs(v-top)<.0005?NAMES[i]:null).filter(Boolean);
-   e=`最多得票は政党${leaders.join("・")}（${(top*100).toFixed(1)}%）である。各党の支持領域は、近接する政党との位置関係によって定まる。`;
+  const top=Math.max(...v.shares);
+  const leaders=v.shares.map((p,i)=>top-p<.0005?'政党'+PARTY[i].name:null).filter(Boolean);
+  explanation=`最多得票は${leaders.join('・')}（${fmt(top)}）である。各党の支持領域は隣接する政党との中間点によって定まる。`;
+  if(S.positions.every(p=>Math.abs(p-model.median)<.051)) explanation='全党が中央値に集まった状態である。票は均等に分かれるが、この配置が均衡であるとは限らない。';
  }
- $("explain").textContent=e;
- $("toggleMedian").textContent=state.showMedian?"中央値を隠す":"中央値を表示する";$("toggleVotes").textContent=state.showVotes?"得票率を隠す":"得票率を表示する";
+ $('result').textContent=explanation;
 }
-function render(){let m=model(),sh=votes(m);renderControls();renderChart(m);renderScores(sh,m)}
-function setPos(i,v){state.pos[i]=Math.round(clamp(v,0,10)*10)/10;render()}
-function setN(n){let defaults=[2.5,7.5,5,3.5,6.5];state.pos=n>state.n?state.pos.concat(defaults.slice(state.n,n)):state.pos.slice(0,n);state.n=n;render()}
-$("partyCount").onchange=e=>setN(+e.target.value);
-$("shape").onchange=e=>{state.shape=e.target.value;state.center=5;render()};
-$("center").oninput=e=>{state.center=+e.target.value;render()};
-$("partyControls").oninput=e=>{if(e.target.classList.contains("ps"))setPos(+e.target.dataset.i,+e.target.value)};
-$("allMedian").onclick=()=>{let m=model();state.pos=state.pos.map(()=>Math.round(m.med*10)/10);render()};
-$("toggleMedian").onclick=()=>{state.showMedian=!state.showMedian;render()};
-$("toggleVotes").onclick=()=>{state.showVotes=!state.showVotes;render()};
-$("reset").onclick=()=>{Object.assign(state,{n:2,pos:[2.5,7.5],shape:"normal",center:5,showMedian:true,showVotes:true,drag:null});render()};
-$("fullscreen").onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
-document.querySelector(".preset").onclick=e=>{
- let k=e.target.dataset.case;if(!k)return;state.center=5;state.showMedian=true;state.showVotes=true;
- if(k==="two"){state.n=2;state.shape="normal";state.pos=[2.5,7.5]}
- if(k==="bi"){state.n=2;state.shape="bimodal";state.pos=[3.1,6.9]}
- if(k==="tri"){state.n=3;state.shape="trimodal";state.pos=[2.4,5,7.6]}
- if(k==="quad"){state.n=4;state.shape="quadmodal";state.pos=[2.3,4.1,5.9,7.7]}
- if(k==="penta"){state.n=5;state.shape="pentamodal";state.pos=[2.2,3.6,5,6.4,7.8]}
- if(k==="median"){state.n=3;state.shape="normal";state.pos=[5,5,5]}
- render();
-};
-function xFromEvent(e){let r=$("chart").getBoundingClientRect();return clamp(((e.clientX-r.left)/r.width*1000-X0)/W*10,0,10)}
-$("chart").addEventListener("pointerdown",e=>{let g=e.target.closest(".marker");if(!g)return;state.drag=+g.dataset.i;$("chart").setPointerCapture?.(e.pointerId);e.preventDefault()});
-$("chart").addEventListener("pointermove",e=>{if(state.drag===null)return;setPos(state.drag,xFromEvent(e));e.preventDefault()});
-["pointerup","pointercancel","lostpointercapture"].forEach(t=>$("chart").addEventListener(t,()=>state.drag=null));
-render();
-</script>
-</body>
-</html>
+function syncControls(m){
+ $('distribution').value=S.shape;
+ $('partyCount').value=String(S.count);
+ const center=$('voterCenter'),s=SHAPES[S.shape];center.min=s.min;center.max=s.max;center.disabled=S.shape==='uniform';center.value=S.center;
+ $('valCenter').textContent=S.center.toFixed(1);$('medianNum').textContent=S.showMedian?m.median.toFixed(2):'？？？';
+ $('centerTicks').innerHTML=`<span>${s.min.toFixed(1)} 左寄り</span><span>5.0</span><span>${s.max.toFixed(1)} 右寄り</span>`;
+ $('centerHint').textContent=S.shape==='uniform'?'一様分布では中心設定は適用されず、中央値は5.00である。':'分布の移動パラメータであり、端での切断・再正規化により中央値とは一致しない場合がある。';
+ S.positions.forEach((p,i)=>{$('party'+PARTY[i].name).value=p;$('val'+PARTY[i].name).textContent=p.toFixed(1);});
+ $('moveAll').textContent=S.count===2?'両党を中央値へ':'全党を中央値へ';
+ $('hideMedian').textContent=S.showMedian?'中央値を隠す':'中央値を表示する';
+ $('hideResults').textContent=S.showResults?'得票率を隠す':'得票率を表示する';
+ $('hideMedian').setAttribute('aria-pressed',String(!S.showMedian));
+ $('hideResults').setAttribute('aria-pressed',String(!S.showResults));
+ $('hideMedian').classList.toggle('chosen',!S.showMedian);
+ $('hideResults').classList.toggle('chosen',!S.showResults);
+}
+function render(){
+ model=buildModel(S.shape,S.center);
+ const v=voteShares(S.positions,model);
+ syncControls(model);renderScores(v);renderGraph(model,v);
+}
+function setPosition(i,value){S.positions[i]=round(clamp(value,0,10));render();}
+function setCount(n){
+ if(n===S.count)return;
+ const entry=[2.5,7.5,5,3.5,6.5];
+ S.positions=n>S.count?S.positions.concat(entry.slice(S.count,n)):S.positions.slice(0,n);
+ S.count=n;S.drag=null;
+ renderControls();render();
+}
+function setCase(key){
+ S.center=5;S.showMedian=true;S.showResults=true;S.drag=null;
+ if(key==='trimodal'){S.shape='trimodal';S.count=3;S.positions=[2.4,5,7.6];}
+ else if(key==='quadmodal'){S.shape='quadmodal';S.count=4;S.positions=[2.3,4.1,5.9,7.7];}
+ else if(key==='pentamodal'){S.shape='pentamodal';S.count=5;S.positions=[2.2,3.6,5,6.4,7.8];}
+ else if(key==='median3'){S.shape='normal';S.count=3;S.positions=[5,5,5];}
+ else{S.shape=key==='bimodal'?'bimodal':'normal';S.count=2;S.positions=key==='bimodal'?[3.1,6.9]:[2.5,7.5];
+  if(key==='one')S.positions[0]=5;
+  if(key==='both')S.positions=[5,5];}
+ $('scenario').value=key;
+ renderControls();render();
+}
+function eventPos(e){
+ const svg=$('plot'),bounds=svg.getBoundingClientRect();
+ // viewBox bounds can differ from CSS box if aspect ratio is constrained.
+ const point=svg.createSVGPoint();point.x=e.clientX;point.y=e.clientY;
+ const ctm=svg.getScreenCTM();
+ if(ctm){const svgPoint=point.matrixTransform(ctm.inverse());return clamp((svgPoint.x-L)*10/CW,0,10);}
+ return clamp(((e.clientX-bounds.left)*W/bounds.width-L)*10/CW,0,10);
+}
+$('plot').addEventListener('pointerdown',ev=>{
+ const group=ev.target.closest('.partyMarker');if(!group)return;
+ S.drag=Number(group.dataset.party);try{$('plot').setPointerCapture(ev.pointerId);}catch{}
+ ev.preventDefault();
+});
+$('plot').addEventListener('pointermove',ev=>{if(S.drag===null)return;setPosition(S.drag,eventPos(ev));ev.preventDefault();});
+function endDrag(){S.drag=null;}
+$('plot').addEventListener('pointerup',endDrag);$('plot').addEventListener('pointercancel',endDrag);$('plot').addEventListener('lostpointercapture',endDrag);
+$('plot').addEventListener('keydown',ev=>{
+ const group=ev.target.closest('.partyMarker');if(!group)return;
+ if(!['ArrowLeft','ArrowRight','Home','End'].includes(ev.key))return;
+ const i=Number(group.dataset.party);let value=S.positions[i];
+ if(ev.key==='ArrowLeft')value-=.1;if(ev.key==='ArrowRight')value+=.1;
+ if(ev.key==='Home')value=0;if(ev.key==='End')value=10;
+ ev.preventDefault();setPosition(i,value);
+ $('plot').querySelector(`.partyMarker[data-party="${i}"]`)?.focus();
+});
+$('partyControls').addEventListener('input',ev=>{
+ if(!ev.target.matches('.partyslider'))return;
+ setPosition(Number(ev.target.dataset.party),Number(ev.target.value));
+});
+$('partyCount').addEventListener('change',ev=>setCount(Number(ev.target.value)));
+$('distribution').addEventListener('change',ev=>{S.shape=ev.target.value;let s=SHAPES[S.shape];S.center=clamp(S.center,s.min,s.max);render();});
+$('voterCenter').addEventListener('input',ev=>{S.center=Number(ev.target.value);render();});
+$('moveA').addEventListener('click',()=>setPosition(0,model.median));
+$('moveB').addEventListener('click',()=>setPosition(1,model.median));
+$('moveAll').addEventListener('click',()=>{S.positions=S.positions.map(()=>round(model.median));render();});
+$('hideMedian').addEventListener('click',()=>{S.showMedian=!S.showMedian;render();});
+$('hideResults').addEventListener('click',()=>{S.showResults=!S.showResults;render();});
+$('resetTop').addEventListener('click',()=>setCase('initial'));
+$('scenario').addEventListener('change',ev=>setCase(ev.target.value));
+$('viewSwitch').addEventListener('click',()=>{document.body.classList.toggle('mobile-controls');const isOn=document.body.classList.contains('mobile-controls');$('viewSwitch').textContent=isOn?'▣ グラフ':'⚙ 操作';$('viewSwitch').setAttribute('aria-pressed',String(isOn));});
+$('present').addEventListener('click',()=>{
+ if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});return;}
+ if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen().catch(()=>{document.body.classList.toggle('presenter');});}
+ else{document.body.classList.toggle('presenter');}
+});
+document.addEventListener('fullscreenchange',()=>{$('present').textContent=document.fullscreenElement?'⤢ 全画面終了':'⛶ 全画面';});
+renderControls();render();
+window.DownsModel={density,buildModel,voteShares,shares};
+</script></body></html>
