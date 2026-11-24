@@ -1,478 +1,87 @@
-<!DOCTYPE html>
-
-<html>
-
+<!doctype html>
+<html lang="ja">
 <head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-
-
-
-<title>Naoshi ISAKI’s website</title>
-
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
-
-
-
-
-
-<link rel="stylesheet" href="site_style.css" type="text/css" />
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>伊﨑直志 | 比較政治学・政党政治</title>
+  <meta name="description" content="伊﨑直志の研究・主要業績・経歴・教育活動。比較政治学、政党政治、イギリス政治。">
+  <meta property="og:title" content="伊﨑直志 | Naoshi Isaki">
+  <meta property="og:description" content="研究・主要業績・経歴・教育活動">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://naoshi-isaki.github.io/">
+  <link rel="canonical" href="https://naoshi-isaki.github.io/">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preload" href="assets/research-sans.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
-
 <body>
-
-
-<div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Naoshi <strong>ISAKI</strong></a>
+  <a class="skip-link" href="#main"><span data-ja>本文へ移動</span><span data-en>Skip to content</span></a>
+  <header class="site-header container" id="home">
+    <div class="header-top">
+      <div><h1>伊﨑 直志</h1><p class="roman-name">Naoshi Isaki</p></div>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="ja" aria-pressed="true" lang="ja">日本語</button><span aria-hidden="true">/</span><button type="button" data-language="en" aria-pressed="false" lang="en">English</button>
+      </div>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">Home</a>
-</li>
-<li>
-  <a href="univ.html">Univ.</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="js_test.html">jsのテスト</a>
-</li>
-<li>
-  <a href="html_gene.html">Rでhtml生成</a>
-</li>
-<li>
-  <a href="id_class_check.html">タグチェック用</a>
-</li>
-<li>
-  <a href="grid_test.html">gridレイアウト用</a>
-</li>
-<li>
-  <a href="css_test.html">cssチェック用</a>
-</li>
-<li>
-  <a href="rstudy.html">R勉強会</a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+    <p class="affiliation"><span data-ja>同志社大学 大学院総合政策科学研究科 博士課程（後期課程）</span><span data-en>Doctoral student, Graduate School of Policy and Management, Doshisha University</span></p>
+    <p class="research-fields"><span data-ja>専門：比較政治学・政党政治・イギリス政治</span><span data-en>Research fields: comparative politics, party politics, British politics</span></p>
+    <div class="profile-links"><a href="https://jglobal.jst.go.jp/detail?JGLOBAL_ID=202401014096410782" target="_blank" rel="noopener noreferrer">J-GLOBAL</a><a href="https://orcid.org/0009-0001-3694-7680" target="_blank" rel="noopener noreferrer">ORCID</a></div>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#research"><span data-ja>研究</span><span data-en>Research</span></a>
+      <a href="#publications"><span data-ja>主要業績</span><span data-en>Publications</span></a>
+      <a href="#about"><span data-ja>経歴</span><span data-en>Education</span></a>
+      <a href="#teaching"><span data-ja>教育</span><span data-en>Teaching</span></a>
+    </nav>
+  </header>
+  <main id="main" class="container">
+    <section id="research" aria-labelledby="research-heading">
+      <h2 id="research-heading"><span data-ja>研究</span><span data-en>Research</span></h2>
+      <div class="research-item">
+        <h3><span data-ja>危機認識と政党変容</span><span data-en>Crisis and party transformation</span></h3>
+        <p><span data-ja>1970年代から1990年代のイギリス労働党を中心に、危機認識と党内改革の関係を研究しています。一次史料の分析を通じて、競合する改革構想が選択・制度化される過程を検討しています。</span><span data-en>I study the relationship between perceptions of crisis and party reform, focusing on the British Labour Party from the 1970s to the 1990s. Through archival research, I examine how competing reform projects were selected and institutionalised.</span></p>
+      </div>
+      <div class="research-item">
+        <h3><span data-ja>政策形成能力と専門知</span><span data-en>Policy-making capacity and expertise</span></h3>
+        <p><span data-ja>ジェレミー・ブレイ、マクロ経済モデル、議会の分析基盤に着目し、1980年代の労働党における代替政策の比較・検証と、その組織的・知的基盤を研究しています。</span><span data-en>My research on Jeremy Bray, macroeconomic models, and parliamentary analytical resources examines how Labour compared and assessed policy alternatives in the 1980s, and the organisational and intellectual foundations of that work.</span></p>
+      </div>
+      <div class="research-item">
+        <h3><span data-ja>政党間競争と対立軸</span><span data-en>Party competition and political divides</span></h3>
+        <p><span data-ja>ヨーロッパ政治におけるGAL–TAN対立軸や、能力・信頼性をめぐる政党間競争に関心をもっています。政治的対立の構築・再編において政党が果たす役割を検討しています。</span><span data-en>I am interested in the GAL–TAN dimension in European politics, competition over competence and credibility, and the role of parties in constructing and reshaping political divides.</span></p>
+      </div>
+    </section>
+    <section id="publications" aria-labelledby="publications-heading">
+      <h2 id="publications-heading"><span data-ja>主要業績</span><span data-en>Selected publications</span></h2>
+      <div class="publication-toolbar"><div class="filters" role="group" aria-label="Publication type">
+        <button class="filter active" type="button" data-filter="all" aria-pressed="true"><span data-ja>すべて</span><span data-en>All</span></button>
+        <button class="filter" type="button" data-filter="article" aria-pressed="false"><span data-ja>論文</span><span data-en>Articles</span></button>
+        <button class="filter" type="button" data-filter="translation" aria-pressed="false"><span data-ja>翻訳</span><span data-en>Translation</span></button>
+      </div></div>
+        <div id="publication-list">
+          <article class="publication" data-type="article"><div class="pub-year">2026<span data-ja>論文</span><span data-en>Article</span></div><div class="pub-main"><h3 lang="ja">イギリス労働党における「危機」言説の展開（1975–1984年）</h3><p class="pub-meta"><span data-ja>伊﨑直志｜『同志社政策科学研究』28(1), 47–58.</span><span data-en>Naoshi Isaki · Doshisha University Policy &amp; Management Review, 28(1), 47–58. [In Japanese]</span></p><div class="pub-actions"><a href="https://jglobal.jst.go.jp/detail?JGLOBAL_ID=202401014096410782" target="_blank" rel="noopener noreferrer"><span data-ja>書誌情報</span><span data-en>Publication record</span><span aria-hidden="true">↗</span></a><button type="button" class="copy-citation" data-citation="crisis"><span data-ja>引用をコピー</span><span data-en>Copy citation</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3"/></svg></button></div></div></article>
+          <article class="publication" data-type="article"><div class="pub-year">2025<span data-ja>研究ノート</span><span data-en>Research note</span></div><div class="pub-main"><h3 lang="ja">欧州政治におけるGAL–TAN対立軸研究の展開と展望―政党間競争の視角から</h3><p class="pub-meta"><span data-ja>伊﨑直志｜『同志社政策科学研究』27(1), 39–49.</span><span data-en>Naoshi Isaki · Doshisha University Policy &amp; Management Review, 27(1), 39–49. [In Japanese]</span></p><div class="pub-actions"><a href="https://doshisha.repo.nii.ac.jp/records/2001265" target="_blank" rel="noopener noreferrer"><span data-ja>論文を読む</span><span data-en>Read article</span><span aria-hidden="true">↗</span></a><button type="button" class="copy-citation" data-citation="galtan"><span data-ja>引用をコピー</span><span data-en>Copy citation</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3"/></svg></button></div></div></article>
+          <article class="publication" data-type="translation"><div class="pub-year">2023<span data-ja>共訳書</span><span data-en>Co-translation</span></div><div class="pub-main"><h3 lang="ja">民主主義の危機―比較分析が示す変容</h3><p class="pub-meta"><span data-ja>アダム・プシェヴォスキ 著／吉田徹・伊﨑直志 訳｜白水社.</span><span data-en>Adam Przeworski · Translated into Japanese by Toru Yoshida and Naoshi Isaki · Hakusuisha.</span></p><div class="pub-actions"><a href="https://ndlsearch.ndl.go.jp/books/R100000002-I032891161" target="_blank" rel="noopener noreferrer"><span data-ja>書籍情報</span><span data-en>Book details</span><span aria-hidden="true">↗</span></a><button type="button" class="copy-citation" data-citation="democracy"><span data-ja>引用をコピー</span><span data-en>Copy citation</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 5.5h8v8h-8zM10.5 5.5v-3h-8v8h3"/></svg></button></div></div></article>
+        </div>
 
-<div id="header">
-
-
-
-<h1 class="title toc-ignore">Naoshi ISAKI’s website</h1>
-
-</div>
-
-
-<p>Under Construction…</p>
-<p><font size="4"> 伊﨑 直志（Naoshi ISAKI）</font></p>
-<div id="bio" class="section level2">
-<h2>Bio</h2>
-<div id="education" class="section level3">
-<h3>Education</h3>
-<ul>
-<li>2017-21
-首都大学東京（現・東京都立大学）都市教養学部都市教養学科法学系政治学コース</li>
-<li>2021-現在 同志社大学大学院総合政策科学研究科 博士前期課程 在籍</li>
-</ul>
-</div>
-<div id="field-of-research-research-interests" class="section level3">
-<h3>Field of research, Research interests</h3>
-<ul>
-<li>比較政治学. 政党政治. ポピュリズム.</li>
-<li>ガバナンス. 比較政策論. 脱政治化. 委任（delegation）.</li>
-</ul>
-</div>
-<div id="publications" class="section level3">
-<h3>Publications</h3>
-<ul>
-<li><a
-href="https://www.hakusuisha.co.jp/book/b626498.html">アダム・プシェヴォスキ著,
-吉田徹・伊﨑直志訳. (2019=2023).『民主主義の危機：比較分析が示す変容』.
-白水社.</a></li>
-</ul>
-</div>
-</div>
-<div id="contact" class="section level2">
-<h2>Contact</h2>
-<ul>
-<li>isaki.naoshi [at] gmail.com</li>
-</ul>
-</div>
-
-<footer>
-  <p>Copyright &copy; 2023- Naoshi ISAKI </p>
-</footer>
-
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
+      <p class="screen-reader-only" id="filter-status" role="status"></p>
+      <p class="all-publications"><a href="https://jglobal.jst.go.jp/detail?JGLOBAL_ID=202401014096410782" target="_blank" rel="noopener noreferrer"><span data-ja>業績一覧（J-GLOBAL）</span><span data-en>Full publication record (J-GLOBAL)</span></a></p>
+    </section>
+    <section id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading"><span data-ja>経歴</span><span data-en>Education</span></h2>
+        <div class="bio-timeline"><div><span class="bio-date">2024 — <span data-ja>現在</span><span data-en>present</span></span><p><strong><span data-ja>同志社大学 大学院総合政策科学研究科</span><span data-en>Doshisha University</span></strong><span data-ja>博士課程（後期課程）</span><span data-en>Doctoral programme, Graduate School of Policy and Management</span></p></div><div><span class="bio-date">2021 — 2024</span><p><strong><span data-ja>同志社大学 大学院総合政策科学研究科</span><span data-en>Doshisha University</span></strong><span data-ja>博士課程（前期課程）／修士（政策科学）</span><span data-en>Master's programme / Master's degree in Policy and Management</span></p></div><div><span class="bio-date">2017 — 2021</span><p><strong><span data-ja>東京都立大学（旧・首都大学東京）</span><span data-en>Tokyo Metropolitan University</span></strong><span data-ja>都市教養学部 法学系政治学コース</span><span data-en>Faculty of Urban Liberal Arts, Political Science</span></p></div></div>
+        <div class="memberships"><span class="subtle-label"><span data-ja>所属学会</span><span data-en>MEMBERSHIPS</span></span><p><span data-ja>日本比較政治学会 ／ 日本政治学会 ／ 日本EU学会</span><span data-en>Japan Association for Comparative Politics<br>Japanese Political Science Association<br>European Union Studies Association–Japan</span></p></div>
+    </section>
+    <section id="teaching" aria-labelledby="teaching-heading">
+      <h2 id="teaching-heading"><span data-ja>教育</span><span data-en>Teaching</span></h2>
+      <h3><span data-ja>政治過程論（2026年度）</span><span data-en>Political Processes (2026)</span></h3>
+      <p><span data-ja>政策の形成・決定・実施・評価と、資源・時間・空間・領域などの政策構造を扱います。具体的な事例と理論を通じて、政治と政策の関係を検討します。</span><span data-en>This course covers agenda-setting, decision-making, implementation, evaluation, and policy structures including resources, time, space, and territory. It examines relationships between politics and policy through theory and concrete cases.</span></p>
+      <button class="text-button" type="button" id="open-course"><span data-ja>授業の構成</span><span data-en>Course outline</span></button>
+    </section>
+  </main>
+  <footer class="site-footer container"><span>© 2026 Naoshi Isaki</span><a href="#home"><span data-ja>ページ上部へ</span><span data-en>Back to top</span></a></footer>
+  <dialog id="course-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><p class="dialog-label"><span data-ja>授業の構成（2026年度）</span><span data-en>Course outline (2026)</span></p><button type="button" class="dialog-close" aria-label="閉じる">×</button></div><h2 id="dialog-title"><span data-ja>政治過程論</span><span data-en>Political Processes</span></h2><p class="dialog-intro"><span data-ja>政策過程と、それを形づくる政治的な関係・制度・構造を学ぶ全14回の構成です。</span><span data-en>A fourteen-session course on policy processes and the political relationships, institutions, and structures that shape them.</span></p><ol class="session-list"></ol><p class="dialog-note"><span data-ja>各回の資料・課題は、授業内で案内する方法により配布します。</span><span data-en>Course materials and assignments are distributed through the channels specified in class.</span></p><button type="button" class="button-primary dialog-close-bottom"><span data-ja>閉じる</span><span data-en>Close outline</span></button></dialog>
+  <dialog id="citation-dialog" aria-labelledby="citation-heading"><div class="dialog-top"><h2 id="citation-heading"><span data-ja>引用情報</span><span data-en>Citation</span></h2><button type="button" class="citation-close dialog-close" aria-label="閉じる">×</button></div><p><span data-ja>以下の引用情報を選択してコピーできます。</span><span data-en>Select and copy the citation below.</span></p><textarea id="citation-text" readonly rows="6" aria-label="Citation text"></textarea></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
